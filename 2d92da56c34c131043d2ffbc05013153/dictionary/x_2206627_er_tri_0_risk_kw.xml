@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="2bbc693c98b64a119de2e6ba99f063b1" label="High Risk Keyword" name="x_2206627_er_tri_0_risk_kw" type="collection">
+        <element display="true" label="Keyword" mandatory="true" max_length="200" name="keyword" type="string"/>
+        <element label="ESI Level" mandatory="true" name="esi_level" type="integer"/>
+        <element default="true" label="Active" name="active" type="boolean"/>
+        <element choice="1" label="Requires Patient Flag" name="requires_flag" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="On Anticoagulant" sequence="2" value="on_anticoagulant"/>
+                <element inactive_on_update="false" label="Cardiac History" sequence="4" value="cardiac_history"/>
+                <element inactive_on_update="false" label="Diabetic" sequence="1" value="diabetic"/>
+                <element inactive_on_update="false" label="Immunosuppressed" sequence="3" value="immunosuppressed"/>
+            </choice>
+        </element>
+        <element default="javascript:getNextObjNumberPadded();" label="Number" name="number" type="string"/>
+    </element>
+</database>

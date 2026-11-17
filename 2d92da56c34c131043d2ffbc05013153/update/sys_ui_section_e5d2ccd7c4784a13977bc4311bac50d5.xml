@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Vital Threshold" section_id="e5d2ccd7c4784a13977bc4311bac50d5" sys_domain="global" table="x_2206627_er_tri_0_vital_thr" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>0</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:47</sys_created_on>
+            <sys_id>44c832098fa1441b857880da4245a397</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Vital Threshold" display_value="Vital Threshold" name="x_2206627_er_tri_0_vital_thr" sys_domain="global" view="Default view">e5d2ccd7c4784a13977bc4311bac50d5</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:47</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>number</element>
+            <position>1</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:47</sys_created_on>
+            <sys_id>a151389019b34c7aa6d364ea410d1cab</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Vital Threshold" display_value="Vital Threshold" name="x_2206627_er_tri_0_vital_thr" sys_domain="global" view="Default view">e5d2ccd7c4784a13977bc4311bac50d5</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:47</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>age_band_label</element>
+            <position>2</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:47</sys_created_on>
+            <sys_id>b58a328faa8a42d78c1dc2c6707a3d05</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Vital Threshold" display_value="Vital Threshold" name="x_2206627_er_tri_0_vital_thr" sys_domain="global" view="Default view">e5d2ccd7c4784a13977bc4311bac50d5</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:47</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>min_age_months</element>
+            <position>3</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:47</sys_created_on>
+            <sys_id>c9b8b5a392014173b4c4168859f890fd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Vital Threshold" display_value="Vital Threshold" name="x_2206627_er_tri_0_vital_thr" sys_domain="global" view="Default view">e5d2ccd7c4784a13977bc4311bac50d5</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:47</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>vital_name</element>
+            <position>4</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:47</sys_created_on>
+            <sys_id>135b1cb6924a401baf873ca29b636be0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Vital Threshold" display_value="Vital Threshold" name="x_2206627_er_tri_0_vital_thr" sys_domain="global" view="Default view">e5d2ccd7c4784a13977bc4311bac50d5</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:47</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>low_danger</element>
+            <position>5</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:47</sys_created_on>
+            <sys_id>fc74c070bc984227a31c0171b8eb4df3</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Vital Threshold" display_value="Vital Threshold" name="x_2206627_er_tri_0_vital_thr" sys_domain="global" view="Default view">e5d2ccd7c4784a13977bc4311bac50d5</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:47</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>6</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:47</sys_created_on>
+            <sys_id>4b20932b596d47a4ae9a5d8ef16583b4</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Vital Threshold" display_value="Vital Threshold" name="x_2206627_er_tri_0_vital_thr" sys_domain="global" view="Default view">e5d2ccd7c4784a13977bc4311bac50d5</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:47</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>active</element>
+            <position>7</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:47</sys_created_on>
+            <sys_id>5550e361386e4b83aa80708c2aeb32a0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Vital Threshold" display_value="Vital Threshold" name="x_2206627_er_tri_0_vital_thr" sys_domain="global" view="Default view">e5d2ccd7c4784a13977bc4311bac50d5</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:47</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>max_age_months</element>
+            <position>8</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:47</sys_created_on>
+            <sys_id>76229a39d14545b59a06cf27c2c00e9b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Vital Threshold" display_value="Vital Threshold" name="x_2206627_er_tri_0_vital_thr" sys_domain="global" view="Default view">e5d2ccd7c4784a13977bc4311bac50d5</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:47</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>high_danger</element>
+            <position>9</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:47</sys_created_on>
+            <sys_id>7b162f1214af4772a7bd787096e9ae7f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Vital Threshold" display_value="Vital Threshold" name="x_2206627_er_tri_0_vital_thr" sys_domain="global" view="Default view">e5d2ccd7c4784a13977bc4311bac50d5</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:47</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>10</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:47</sys_created_on>
+            <sys_id>67252bfca5874048bbd3405c07b951ee</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Vital Threshold" display_value="Vital Threshold" name="x_2206627_er_tri_0_vital_thr" sys_domain="global" view="Default view">e5d2ccd7c4784a13977bc4311bac50d5</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:47</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Vital Threshold</caption>
+            <header>false</header>
+            <name>x_2206627_er_tri_0_vital_thr</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:00:21</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e5d2ccd7c4784a13977bc4311bac50d5</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_2206627_er_tri_0_vital_thr</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_ui_section_e5d2ccd7c4784a13977bc4311bac50d5</sys_update_name>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:00:21</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

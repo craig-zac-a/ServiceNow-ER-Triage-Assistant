@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[var erTimer = null, erStart = new Date().getTime(), erLast = '';
+
+(function erBegin() {
+  var enc = gel('er_encounter').value;
+  var ga = new GlideAjax('x_2206627_er_tri_0.ERTriageRunAjax');
+  ga.addParam('sysparm_name', 'start');
+  ga.addParam('sysparm_encounter', enc);
+  ga.getXMLAnswer(function(answer) {
+    var r = JSON.parse(answer);
+    if (!r.ok) { erFail(r.error); return; }
+    erTimer = setInterval(erPoll, 2000);
+    erPoll();
+  });
+})();
+
+function erPoll() {
+  gel('er_elapsed').innerHTML = Math.round((new Date().getTime() - erStart) / 1000);
+  var ga = new GlideAjax('x_2206627_er_tri_0.ERTriageRunAjax');
+  ga.addParam('sysparm_name', 'status');
+  ga.addParam('sysparm_encounter', gel('er_encounter').value);
+  ga.getXMLAnswer(function(answer) {
+    var r = JSON.parse(answer);
+    if (r.message && r.message != erLast) {
+      var log = gel('er_log');
+      var prev = log.querySelector('.current');
+      if (prev) prev.className = 'er-step';
+      var d = document.createElement('div');
+      d.className = 'er-step current';
+      d.appendChild(document.createTextNode('\u2022 ' + r.message));
+      log.appendChild(d);
+      gel('er_msg').innerHTML = '';
+      gel('er_msg').appendChild(document.createTextNode(r.message));
+      erLast = r.message;
+    }
+    if (r.status == 'done') erDone(r);
+    else if (r.status == 'failed') erFail(r.message);
+    else if ((new Date().getTime() - erStart) > 180000) erFail('Still running after 3 minutes. Check the encounter later.');
+  });
+}
+
+function erDone(r) {
+  clearInterval(erTimer);
+  gel('er_running').style.display = 'none';
+  var box = gel('er_done');
+  box.style.display = 'block';
+  var esc = function(s) { var t = document.createElement('div'); t.appendChild(document.createTextNode(s || '')); return t.innerHTML; };
+  box.innerHTML =
+    '<p style="font-size:16px;"><b>Suggested ESI: ' + esc(r.suggested_esi) + '</b>' +
+    ' (rules ' + esc(r.rule_esi) + ', AI ' + esc(r.llm_esi || 'n/a') + ')</p>' +
+    (r.ai_available == '1' || r.ai_available == 'true'
+      ? '<p><b>AI rationale:</b> ' + esc(r.rationale) + '</p>'
+      : '<p style="color:#c62828;">AI unavailable. Rule-based ESI only.</p>');
+  if (r.assessment) {
+    var btn = gel('er_open');
+    btn.style.display = 'inline-block';
+    btn.onclick = function() {
+      top.location.href = 'x_2206627_er_tri_0_triage_assessment.do?sys_id=' + r.assessment;
+    };
+  }
+}
+
+function erFail(msg) {
+  clearInterval(erTimer);
+  gel('er_running').style.display = 'none';
+  var box = gel('er_done');
+  box.style.display = 'block';
+  box.innerHTML = '';
+  var p = document.createElement('p');
+  p.style.color = '#c62828';
+  p.appendChild(document.createTextNode(msg || 'Triage failed.'));
+  box.appendChild(p);
+}
+
+function erClose() {
+  clearInterval(erTimer);
+  GlideModal.prototype.get('x_2206627_er_tri_0_er_triage_progress') ?
+    GlideModal.prototype.get('x_2206627_er_tri_0_er_triage_progress').destroy() :
+    window.location.reload();
+}]]></client_script>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_2206627_er_tri_0_er_triage_progress.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide">
+    <style>
+        .er-spin {
+            width: 28px;
+            height: 28px;
+            border: 4px solid #ddd;
+            border-top-color: #1565c0;
+            border-radius: 50%;
+            animation: erspin 0.9s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @keyframes erspin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .er-step {
+            margin: 4px 0;
+            color: #555;
+        }
+
+        .er-step.current {
+            color: #000;
+            font-weight: bold;
+        }
+    </style>
+    <div id="er_running">
+        <span class="er-spin"></span>
+        <span id="er_msg" style="margin-left:10px;">Starting triage...</span>
+        <div id="er_log" style="margin-top:12px;font-size:13px;"></div>
+        <div style="margin-top:8px;color:#777;font-size:12px;">Elapsed: <span id="er_elapsed">0</span>s</div>
+    </div>
+    <div id="er_done" style="display:none;"></div>
+    <div style="margin-top:14px;text-align:right;">
+        <button type="button" id="er_open" class="btn btn-primary" style="display:none;">Open assessment</button>
+        <button type="button" class="btn btn-default" onclick="erClose()">Close</button>
+    </div>
+    <input type="hidden" id="er_encounter" value="${sysparm_encounter}" />
+</j:jelly>]]></html>
+        <name>er_triage_progress</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-09 20:22:53</sys_created_on>
+        <sys_id>dc7643c4c328131043d2ffbc05013102</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>er_triage_progress</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_ui_page_dc7643c4c328131043d2ffbc05013102</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-09 20:22:53</sys_updated_on>
+    </sys_ui_page>
+</record_update>

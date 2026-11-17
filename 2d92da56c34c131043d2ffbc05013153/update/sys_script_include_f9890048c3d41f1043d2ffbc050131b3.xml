@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_2206627_er_tri_0.ERTriageCaseBuilder</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ERTriageCaseBuilder</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var ERTriageCaseBuilder = Class.create();
+ERTriageCaseBuilder.prototype = {
+  // Common words that are also names. Never redacted on their own, so a patient
+  // named "Test" doesn't turn "pregnancy test" into "pregnancy [name]".
+  NAME_STOPLIST: ['test', 'patient', 'stub', 'case', 'may', 'will', 'mark', 'hope',
+    'grace', 'joy', 'june', 'april', 'faith', 'bill', 'art', 'rose', 'sue', 'pat',
+    'don', 'ray', 'dawn', 'summer', 'page', 'chase', 'hunter', 'lane', 'king', 'young',
+    'long', 'white', 'black', 'brown', 'green', 'gray', 'grey', 'rice', 'cook', 'nurse'],
+
+  RISK_FLAGS: [
+    ['diabetic', 'diabetic'],
+    ['on_anticoagulant', 'on anticoagulant'],
+    ['immunosuppressed', 'immunosuppressed'],
+    ['cardiac_history', 'known cardiac history']
+  ],
+
+  initialize: function() {},
+
+  /**
+   * CONTRACT (do not change without telling the team)
+   * Builds the de-identified case text sent to the LLM.
+   * Must NEVER include patient name, MRN, or date of birth.
+   * @param {GlideRecord} encounterGr - Encounter record
+   * @param {GlideRecord|null} vitalsGr - latest Vitals record, or null
+   * @returns {string} case text
+   */
+  build: function(encounterGr, vitalsGr) {
+    var p = this._patient(encounterGr);
+    var redact = this._redactor(encounterGr, p);
+
+    var lines = [
+      'De-identified ED triage case (synthetic data).',
+      '',
+      'Age: ' + this._age(encounterGr),
+      'Sex: ' + this._sex(p),
+      'Arrival mode: ' + this._display(encounterGr, 'arrival_mode', 'not recorded')
+    ];
+
+    var preg = this._pregnancy(encounterGr, p);
+    if (preg) lines.push('Pregnancy status: ' + preg);
+
+    lines.push('Chief complaint: ' + (redact(this._val(encounterGr, 'chief_complaint')) || 'not recorded'));
+    lines.push('Triage note: ' + (redact(this._stripTag(this._val(encounterGr, 'triage_note'))) || 'none'));
+    lines.push('');
+    lines = lines.concat(this._vitals(vitalsGr));
+    lines.push('');
+    lines.push('Risk flags: ' + this._flags(p));
+    lines.push('Medical history: ' + (redact(this._val(p, 'medical_history')) || 'not documented'));
+    lines.push('Medications: ' + (redact(this._val(p, 'medications')) || 'not documented'));
+    lines.push('Allergies: ' + this._allergies(p, redact));
+
+    return lines.join('\n');
+  },
+
+  _patient: function(enc) {
+    if (!enc.isValidField('patient') || enc.getElement('patient').nil()) return null;
+    var p = enc.patient.getRefRecord();
+    return (p && p.isValidRecord()) ? p : null;
+  },
+
+  _age: function(enc) {
+    var months = this._int(this._val(enc, 'age_months'));
+    var years = this._int(this._val(enc, 'age_at_arrival'));
+    // Months matter for infants and toddlers (pediatric vital sign bands)
+    if (months !== null && months < 24) return months + ' months';
+    if (years !== null) return years + ' years';
+    if (months !== null) return Math.floor(months / 12) + ' years';
+    return 'not recorded';
+  },
+
+  _sex: function(p) {
+    var sex = this._val(p, 'sex');
+    if (!sex || sex == 'unknown') return 'not recorded';
+    return this._display(p, 'sex', sex).toLowerCase();
+  },
+
+  _pregnancy: function(enc, p) {
+    var status = this._val(enc, 'pregnancy_status');
+    if (!status || status == 'not_applicable') return null;
+    if (this._val(p, 'sex') == 'male' && status != 'pregnant' && status != 'possible') return null;
+    return this._display(enc, 'pregnancy_status', status).toLowerCase();
+  },
+
+  _vitals: function(v) {
+    if (!v) return ['Vital signs: none recorded yet'];
+
+    var num = function(f) {
+      return (v.isValidField(f) && !v.getElement(f).nil()) ? String(v.getValue(f)) : null;
+    };
+    var line = function(label, f, unit) {
+      var x = num(f);
+      return '- ' + label + ': ' + (x === null ? 'not recorded' : x + unit);
+    };
+
+    var sbp = num('systolic_bp');
+    var dbp = num('diastolic_bp');
+    var bp = 'not recorded';
+    if (sbp !== null && dbp !== null) bp = sbp + '/' + dbp + ' mmHg';
+    else if (sbp !== null) bp = 'systolic ' + sbp + ' mmHg (diastolic not recorded)';
+    else if (dbp !== null) bp = 'diastolic ' + dbp + ' mmHg (systolic not recorded)';
+
+    var t = num('temperature');
+
+    return [
+      'Vital signs:',
+      line('Heart rate', 'heart_rate', ' bpm'),
+      '- Blood pressure: ' + bp,
+      line('Respiratory rate', 'resp_rate', ' breaths/min'),
+      line('SpO2', 'spo2', '%'),
+      '- Temperature: ' + (t === null ? 'not recorded' : parseFloat(t).toFixed(1) + ' C'),
+      line('GCS', 'gcs', '/15'),
+      line('Pain score', 'pain_score', '/10'),
+      line('Glucose', 'glucose', ' mg/dL')
+    ];
+  },
+
+  _flags: function(p) {
+    if (!p) return 'not documented';
+    var present = [];
+    for (var i = 0; i < this.RISK_FLAGS.length; i++) {
+      if (this._bool(this._val(p, this.RISK_FLAGS[i][0]))) present.push(this.RISK_FLAGS[i][1]);
+    }
+    return present.length ? present.join(', ') : 'none flagged';
+  },
+
+  _allergies: function(p, redact) {
+    if (!p) return 'not documented';
+    var text = redact(this._val(p, 'allergies'));
+    if (text) return text;
+    // An empty field is ambiguous: "none" and "never asked" look the same
+    return this._bool(this._val(p, 'nkda')) ? 'no known drug allergies' : 'not documented';
+  },
+
+  // WS5 vignettes start the triage note with a tag such as [V01]; the LLM must not see it
+  _stripTag: function(s) {
+    return s ? String(s).replace(/^\s*\[[A-Za-z0-9_-]{1,12}\]\s*/, '') : '';
+  },
+
+  /**
+   * Returns a function that removes identifiers from free text. The case text never
+   * reads name, MRN, or DOB fields; this catches them when someone types them into a note.
+   */
+  _redactor: function(enc, p) {
+    var self = this;
+    var rules = [];
+    var addLiteral = function(text, token, allowStoplisted) {
+      var s = String(text || '').trim();
+      if (s.length < 3) return;
+      if (!allowStoplisted && self.NAME_STOPLIST.indexOf(s.toLowerCase()) > -1) return;
+      rules.push([new RegExp('\\b' + self._escape(s) + '\\b', 'gi'), token]);
+    };
+
+    if (p) {
+      var first = this._val(p, 'patient_first_name');
+      var last = this._val(p, 'patient_last_name');
+      if (first && last) {
+        // Full-name forms first, so "Smith, Jane" becomes one [name], not two
+        addLiteral(first + ' ' + last, '[name]', true);
+        addLiteral(last + ', ' + first, '[name]', true);
+        addLiteral(last + ' ' + first, '[name]', true);
+      }
+      addLiteral(first, '[name]', false);
+      addLiteral(last, '[name]', false);
+      addLiteral(this._val(p, 'number'), '[id]', true);
+
+      // date_of_birth can be a date ("1992-11-03") or a date/time ("1992-11-03 16:25:06").
+      // The full value goes first, then the date alone in the formats a nurse might type.
+      var dobValues = [this._val(p, 'date_of_birth'), this._display(p, 'date_of_birth', '')];
+      for (var k = 0; k < dobValues.length; k++) {
+        var dob = dobValues[k];
+        addLiteral(dob, '[dob]', true);
+        var d = /^(\d{4})-(\d{2})-(\d{2})/.exec(dob);
+        if (d) {
+          var m = parseInt(d[2], 10), day = parseInt(d[3], 10);
+          addLiteral(d[0], '[dob]', true);
+          addLiteral(d[2] + '/' + d[3] + '/' + d[1], '[dob]', true);
+          addLiteral(m + '/' + day + '/' + d[1], '[dob]', true);
+          addLiteral(d[2] + '-' + d[3] + '-' + d[1], '[dob]', true);
+        }
+      }
+    }
+    addLiteral(this._val(enc, 'number'), '[id]', true);
+
+    rules.push([/\b(?:MRN|ENC|VIT|TRI)\d{4,}\b/gi, '[id]']);
+    rules.push([/\b\d{3}-\d{2}-\d{4}\b/g, '[ssn]']);
+    rules.push([/\(?\b\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}\b/g, '[phone]']);
+    rules.push([/\b[\w.+-]+@[\w-]+\.[\w.-]+\b/g, '[email]']);
+
+    return function(text) {
+      if (!text) return '';
+      var s = String(text);
+      for (var i = 0; i < rules.length; i++) {
+        s = s.replace(rules[i][0], rules[i][1]);
+      }
+      return s.trim();
+    };
+  },
+
+  _val: function(gr, f) {
+    if (!gr || !gr.isValidField(f)) return '';
+    var v = gr.getValue(f);
+    return v == null ? '' : String(v).trim();
+  },
+
+  _display: function(gr, f, dflt) {
+    if (!gr || !gr.isValidField(f) || gr.getElement(f).nil()) return dflt;
+    return String(gr.getElement(f).getDisplayValue() || gr.getValue(f) || dflt);
+  },
+
+  _int: function(v) {
+    if (v === null || v === '') return null;
+    var n = parseInt(v, 10);
+    return isNaN(n) ? null : n;
+  },
+
+  _bool: function(v) {
+    return v === true || v == '1' || v == 'true';
+  },
+
+  _escape: function(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  },
+
+  type: 'ERTriageCaseBuilder'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-27 20:21:12</sys_created_on>
+        <sys_id>f9890048c3d41f1043d2ffbc050131b3</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>ERTriageCaseBuilder</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_include_f9890048c3d41f1043d2ffbc050131b3</sys_update_name>
+        <sys_updated_by>mihir.k</sys_updated_by>
+        <sys_updated_on>2026-11-03 16:28:39</sys_updated_on>
+    </sys_script_include>
+</record_update>

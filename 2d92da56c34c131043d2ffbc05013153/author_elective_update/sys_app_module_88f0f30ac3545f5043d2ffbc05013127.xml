@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_module">
+    <sys_app_module action="DELETE">
+        <active>true</active>
+        <application display_value="ER Triage">33e0730ec3545f5043d2ffbc050131ba</application>
+        <assessment/>
+        <device_type/>
+        <filter/>
+        <hint/>
+        <homepage/>
+        <image/>
+        <link_type>SEPARATOR</link_type>
+        <map_page/>
+        <mobile_title>ER Triage</mobile_title>
+        <mobile_view_name>Mobile</mobile_view_name>
+        <name/>
+        <order>100</order>
+        <override_menu_roles>false</override_menu_roles>
+        <query/>
+        <report/>
+        <require_confirmation>true</require_confirmation>
+        <roles>x_2206627_er_tri_0.user</roles>
+        <route/>
+        <screen/>
+        <sys_class_name>sys_app_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-03 18:21:27</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>88f0f30ac3545f5043d2ffbc05013127</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ER Triage</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_app_module_88f0f30ac3545f5043d2ffbc05013127</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-03 18:21:27</sys_updated_on>
+        <timeline_page/>
+        <title>ER Triage</title>
+        <uncancelable>false</uncancelable>
+        <ux_list/>
+        <view_name/>
+        <window_name/>
+    </sys_app_module>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</application>
+        <file_path/>
+        <instance_id>657464de93401fd8401cddd548373c41</instance_id>
+        <instance_name>dev458343</instance_name>
+        <merge_base/>
+        <name>sys_app_module_88f0f30ac3545f5043d2ffbc05013127</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_module"><sys_app_module action="INSERT_OR_UPDATE"><active>true</active><application display_value="ER Triage">33e0730ec3545f5043d2ffbc050131ba</application><assessment/><device_type/><filter/><hint/><homepage/><image/><link_type>SEPARATOR</link_type><map_page/><mobile_title>ER Triage</mobile_title><mobile_view_name>Mobile</mobile_view_name><name/><order>100</order><override_menu_roles>false</override_menu_roles><query/><report/><require_confirmation>true</require_confirmation><roles>x_2206627_er_tri_0.user</roles><route/><screen/><sys_class_name>sys_app_module</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-11-03 18:21:27</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>88f0f30ac3545f5043d2ffbc05013127</sys_id><sys_mod_count>0</sys_mod_count><sys_name>ER Triage</sys_name><sys_overrides/><sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package><sys_policy/><sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope><sys_update_name>sys_app_module_88f0f30ac3545f5043d2ffbc05013127</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-11-03 18:21:27</sys_updated_on><timeline_page/><title>ER Triage</title><uncancelable>false</uncancelable><ux_list/><view_name/><window_name/></sys_app_module></record_update>]]></payload>
+        <payload_hash>-67922298</payload_hash>
+        <record_name>ER Triage</record_name>
+        <reverted_from/>
+        <source>caccc890c3589f1043d2ffbc050131dd</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-03 18:21:27</sys_created_on>
+        <sys_id>d651ff0ec3545f5043d2ffbc05013115</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a1a2a50c110000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-03 18:21:27</sys_updated_on>
+        <type>Module</type>
+        <update_guid>9651ff0ec7545f50bb27aacd36219614</update_guid>
+        <update_guid_history>9651ff0ec7545f50bb27aacd36219614:-67922298</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="ER Triage">1cb3f742c3945f5043d2ffbc050131e0</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-03 18:31:41</sys_created_on>
+        <sys_db_object display_value="" name="sys_app_module">sys_app_module</sys_db_object>
+        <sys_id>33b57ab408574f97a146ad8334e585a9</sys_id>
+        <sys_metadata>88f0f30ac3545f5043d2ffbc05013127</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ER Triage</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_scope_delete display_value="">9ac35f9b9d704fc6ace7b0309b1d2b01</sys_scope_delete>
+        <sys_update_name>sys_app_module_88f0f30ac3545f5043d2ffbc05013127</sys_update_name>
+        <sys_update_version display_value="sys_app_module_88f0f30ac3545f5043d2ffbc05013127">d651ff0ec3545f5043d2ffbc05013115</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-03 18:31:41</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

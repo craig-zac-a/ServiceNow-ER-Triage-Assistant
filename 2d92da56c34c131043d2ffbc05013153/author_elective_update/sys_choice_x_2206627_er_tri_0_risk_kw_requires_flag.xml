@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="requires_flag" table="x_2206627_er_tri_0_risk_kw" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>requires_flag</element>
+            <name>x_2206627_er_tri_0_risk_kw</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:00:20</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>requires_flag</sys_name>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_choice_x_2206627_er_tri_0_risk_kw_requires_flag</sys_update_name>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:00:20</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>requires_flag</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Diabetic</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_risk_kw</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:45</sys_updated_on>
+            <value>diabetic</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>requires_flag</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>On Anticoagulant</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_risk_kw</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:45</sys_updated_on>
+            <value>on_anticoagulant</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>requires_flag</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Immunosuppressed</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_risk_kw</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:45</sys_updated_on>
+            <value>immunosuppressed</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>requires_flag</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Cardiac History</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_risk_kw</name>
+            <sequence>4</sequence>
+            <synonyms/>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:45</sys_updated_on>
+            <value>cardiac_history</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

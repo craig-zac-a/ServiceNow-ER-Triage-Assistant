@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Patient and Arrival" section_id="70901af6c314939043d2ffbc0501319f" sys_domain="global" table="x_2206627_er_tri_0_encounter" version="3" view="new_visit">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>patient</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-05 19:18:02</sys_created_on>
+            <sys_id>2271d67ac314939043d2ffbc050131ec</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Patient and Arrival" display_value="Patient and Arrival" name="x_2206627_er_tri_0_encounter" sys_domain="global" view="675052f6c314939043d2ffbc0501316e">70901af6c314939043d2ffbc0501319f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-05 19:18:02</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>chief_complaint</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-05 19:18:02</sys_created_on>
+            <sys_id>ae71d67ac314939043d2ffbc050131ec</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Patient and Arrival" display_value="Patient and Arrival" name="x_2206627_er_tri_0_encounter" sys_domain="global" view="675052f6c314939043d2ffbc0501316e">70901af6c314939043d2ffbc0501319f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-05 19:18:02</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-05 19:18:02</sys_created_on>
+            <sys_id>2e71d67ac314939043d2ffbc050131ed</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Patient and Arrival" display_value="Patient and Arrival" name="x_2206627_er_tri_0_encounter" sys_domain="global" view="675052f6c314939043d2ffbc0501316e">70901af6c314939043d2ffbc0501319f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-05 19:18:02</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>pregnancy_status</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-05 19:18:02</sys_created_on>
+            <sys_id>aa71d67ac314939043d2ffbc050131ee</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Patient and Arrival" display_value="Patient and Arrival" name="x_2206627_er_tri_0_encounter" sys_domain="global" view="675052f6c314939043d2ffbc0501316e">70901af6c314939043d2ffbc0501319f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-05 19:18:02</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>arrival_time</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-05 19:18:02</sys_created_on>
+            <sys_id>2a71d67ac314939043d2ffbc050131ef</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Patient and Arrival" display_value="Patient and Arrival" name="x_2206627_er_tri_0_encounter" sys_domain="global" view="675052f6c314939043d2ffbc0501316e">70901af6c314939043d2ffbc0501319f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-05 19:18:02</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-05 19:18:02</sys_created_on>
+            <sys_id>a671d67ac314939043d2ffbc050131f0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Patient and Arrival" display_value="Patient and Arrival" name="x_2206627_er_tri_0_encounter" sys_domain="global" view="675052f6c314939043d2ffbc0501316e">70901af6c314939043d2ffbc0501319f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-05 19:18:02</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>assigned_area</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-05 19:18:02</sys_created_on>
+            <sys_id>2671d67ac314939043d2ffbc050131f1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Patient and Arrival" display_value="Patient and Arrival" name="x_2206627_er_tri_0_encounter" sys_domain="global" view="675052f6c314939043d2ffbc0501316e">70901af6c314939043d2ffbc0501319f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-05 19:18:02</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>arrival_mode</element>
+            <position>7</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-05 19:18:02</sys_created_on>
+            <sys_id>a271d67ac314939043d2ffbc050131f2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Patient and Arrival" display_value="Patient and Arrival" name="x_2206627_er_tri_0_encounter" sys_domain="global" view="675052f6c314939043d2ffbc0501316e">70901af6c314939043d2ffbc0501319f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-05 19:18:02</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Patient and Arrival</caption>
+            <header>false</header>
+            <name>x_2206627_er_tri_0_encounter</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-05 19:14:05</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>70901af6c314939043d2ffbc0501319f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_2206627_er_tri_0_encounter</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_ui_section_70901af6c314939043d2ffbc0501319f</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-05 19:14:05</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="New Visit" name="new_visit">675052f6c314939043d2ffbc0501316e</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

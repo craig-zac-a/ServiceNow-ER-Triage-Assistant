@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="55dc672ec344d31043d2ffbc050131c5" label="Vitals" max_length="40" name="x_2206627_er_tri_0_vitals" type="collection">
+        <element label="Temperature" max_length="38" name="temperature" type="decimal"/>
+        <element label="Diastolic BP" max_length="40" name="diastolic_bp" type="integer"/>
+        <element label="SpO₂" max_length="40" name="spo2" type="integer"/>
+        <element label="Pain score" max_length="40" name="pain_score" type="integer"/>
+        <element label="Glucose" max_length="40" name="glucose" type="integer"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element label="Heart rate" max_length="40" name="heart_rate" type="integer"/>
+        <element label="Respiratory rate" max_length="40" name="resp_rate" type="integer"/>
+        <element label="GCS" max_length="40" name="gcs" type="integer"/>
+        <element default="javascript:gs.nowDateTime()" display="true" dynamic_default_value="79cb83a85f220100a9ad2572f2b4773c" label="Taken at" max_length="255" name="taken_at" type="glide_date_time" use_dynamic_default="true"/>
+        <element default="javascript:gs.getUserID();" dynamic_default_value="bdcb83a85f220100a9ad2572f2b4773d" label="Taken by" max_length="32" name="taken_by" reference="sys_user" type="reference" use_dynamic_default="true"/>
+        <element label="Encounter" mandatory="true" max_length="32" name="encounter" reference="x_2206627_er_tri_0_encounter" type="reference"/>
+        <element label="Systolic BP" max_length="40" name="systolic_bp" type="integer"/>
+        <index name="index">
+            <element name="encounter"/>
+        </index>
+        <index name="index2">
+            <element name="taken_by"/>
+        </index>
+    </element>
+</database>

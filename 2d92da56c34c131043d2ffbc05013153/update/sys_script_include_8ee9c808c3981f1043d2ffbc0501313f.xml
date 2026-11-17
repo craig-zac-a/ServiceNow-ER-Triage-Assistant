@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_2206627_er_tri_0.ERTriageService</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ERTriageService</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var ERTriageService = Class.create();
+ERTriageService.prototype = {
+    SCOPE: 'x_2206627_er_tri_0',
+    T_ENCOUNTER: 'x_2206627_er_tri_0_encounter',
+    T_VITALS: 'x_2206627_er_tri_0_vitals',
+    T_ASSESSMENT: 'x_2206627_er_tri_0_triage_assessment',
+    T_PATIENT: 'x_2206627_er_tri_0_patient',
+
+
+    initialize: function() {
+        this.useStub = gs.getProperty(this.SCOPE + '.llm_use_stub', 'true') == 'true';
+        this.useCache = gs.getProperty(this.SCOPE + '.llm_use_cache', 'false') == 'true';
+    },
+
+    /**
+     * CONTRACT: runs triage and writes a Triage Assessment.
+     * @param {string} encounterSysId
+     * @returns {string|null} sys_id of the new assessment, or null on failure
+     */
+    runTriage: function(encounterSysId) {
+        try {
+            var enc = new GlideRecord(this.T_ENCOUNTER);
+            if (!enc.get(encounterSysId)) {
+                gs.error('ERTriageService: encounter not found: ' + encounterSysId);
+                return null;
+            }
+            this._progress(encounterSysId, 'running', 'Loading vitals and patient details...');
+            var vitals = this._getLatestVitals(encounterSysId);
+
+            var caseText = null,
+                caseHash = null;
+            try {
+                caseText = new ERTriageCaseBuilder().build(enc, vitals);
+                caseHash = this._hash(caseText);
+            } catch (e) {
+                gs.warn('ERTriageService: could not build/hash case text: ' + e.message);
+            }
+
+            var existing = this._findReusable(enc, vitals, caseHash);
+            if (existing) {
+                this._progress(encounterSysId, 'done', 'Inputs unchanged; showing the existing assessment.');
+                return existing;
+            }
+
+            this._progress(encounterSysId, 'running', 'Applying ESI rules...');
+            var rules = this._runRules(enc, vitals);
+
+            this._progress(encounterSysId, 'running', 'Asking the AI model for a differential (this can take 10-60 seconds)...');
+            var llm = this._runLLM(enc, vitals, caseText);
+
+            this._progress(encounterSysId, 'running', 'Combining results and writing the assessment...');
+            var merged = this._merge(rules, llm);
+            var asmtId = this._writeAssessment(enc, vitals, rules, llm, merged);
+            if (!asmtId) {
+                this._progress(encounterSysId, 'failed', 'Could not save the assessment. Check the system log.');
+                return null;
+            }
+
+            enc.get(encounterSysId); // re-read: _progress updated the record
+            enc.setValue('current_assessment', asmtId);
+            if (enc.isValidField('reassessment_overdue')) enc.setValue('reassessment_overdue', false);
+            enc.update();
+
+            try {
+                this._checkAlert(enc, merged, asmtId, vitals);
+            } catch (e) {
+                gs.error('ERTriageService: alert check failed: ' + e.message);
+            }
+
+            this._progress(encounterSysId, 'done', 'Triage complete.');
+            return asmtId;
+        } catch (e) {
+            gs.error('ERTriageService: runTriage failed: ' + e.message);
+            this._progress(encounterSysId, 'failed', 'Triage failed: ' + e.message);
+            return null;
+        }
+    },
+
+    /**
+     * CONTRACT: records the nurse's decision.
+     * @param {string} assessmentSysId
+     * @param {string} decision - 'accepted' or 'overridden'
+     * @param {number} finalEsi - required when overridden; ignored when accepted
+     * @param {string} reason - required when overridden
+     * @returns {boolean}
+     */
+    recordDecision: function(assessmentSysId, decision, finalEsi, reason) {
+        var asmt = new GlideRecord(this.T_ASSESSMENT);
+        if (!asmt.get(assessmentSysId)) {
+            gs.error('ERTriageService: assessment not found: ' + assessmentSysId);
+            return false;
+        }
+        if (decision != 'accepted' && decision != 'overridden') {
+            gs.error('ERTriageService: invalid decision: ' + decision);
+            return false;
+        }
+
+        var esi;
+        if (decision == 'accepted') {
+            esi = this._toEsi(asmt.getValue('suggested_esi'));
+        } else {
+            esi = this._toEsi(finalEsi);
+            if (!reason || !String(reason).trim()) {
+                gs.error('ERTriageService: override requires a reason');
+                return false;
+            }
+        }
+        if (!esi) {
+            gs.error('ERTriageService: no valid final ESI');
+            return false;
+        }
+
+        asmt.setValue('nurse_decision', decision);
+        asmt.setValue('final_esi', esi);
+        asmt.setValue('override_reason', decision == 'overridden' ? String(reason) : '');
+        asmt.setValue('decided_by', gs.getUserID());
+        asmt.setValue('decided_at', new GlideDateTime());
+        asmt.update();
+
+        var enc = new GlideRecord(this.T_ENCOUNTER);
+        if (enc.get(asmt.getValue('encounter'))) {
+            enc.setValue('current_esi', esi);
+            enc.setValue('assigned_area', this._areaForEsi(esi));
+            if (enc.getValue('status') == 'waiting_triage') {
+                enc.setValue('status', 'triaged');
+            }
+            enc.update();
+        }
+        return true;
+    },
+
+    REASSESS_MIN: {
+        2: 15,
+        3: 60,
+        4: 120,
+        5: 120
+    },
+
+    flagOverdueReassessments: function() {
+        var now = new GlideDateTime().getNumericValue();
+        var checked = 0,
+            flagged = 0,
+            cleared = 0;
+        var enc = new GlideRecord(this.T_ENCOUNTER);
+        enc.addQuery('status', 'IN', 'triaged');
+        enc.query();
+        while (enc.next()) {
+            var esi = this._toEsi(enc.getValue('current_esi')) ||
+                this._toEsi(enc.current_assessment.suggested_esi);
+            var limit = this.REASSESS_MIN[esi];
+            if (!limit) continue; // ESI 1 = continuous monitoring, not timer-based
+            checked++;
+            var v = this._getLatestVitals(enc.getUniqueValue());
+            var taken = v ? (v.getValue('taken_at') || v.getValue('sys_created_on')) : null;
+            var overdue = !taken ||
+                (now - new GlideDateTime(taken).getNumericValue()) / 60000 > limit;
+            if ((enc.getValue('reassessment_overdue') == '1') != overdue) {
+                enc.setValue('reassessment_overdue', overdue);
+                enc.update();
+                if (overdue) flagged++;
+                else cleared++;
+            }
+        }
+        gs.info('ERTriageService: reassessment check | checked ' + checked +
+            ' | newly flagged ' + flagged + ' | cleared ' + cleared);
+    },
+
+    _getLatestVitals: function(encounterSysId) {
+        var v = new GlideRecord(this.T_VITALS);
+        v.addQuery('encounter', encounterSysId);
+        v.orderByDesc('taken_at');
+        v.setLimit(1);
+        v.query();
+        return v.next() ? v : null;
+    },
+
+    _runRules: function(enc, vitals) {
+        try {
+            return new ERTriageRules().evaluate(enc, vitals);
+        } catch (e) {
+            gs.error('ERTriageService: rules engine error: ' + e.message);
+            return {
+                esi: 2,
+                decision_point: 'B',
+                triggers: ['Rules engine error; defaulted to ESI 2 for safety'],
+                resources_estimated: 0,
+                danger_zone: false,
+                missing: ['Rules evaluation failed'],
+                error: true
+            };
+        }
+    },
+
+    _runLLM: function(enc, vitals, caseText) {
+        try {
+            caseText = caseText || new ERTriageCaseBuilder().build(enc, vitals);
+
+            if (this.useCache) {
+                var cached = this._fromCache(caseText);
+                if (cached) {
+                    gs.info('ERTriageService: cache hit; reusing result from ' + cached.meta.cached_from);
+                    return cached;
+                }
+            }
+
+            var llm = this.useStub ? new ERTriageLLMStub() : new ERTriageLLM();
+            var res = llm.analyze(caseText);
+            if (!res || typeof res !== 'object') {
+                return {
+                    available: false,
+                    reason: 'LLM returned no result',
+                    meta: {},
+                    case_text: caseText
+                };
+            }
+            if (res.available && !res.result) {
+                return {
+                    available: false,
+                    reason: 'LLM returned no result body',
+                    meta: res.meta || {},
+                    case_text: caseText
+                };
+            }
+            res.meta = res.meta || {};
+            res.case_text = caseText;
+            return res;
+        } catch (e) {
+            gs.error('ERTriageService: LLM layer error: ' + e.message);
+            return {
+                available: false,
+                reason: 'LLM layer error: ' + e.message,
+                meta: {},
+                case_text: caseText
+            };
+        }
+    },
+
+    _merge: function(rules, llm) {
+        var ruleEsi = this._toEsi(rules.esi) || 2;
+        var llmEsi = (llm && llm.available && llm.result) ?
+            this._toEsi(llm.result.suggested_esi) : null;
+        return {
+            rule_esi: ruleEsi,
+            llm_esi: llmEsi,
+            suggested_esi: llmEsi ? Math.min(ruleEsi, llmEsi) : ruleEsi,
+            disagreement: !!(llmEsi && llmEsi != ruleEsi)
+        };
+    },
+
+    _writeAssessment: function(enc, vitals, rules, llm, merged) {
+        var a = new GlideRecord(this.T_ASSESSMENT);
+        a.initialize();
+        a.setValue('encounter', enc.getUniqueValue());
+        if (vitals) a.setValue('vitals', vitals.getUniqueValue());
+
+        a.setValue('rule_esi', merged.rule_esi);
+        if (merged.llm_esi) a.setValue('llm_esi', merged.llm_esi);
+        a.setValue('suggested_esi', merged.suggested_esi);
+        a.setValue('disagreement', merged.disagreement);
+        a.setValue('nurse_decision', 'pending');
+
+        var triggers = (rules.triggers || []).slice();
+        if (rules.missing && rules.missing.length) {
+            triggers.push('Missing: ' + rules.missing.join(', '));
+        }
+        a.setValue('rule_triggers', triggers.join('\n'));
+
+        a.setValue('ai_available', !!llm.available);
+        if (llm.available) {
+            a.setValue('ai_rationale', llm.result.rationale || '');
+            var json = JSON.stringify(llm.result);
+            if (json.length > 8000) {
+                gs.warn('ERTriageService: differential_json is ' + json.length +
+                    ' chars; increase the field max length');
+            }
+            a.setValue('differential_json', json);
+            a.setValue('differential_html', this._renderDifferential(llm.result));
+        } else {
+            a.setValue('ai_fallback_reason', llm.reason || 'Unknown');
+        }
+
+        var m = llm.meta || {};
+        a.setValue('model', m.model || '');
+        a.setValue('routed_model', m.routed_model || '');
+        a.setValue('prompt_version', m.prompt_version || '');
+        if (m.latency_ms != null) a.setValue('latency_ms', m.latency_ms);
+        a.setValue('format_repaired', !!m.format_repaired);
+        a.setValue('response_id', m.response_id || '');
+
+        if (m.cached_from && a.isValidField('cached_from')) a.setValue('cached_from', m.cached_from);
+
+        if (a.isValidField('patient_snapshot_json')) {
+            a.setValue('patient_snapshot_json', JSON.stringify(this._patientSnapshot(enc)));
+        }
+
+        if (llm.case_text && a.isValidField('case_hash')) {
+            a.setValue('case_hash', this._hash(llm.case_text));
+        }
+
+        var id = a.insert();
+        if (!id) gs.error('ERTriageService: failed to insert assessment');
+        return id || null;
+    },
+
+    _findReusable: function(enc, vitals, caseHash) {
+        var a = new GlideRecord(this.T_ASSESSMENT);
+        a.addQuery('encounter', enc.getUniqueValue());
+        if (vitals) a.addQuery('vitals', vitals.getUniqueValue());
+        else a.addNullQuery('vitals');
+        a.addQuery('ai_available', true);
+        a.addQuery('nurse_decision', 'pending');
+        if (caseHash && a.isValidField('case_hash')) a.addQuery('case_hash', caseHash);
+        a.orderByDesc('sys_created_on');
+        a.setLimit(1);
+        a.query();
+        return a.next() ? a.getUniqueValue() : null;
+    },
+
+    _patientSnapshot: function(enc) {
+        var p = enc.patient.getRefRecord();
+        var valid = p && p.isValidRecord();
+        var flag = function(f) {
+            if (!valid) return null;
+            var v = String(p.getValue(f));
+            return v == '1' || v == 'true';
+        };
+        return {
+            age_at_arrival: enc.getValue('age_at_arrival'),
+            age_months: enc.getValue('age_months'),
+            pregnancy_status: enc.getValue('pregnancy_status'),
+            arrival_mode: enc.getValue('arrival_mode'),
+            sex: valid ? p.getValue('sex') : null,
+            diabetic: flag('diabetic'),
+            on_anticoagulant: flag('on_anticoagulant'),
+            immunosuppressed: flag('immunosuppressed'),
+            cardiac_history: flag('cardiac_history')
+        };
+    },
+    _renderDifferential: function(r) {
+        var esc = function(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        };
+        var list = function(items) {
+            if (!items || !items.length) return '<i>none</i>';
+            return '<ul style="margin:0 0 0 18px;padding:0;">' +
+                items.map(function(i) {
+                    return '<li>' + esc(i) + '</li>';
+                }).join('') + '</ul>';
+        };
+        var html = '';
+
+        html += '<p><b>Extracted symptoms:</b> ' + esc((r.extracted_symptoms || []).join('; ')) + '</p>';
+        html += '<p><b>Risk factors:</b> ' + esc((r.risk_factors || []).join('; ')) + '</p>';
+
+        (r.differential || []).forEach(function(d) {
+            var flag = d.cant_miss ?
+                ' <span style="background:#c62828;color:#fff;padding:1px 6px;border-radius:3px;">CAN\'T MISS</span>' :
+                '';
+            html += '<div style="border:1px solid #ccc;border-radius:4px;padding:8px;margin:8px 0;">' +
+                '<b>' + esc(d.condition) + '</b> (' + esc(d.icd10) + ') &ndash; likelihood: ' +
+                esc(d.likelihood) + flag +
+                '<table style="width:100%;margin-top:6px;"><tr>' +
+                '<td style="vertical-align:top;width:50%;"><b>Supporting</b>' + list(d.supporting) + '</td>' +
+                '<td style="vertical-align:top;"><b>Contradicting</b>' + list(d.contradicting) + '</td>' +
+                '</tr><tr>' +
+                '<td style="vertical-align:top;"><b>Questions to ask</b>' + list(d.suggested_questions) + '</td>' +
+                '<td style="vertical-align:top;"><b>Suggested workup</b>' + list(d.suggested_workup) + '</td>' +
+                '</tr></table></div>';
+        });
+
+        html += '<p><b>Missing information:</b> ' + esc((r.missing_information || []).join('; ')) + '</p>';
+        return html;
+    },
+
+    _alreadyAlerted: function(enc, merged, asmtId, vitals) {
+        var prev = new GlideRecord(this.T_ASSESSMENT);
+        prev.addQuery('encounter', enc.getUniqueValue());
+        prev.addQuery('sys_id', '!=', asmtId);
+        prev.addQuery('suggested_esi', merged.suggested_esi);
+        if (vitals) prev.addQuery('vitals', vitals.getUniqueValue());
+        else prev.addNullQuery('vitals');
+        prev.setLimit(1);
+        prev.query();
+        return prev.hasNext();
+    },
+
+    _checkAlert: function(enc, merged, asmtId, vitals) {
+        var cur = this._toEsi(enc.getValue('current_esi'));
+        var high = merged.suggested_esi <= 2;
+        var worse = !!(cur && merged.suggested_esi < cur);
+        if (!high && !worse) return;
+        if (this._alreadyAlerted(enc, merged, asmtId, vitals)) {
+            gs.info('ERTriageService: alert suppressed (duplicate) for ' + asmtId);
+            return;
+        }
+        var a = new GlideRecord(this.T_ASSESSMENT);
+        if (a.get(asmtId)) {
+            gs.eventQueue(this.SCOPE + '.triage.alert', a,
+                String(merged.suggested_esi), worse ? 'worsening' : 'high_acuity');
+        }
+    },
+
+    _toEsi: function(v) {
+        var n = parseInt(v, 10);
+        return (n >= 1 && n <= 5) ? n : null;
+    },
+
+    _progress: function(encSysId, status, message) {
+        var e = new GlideRecord(this.T_ENCOUNTER);
+        if (!e.get(encSysId) || !e.isValidField('triage_job_status')) return;
+        e.setValue('triage_job_status', status);
+        e.setValue('triage_job_message', String(message || '').substring(0, 255));
+        e.setWorkflow(false); // don't fire business rules for a progress update
+        e.update();
+    },
+
+    _areaForEsi: function(esi) {
+        if (esi == 1) return 'resuscitation';
+        if (esi <= 3) return 'main_ed';
+        return 'fast_track';
+    },
+
+    _hash: function(text) {
+        return new GlideDigest().getSHA256Hex(String(text || ''));
+    },
+
+    _fromCache: function(caseText) {
+        var a = new GlideRecord(this.T_ASSESSMENT);
+        a.addQuery('case_hash', this._hash(caseText));
+        a.addQuery('ai_available', true);
+        a.orderByDesc('sys_created_on');
+        a.setLimit(1);
+        a.query();
+        if (!a.next()) return null;
+        try {
+            return {
+                available: true,
+                result: JSON.parse(a.getValue('differential_json')),
+                meta: {
+                    model: a.getValue('model'),
+                    prompt_version: a.getValue('prompt_version'),
+                    cached_from: a.getUniqueValue()
+                },
+                case_text: caseText
+            };
+        } catch (e) {
+            return null;
+        } // truncated or invalid JSON: fall through to a live call
+    },
+
+    type: 'ERTriageService'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-27 20:26:45</sys_created_on>
+        <sys_id>8ee9c808c3981f1043d2ffbc0501313f</sys_id>
+        <sys_mod_count>23</sys_mod_count>
+        <sys_name>ERTriageService</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_include_8ee9c808c3981f1043d2ffbc0501313f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-12 17:39:20</sys_updated_on>
+    </sys_script_include>
+</record_update>

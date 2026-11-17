@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_2206627_er_tri_0.ERTriagePatientAjax</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ERTriagePatientAjax</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var ERTriagePatientAjax = Class.create();
+ERTriagePatientAjax.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+
+  createPatient: function() {
+    if (!gs.hasRole('x_2206627_er_tri_0.intake'))
+      return JSON.stringify({ ok: false, error: 'Not authorized' });
+
+    var first = (this.getParameter('sysparm_first') || '').trim();
+    var last = (this.getParameter('sysparm_last') || '').trim();
+    var dob = (this.getParameter('sysparm_dob') || '').trim();
+    var sex = (this.getParameter('sysparm_sex') || '').trim();
+    if (!first || !last || !dob)
+      return JSON.stringify({ ok: false, error: 'First name, last name and date of birth are required' });
+
+    var p = new GlideRecord('x_2206627_er_tri_0_patient');
+    p.initialize();
+    p.setValue('patient_first_name', first);
+    p.setValue('patient_last_name', last);
+    p.setValue('date_of_birth', dob);
+    if (sex) p.setValue('sex', sex);
+    var id = p.insert();
+    if (!id)
+      return JSON.stringify({ ok: false, error: 'Could not create the patient' });
+
+    return JSON.stringify({ ok: true, sys_id: id, display: last + ', ' + first });
+  },
+
+  type: 'ERTriagePatientAjax'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-05 17:36:51</sys_created_on>
+        <sys_id>50d97df6c350939043d2ffbc050131b1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ERTriagePatientAjax</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_include_50d97df6c350939043d2ffbc050131b1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-05 17:36:51</sys_updated_on>
+    </sys_script_include>
+</record_update>

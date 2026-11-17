@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="High Risk Keyword" section_id="0d1ff679c5e1495a9cd4da758307672c" sys_domain="global" table="x_2206627_er_tri_0_risk_kw" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>0</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:46</sys_created_on>
+            <sys_id>691d4ac2e454429e8a2126ba5eb97516</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="High Risk Keyword" display_value="High Risk Keyword" name="x_2206627_er_tri_0_risk_kw" sys_domain="global" view="Default view">0d1ff679c5e1495a9cd4da758307672c</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:46</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>number</element>
+            <position>1</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:46</sys_created_on>
+            <sys_id>61e9a37a176a4517818284e0bbf28f66</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="High Risk Keyword" display_value="High Risk Keyword" name="x_2206627_er_tri_0_risk_kw" sys_domain="global" view="Default view">0d1ff679c5e1495a9cd4da758307672c</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:46</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>keyword</element>
+            <position>2</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:46</sys_created_on>
+            <sys_id>4060a8e6b1df4446b43c6d720848c019</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="High Risk Keyword" display_value="High Risk Keyword" name="x_2206627_er_tri_0_risk_kw" sys_domain="global" view="Default view">0d1ff679c5e1495a9cd4da758307672c</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:46</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>esi_level</element>
+            <position>3</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:46</sys_created_on>
+            <sys_id>92f72c50db4a4601814c9ddfbbd1ddf4</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="High Risk Keyword" display_value="High Risk Keyword" name="x_2206627_er_tri_0_risk_kw" sys_domain="global" view="Default view">0d1ff679c5e1495a9cd4da758307672c</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:46</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>4</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:46</sys_created_on>
+            <sys_id>0bf76f1346894d9e9f405cb9fe5e4a08</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="High Risk Keyword" display_value="High Risk Keyword" name="x_2206627_er_tri_0_risk_kw" sys_domain="global" view="Default view">0d1ff679c5e1495a9cd4da758307672c</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:46</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>active</element>
+            <position>5</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:46</sys_created_on>
+            <sys_id>61d765d34d1045d5a196ff648fdffda8</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="High Risk Keyword" display_value="High Risk Keyword" name="x_2206627_er_tri_0_risk_kw" sys_domain="global" view="Default view">0d1ff679c5e1495a9cd4da758307672c</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:46</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>requires_flag</element>
+            <position>6</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:46</sys_created_on>
+            <sys_id>218a2daa60984959a529fe54769aba6b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="High Risk Keyword" display_value="High Risk Keyword" name="x_2206627_er_tri_0_risk_kw" sys_domain="global" view="Default view">0d1ff679c5e1495a9cd4da758307672c</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:46</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>7</position>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:46</sys_created_on>
+            <sys_id>3d2a89d6e9214820a7b584a433188c22</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="High Risk Keyword" display_value="High Risk Keyword" name="x_2206627_er_tri_0_risk_kw" sys_domain="global" view="Default view">0d1ff679c5e1495a9cd4da758307672c</sys_ui_section>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:46</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>High Risk Keyword</caption>
+            <header>false</header>
+            <name>x_2206627_er_tri_0_risk_kw</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:00:20</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>0d1ff679c5e1495a9cd4da758307672c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_2206627_er_tri_0_risk_kw</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_ui_section_0d1ff679c5e1495a9cd4da758307672c</sys_update_name>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:00:20</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

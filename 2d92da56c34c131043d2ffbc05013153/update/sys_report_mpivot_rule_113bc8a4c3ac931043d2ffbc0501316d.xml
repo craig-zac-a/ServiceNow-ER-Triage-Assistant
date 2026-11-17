@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_report_mpivot_rule">
+    <sys_report_mpivot_rule action="INSERT_OR_UPDATE">
+        <bg_color>background-color:</bg_color>
+        <bg_color_id/>
+        <color>background-color:#FF0000</color>
+        <color_id display_value="Red">65b30395a9fe3dba003277a7b660b5db</color_id>
+        <operator>&gt;</operator>
+        <order>1</order>
+        <report_id display_value="ESI 1 Count">593a8424c3ac931043d2ffbc05013131</report_id>
+        <sys_class_name>sys_report_mpivot_rule</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-10 20:01:06</sys_created_on>
+        <sys_id>113bc8a4c3ac931043d2ffbc0501316d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>&gt;</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_report_mpivot_rule_113bc8a4c3ac931043d2ffbc0501316d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-10 20:01:06</sys_updated_on>
+        <value1>0</value1>
+        <value2/>
+    </sys_report_mpivot_rule>
+</record_update>

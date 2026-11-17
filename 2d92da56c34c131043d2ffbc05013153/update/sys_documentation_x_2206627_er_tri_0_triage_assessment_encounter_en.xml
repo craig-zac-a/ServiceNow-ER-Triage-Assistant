@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="encounter" label="Encounter" language="en" table="x_2206627_er_tri_0_triage_assessment">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>encounter</element>
+            <help/>
+            <hint/>
+            <label>Encounter</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_triage_assessment</name>
+            <plural/>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-10-23 21:33:03</sys_created_on>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_name>Encounter</sys_name>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_documentation_x_2206627_er_tri_0_triage_assessment_encounter_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-10-23 21:33:13</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

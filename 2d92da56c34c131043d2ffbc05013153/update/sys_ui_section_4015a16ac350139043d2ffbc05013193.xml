@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Why this level" section_id="4015a16ac350139043d2ffbc05013193" sys_domain="global" table="x_2206627_er_tri_0_triage_assessment" version="3" view="provider_review">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>rule_triggers</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-04 21:25:31</sys_created_on>
+            <sys_id>9015a16ac350139043d2ffbc050131dd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Why this level" display_value="Why this level" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="8c15a16ac350139043d2ffbc05013188">4015a16ac350139043d2ffbc05013193</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-04 21:25:31</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>ai_rationale</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-04 21:25:31</sys_created_on>
+            <sys_id>1015a16ac350139043d2ffbc050131de</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Why this level" display_value="Why this level" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="8c15a16ac350139043d2ffbc05013188">4015a16ac350139043d2ffbc05013193</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-04 21:25:31</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>ai_fallback_reason</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-04 21:25:31</sys_created_on>
+            <sys_id>5415a16ac350139043d2ffbc050131eb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Why this level" display_value="Why this level" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="8c15a16ac350139043d2ffbc05013188">4015a16ac350139043d2ffbc05013193</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-04 21:25:31</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Why this level</caption>
+            <header>false</header>
+            <name>x_2206627_er_tri_0_triage_assessment</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-04 21:25:30</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>4015a16ac350139043d2ffbc05013193</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_2206627_er_tri_0_triage_assessment</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_ui_section_4015a16ac350139043d2ffbc05013193</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-04 21:25:30</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Provider Review" name="provider_review">8c15a16ac350139043d2ffbc05013188</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

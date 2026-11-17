@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description>WS2: low vs medium reasoning effort on three ambiguous cases (6 calls). Run with Proceed in Background.</description>
+        <name>ER Triage - Compare Reasoning Effort</name>
+        <record_for_rollback>true</record_for_rollback>
+        <script><![CDATA[// ER Triage - Compare Reasoning Effort
+// Runs three deliberately ambiguous cases at 'low' and 'medium' reasoning effort and
+// compares ESI, differential, latency, and tokens. 6 LLM calls: allow 2-5 minutes.
+// Choose "Proceed in Background" when running it, then read the output in System Logs.
+// Each request carries a unique Request ID so a provider-side cache can't return old answers.
+(function() {
+  var EFFORTS = ['low', 'medium'];
+
+  var CASES = [
+    {
+      id: 'A',
+      label: 'Young woman, vague lower abdominal pain, pregnancy unknown',
+      text: [
+        'De-identified ED triage case (synthetic data).',
+        'Age: 34 years', 'Sex: female', 'Arrival mode: walk-in', 'Pregnancy status: unknown',
+        'Chief complaint: Lower abdominal pain',
+        'Triage note: Crampy lower abdominal pain since yesterday, worse on the right. Some nausea. Unsure of last menstrual period.',
+        'Vital signs:', '- Heart rate: 96 bpm', '- Blood pressure: 118/76 mmHg', '- Respiratory rate: 16 breaths/min',
+        '- SpO2: 99%', '- Temperature: 37.4 C', '- GCS: 15/15', '- Pain score: 5/10', '- Glucose: not recorded',
+        'Risk flags: none flagged', 'Medical history: not documented', 'Medications: not documented',
+        'Allergies: no known drug allergies'
+      ].join('\n')
+    },
+    {
+      id: 'B',
+      label: 'Older man on a blood thinner, dizzy after a minor fall',
+      text: [
+        'De-identified ED triage case (synthetic data).',
+        'Age: 71 years', 'Sex: male', 'Arrival mode: walk-in',
+        'Chief complaint: Dizzy and weak',
+        'Triage note: Felt dizzy and weak since this morning. Slipped in the bathroom yesterday and bumped his head, did not pass out. Mild headache.',
+        'Vital signs:', '- Heart rate: 88 bpm', '- Blood pressure: 162/94 mmHg', '- Respiratory rate: 18 breaths/min',
+        '- SpO2: 97%', '- Temperature: 36.8 C', '- GCS: 15/15', '- Pain score: 3/10', '- Glucose: not recorded',
+        'Risk flags: on anticoagulant, known cardiac history', 'Medical history: Atrial fibrillation',
+        'Medications: Apixaban, metoprolol', 'Allergies: not documented'
+      ].join('\n')
+    },
+    {
+      id: 'C',
+      label: 'Young man, "panic attack" with fast heart rate and breathing',
+      text: [
+        'De-identified ED triage case (synthetic data).',
+        'Age: 19 years', 'Sex: male', 'Arrival mode: walk-in',
+        'Chief complaint: Anxiety attack',
+        'Triage note: Palpitations and tingling in both hands after an argument. Says this happens when he is stressed.',
+        'Vital signs:', '- Heart rate: 118 bpm', '- Blood pressure: 132/84 mmHg', '- Respiratory rate: 26 breaths/min',
+        '- SpO2: 99%', '- Temperature: 37.0 C', '- GCS: 15/15', '- Pain score: 2/10', '- Glucose: not recorded',
+        'Risk flags: none flagged', 'Medical history: not documented', 'Medications: not documented',
+        'Allergies: not documented'
+      ].join('\n')
+    }
+  ];
+
+  var llm = new ERTriageLLM();
+  gs.info('Config: ' + JSON.stringify(llm.describeConfig()));
+
+  var rows = [];
+  CASES.forEach(function(c) {
+    EFFORTS.forEach(function(effort) {
+      var out = llm.analyze(c.text, { effort: effort, nonce: true });
+      var u = (out.meta && out.meta.usage) || {};
+      var details = u.completion_tokens_details || {};
+      var row = {
+        case_id: c.id,
+        effort: effort,
+        available: out.available,
+        esi: out.available ? out.result.suggested_esi : null,
+        confidence: out.available ? out.result.confidence : null,
+        top_dx: out.available ? out.result.differential[0].condition : null,
+        cant_miss: out.available ? out.result.differential.filter(function(d) {
+          return d.cant_miss;
+        }).map(function(d) {
+          return d.condition;
+        }) : [],
+        dx_count: out.available ? out.result.differential.length : 0,
+        latency_s: out.meta && out.meta.latency_ms != null ? Math.round(out.meta.latency_ms / 100) / 10 : null,
+        output_tokens: u.completion_tokens || null,
+        reasoning_tokens: details.reasoning_tokens || 0,
+        reason: out.available ? '' : out.reason
+      };
+      rows.push(row);
+      // Logged per call, so partial results survive if the script is stopped
+      gs.info('RUN ' + JSON.stringify(row));
+    });
+  });
+
+  var table = ['', 'Case | Effort | ESI | Confidence | Top diagnosis | Can\'t-miss flagged | Latency (s) | Output tokens | Reasoning tokens'];
+  rows.forEach(function(r) {
+    table.push([r.case_id, r.effort, r.available ? r.esi : 'n/a (' + r.reason + ')', r.confidence,
+      r.top_dx, r.cant_miss.join(', '), r.latency_s, r.output_tokens, r.reasoning_tokens].join(' | '));
+  });
+
+  CASES.forEach(function(c) {
+    var pair = rows.filter(function(r) {
+      return r.case_id == c.id;
+    });
+    var esis = pair.map(function(r) {
+      return r.esi;
+    });
+    table.push('Case ' + c.id + ' (' + c.label + '): ESI ' + esis.join(' vs ') +
+      (esis[0] == esis[1] ? ' (same)' : ' (DIFFERENT)'));
+  });
+  gs.info(table.join('\n'));
+})();
+]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>mihir.k</sys_created_by>
+        <sys_created_on>2026-11-03 16:24:43</sys_created_on>
+        <sys_id>94a6d386c3905f5043d2ffbc05013133</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ER Triage - Compare Reasoning Effort</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_fix_94a6d386c3905f5043d2ffbc05013133</sys_update_name>
+        <sys_updated_by>mihir.k</sys_updated_by>
+        <sys_updated_on>2026-11-03 16:24:43</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+</record_update>

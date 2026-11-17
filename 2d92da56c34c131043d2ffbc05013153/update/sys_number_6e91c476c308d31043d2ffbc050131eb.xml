@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_number">
+    <sys_number action="INSERT_OR_UPDATE">
+        <category display_value="" name="x_2206627_er_tri_0_vitals">x_2206627_er_tri_0_vitals</category>
+        <maximum_digits>7</maximum_digits>
+        <number>1000</number>
+        <prefix>VIT</prefix>
+        <sys_class_name>sys_number</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-23 22:33:43</sys_created_on>
+        <sys_id>6e91c476c308d31043d2ffbc050131eb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>VIT</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_number_6e91c476c308d31043d2ffbc050131eb</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-23 22:33:43</sys_updated_on>
+    </sys_number>
+</record_update>

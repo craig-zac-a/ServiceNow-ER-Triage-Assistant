@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sysevent_script_action">
+    <sysevent_script_action action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition_script/>
+        <description/>
+        <event_name>x_2206627_er_tri_0.retriage_requested</event_name>
+        <name>Triage Requested</name>
+        <order>100</order>
+        <script><![CDATA[new ERTriageService().runTriage(event.parm1);]]></script>
+        <synchronous>false</synchronous>
+        <sys_class_name>sysevent_script_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-03 19:48:39</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>76154416c3185f5043d2ffbc0501318f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Triage Requested</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sysevent_script_action_76154416c3185f5043d2ffbc0501318f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-03 19:48:39</sys_updated_on>
+    </sysevent_script_action>
+</record_update>

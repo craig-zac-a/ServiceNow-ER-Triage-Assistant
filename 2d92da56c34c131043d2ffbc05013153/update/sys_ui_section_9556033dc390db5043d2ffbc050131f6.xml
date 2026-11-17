@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Encounter" section_id="9556033dc390db5043d2ffbc050131f6" sys_domain="global" table="x_2206627_er_tri_0_encounter" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>patient</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 16:50:59</sys_created_on>
+            <sys_id>d1cf1f90c368931043d2ffbc05013158</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Encounter" display_value="Encounter" name="x_2206627_er_tri_0_encounter" sys_domain="global" view="Default view">9556033dc390db5043d2ffbc050131f6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 16:50:59</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 16:50:59</sys_created_on>
+            <sys_id>51cf1f90c368931043d2ffbc05013159</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Encounter" display_value="Encounter" name="x_2206627_er_tri_0_encounter" sys_domain="global" view="Default view">9556033dc390db5043d2ffbc050131f6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 16:50:59</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>number</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 16:50:59</sys_created_on>
+            <sys_id>ddcf1f90c368931043d2ffbc05013159</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Encounter" display_value="Encounter" name="x_2206627_er_tri_0_encounter" sys_domain="global" view="Default view">9556033dc390db5043d2ffbc050131f6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 16:50:59</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 16:50:59</sys_created_on>
+            <sys_id>5dcf1f90c368931043d2ffbc0501315a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Encounter" display_value="Encounter" name="x_2206627_er_tri_0_encounter" sys_domain="global" view="Default view">9556033dc390db5043d2ffbc050131f6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 16:50:59</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>patient.number</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 16:50:59</sys_created_on>
+            <sys_id>d9cf1f90c368931043d2ffbc0501315b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Encounter" display_value="Encounter" name="x_2206627_er_tri_0_encounter" sys_domain="global" view="Default view">9556033dc390db5043d2ffbc050131f6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 16:50:59</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Encounter</caption>
+            <header>false</header>
+            <name>x_2206627_er_tri_0_encounter</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>rahul.s</sys_created_by>
+            <sys_created_on>2026-11-02 20:35:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>9556033dc390db5043d2ffbc050131f6</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_2206627_er_tri_0_encounter</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_ui_section_9556033dc390db5043d2ffbc050131f6</sys_update_name>
+            <sys_updated_by>rahul.s</sys_updated_by>
+            <sys_updated_on>2026-11-02 20:35:02</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

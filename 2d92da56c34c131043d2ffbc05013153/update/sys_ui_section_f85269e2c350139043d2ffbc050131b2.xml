@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Nurse Decision" section_id="f85269e2c350139043d2ffbc050131b2" sys_domain="global" table="x_2206627_er_tri_0_triage_assessment" version="3" view="nurse_review">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>decided_by</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 19:04:26</sys_created_on>
+            <sys_id>905e7f5cc32c931043d2ffbc05013192</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Nurse Decision" display_value="Nurse Decision" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="31bc5d2ac310139043d2ffbc050131c7">f85269e2c350139043d2ffbc050131b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 19:04:26</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>decided_at</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 19:04:26</sys_created_on>
+            <sys_id>105e7f5cc32c931043d2ffbc05013193</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Nurse Decision" display_value="Nurse Decision" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="31bc5d2ac310139043d2ffbc050131c7">f85269e2c350139043d2ffbc050131b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 19:04:26</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 19:04:26</sys_created_on>
+            <sys_id>9c5e7f5cc32c931043d2ffbc05013193</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Nurse Decision" display_value="Nurse Decision" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="31bc5d2ac310139043d2ffbc050131c7">f85269e2c350139043d2ffbc050131b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 19:04:26</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>nurse_decision</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 19:04:26</sys_created_on>
+            <sys_id>1c5e7f5cc32c931043d2ffbc05013194</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Nurse Decision" display_value="Nurse Decision" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="31bc5d2ac310139043d2ffbc050131c7">f85269e2c350139043d2ffbc050131b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 19:04:26</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 19:04:26</sys_created_on>
+            <sys_id>985e7f5cc32c931043d2ffbc05013195</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Nurse Decision" display_value="Nurse Decision" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="31bc5d2ac310139043d2ffbc050131c7">f85269e2c350139043d2ffbc050131b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 19:04:26</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>override_reason</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 19:04:26</sys_created_on>
+            <sys_id>185e7f5cc32c931043d2ffbc05013196</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Nurse Decision" display_value="Nurse Decision" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="31bc5d2ac310139043d2ffbc050131c7">f85269e2c350139043d2ffbc050131b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 19:04:26</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Nurse Decision</caption>
+            <header>false</header>
+            <name>x_2206627_er_tri_0_triage_assessment</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-04 21:13:32</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f85269e2c350139043d2ffbc050131b2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_2206627_er_tri_0_triage_assessment</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_ui_section_f85269e2c350139043d2ffbc050131b2</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-04 21:13:32</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Nurse Review" name="nurse_review">31bc5d2ac310139043d2ffbc050131c7</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

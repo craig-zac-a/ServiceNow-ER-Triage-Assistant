@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="d1a2d77cd1e946adb51e57c9aff74f6c" label="Vital Threshold" name="x_2206627_er_tri_0_vital_thr" type="collection">
+        <element label="High Danger Threshold" name="high_danger" type="decimal"/>
+        <element display="true" label="Age Band" mandatory="true" max_length="100" name="age_band_label" type="string"/>
+        <element label="Min Age (months)" mandatory="true" name="min_age_months" type="integer"/>
+        <element label="Max Age (months)" mandatory="true" name="max_age_months" type="integer"/>
+        <element label="Low Danger Threshold" name="low_danger" type="decimal"/>
+        <element label="Vital Sign" mandatory="true" name="vital_name" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Respiratory Rate" sequence="4" value="resp_rate"/>
+                <element inactive_on_update="false" label="Systolic BP" sequence="2" value="systolic_bp"/>
+                <element inactive_on_update="false" label="Temperature" sequence="6" value="temperature"/>
+                <element inactive_on_update="false" label="Diastolic BP" sequence="3" value="diastolic_bp"/>
+                <element inactive_on_update="false" label="SpO2" sequence="5" value="spo2"/>
+                <element inactive_on_update="false" label="Heart Rate" sequence="1" value="heart_rate"/>
+            </choice>
+        </element>
+        <element default="true" label="Active" name="active" type="boolean"/>
+        <element default="javascript:getNextObjNumberPadded();" label="Number" name="number" type="string"/>
+    </element>
+</database>

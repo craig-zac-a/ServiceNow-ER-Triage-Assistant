@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description/>
+        <name>ER Triage - Test Rules Engine</name>
+        <record_for_rollback>true</record_for_rollback>
+        <script><![CDATA[(function() {
+  var P = 'x_2206627_er_tri_0_patient';
+  var E = 'x_2206627_er_tri_0_encounter';
+  var V = 'x_2206627_er_tri_0_vitals';
+
+  function mkPat(d) {
+    var gr = new GlideRecord(P);
+    gr.initialize();
+    gr.setValue('patient_first_name', 'Test');
+    gr.setValue('patient_last_name', d.last);
+    gr.setValue('sex', d.sex || 'unknown');
+    var dob = new GlideDateTime();
+    if (d.dob_months_ago) {
+      dob.addMonthsLocalTime(-d.dob_months_ago);
+    } else {
+      dob.addYearsLocalTime(-(d.dob_years_ago || 30));
+    }
+    gr.setValue('date_of_birth', dob.getLocalDate().getValue());
+    gr.setValue('diabetic', !!d.diabetic);
+    gr.setValue('on_anticoagulant', !!d.on_anticoagulant);
+    gr.setValue('immunosuppressed', !!d.immunosuppressed);
+    gr.setValue('cardiac_history', !!d.cardiac_history);
+    gr.insert();
+    return gr.getUniqueValue();
+  }
+
+  function mkEnc(pid, d) {
+    var gr = new GlideRecord(E);
+    gr.initialize();
+    gr.setValue('patient', pid);
+    gr.setValue('chief_complaint', d.complaint || '');
+    gr.setValue('triage_note', d.note || '');
+    gr.setValue('pregnancy_status', d.pregnancy || 'not_applicable');
+    gr.insert();
+    var enc = new GlideRecord(E);
+    enc.get(gr.getUniqueValue());
+    return enc;
+  }
+
+  function mkVit(encId, d) {
+    if (!d) return null;
+    var gr = new GlideRecord(V);
+    gr.initialize();
+    gr.setValue('encounter', encId);
+    var fields = ['heart_rate', 'systolic_bp', 'diastolic_bp',
+      'resp_rate', 'spo2', 'temperature', 'gcs', 'pain_score', 'glucose'];
+    for (var i = 0; i < fields.length; i++) {
+      if (d[fields[i]] !== undefined && d[fields[i]] !== null) {
+        gr.setValue(fields[i], d[fields[i]]);
+      }
+    }
+    gr.insert();
+    return gr;
+  }
+
+  var cases = [
+    { name: '1. ESI 1 - GCS 6, SpO2 80%', expectedEsi: 1,
+      patient: { last: 'RulesT_01', sex: 'male', dob_years_ago: 45 },
+      encounter: { complaint: 'Found unconscious' },
+      vitals: { gcs: 6, spo2: 80, heart_rate: 110, systolic_bp: 90,
+        resp_rate: 8, temperature: 37.0 } },
+
+    { name: '2. ESI 2 - Diabetic with indigestion', expectedEsi: 2,
+      patient: { last: 'RulesT_02', sex: 'male', dob_years_ago: 58,
+        diabetic: true },
+      encounter: { complaint: 'Bad indigestion', note: 'Sweaty' },
+      vitals: { heart_rate: 108, systolic_bp: 150, diastolic_bp: 92,
+        resp_rate: 18, spo2: 96, temperature: 37.0, gcs: 15,
+        pain_score: 6 } },
+
+    { name: '3. ESI 2 - Anticoagulated head injury', expectedEsi: 2,
+      patient: { last: 'RulesT_03', sex: 'female', dob_years_ago: 72,
+        on_anticoagulant: true },
+      encounter: { complaint: 'Head injury from fall' },
+      vitals: { heart_rate: 78, systolic_bp: 140, diastolic_bp: 80,
+        resp_rate: 16, spo2: 97, temperature: 36.8, gcs: 15,
+        pain_score: 5 } },
+
+    { name: '4. ESI 2 - Pregnant with abdominal pain', expectedEsi: 2,
+      patient: { last: 'RulesT_04', sex: 'female', dob_years_ago: 28 },
+      encounter: { complaint: 'Lower abdominal pain',
+        pregnancy: 'pregnant' },
+      vitals: { heart_rate: 90, systolic_bp: 120, diastolic_bp: 75,
+        resp_rate: 18, spo2: 98, temperature: 37.1, gcs: 15,
+        pain_score: 7 } },
+
+    { name: '5. ESI 2 - Chest pain stable vitals', expectedEsi: 2,
+      patient: { last: 'RulesT_05', sex: 'male', dob_years_ago: 50 },
+      encounter: { complaint: 'Chest pain' },
+      vitals: { heart_rate: 82, systolic_bp: 130, diastolic_bp: 80,
+        resp_rate: 16, spo2: 98, temperature: 37.0, gcs: 15,
+        pain_score: 6 } },
+
+    { name: '6. ESI 4 - Sore throat', expectedEsi: 4,
+      patient: { last: 'RulesT_06', sex: 'female', dob_years_ago: 25 },
+      encounter: { complaint: 'Sore throat' },
+      vitals: { heart_rate: 75, systolic_bp: 118, diastolic_bp: 72,
+        resp_rate: 16, spo2: 99, temperature: 37.2, gcs: 15,
+        pain_score: 3 } },
+
+    { name: '7. ESI 2 - Danger zone (HR 130, temp 39.5)',
+      expectedEsi: 2,
+      patient: { last: 'RulesT_07', sex: 'male', dob_years_ago: 35 },
+      encounter: { complaint: 'Fever and body aches' },
+      vitals: { heart_rate: 130, systolic_bp: 115, diastolic_bp: 70,
+        resp_rate: 22, spo2: 96, temperature: 39.5, gcs: 15,
+        pain_score: 5 } },
+
+    { name: '8. ESI 4 - Laceration', expectedEsi: 4,
+      patient: { last: 'RulesT_08', sex: 'male', dob_years_ago: 30 },
+      encounter: { complaint: 'Laceration on hand' },
+      vitals: { heart_rate: 72, systolic_bp: 125, diastolic_bp: 78,
+        resp_rate: 14, spo2: 99, temperature: 36.9, gcs: 15,
+        pain_score: 4 } },
+
+    { name: '9. ESI 5 - Medication refill', expectedEsi: 5,
+      patient: { last: 'RulesT_09', sex: 'female', dob_years_ago: 40 },
+      encounter: { complaint: 'Medication refill' },
+      vitals: { heart_rate: 70, systolic_bp: 120, diastolic_bp: 75,
+        resp_rate: 16, spo2: 99, temperature: 36.8, gcs: 15,
+        pain_score: 0 } },
+
+    { name: '10. ESI 4 - Headache, no vitals', expectedEsi: 4,
+      patient: { last: 'RulesT_10', sex: 'female', dob_years_ago: 55 },
+      encounter: { complaint: 'Severe headache' },
+      vitals: null },
+
+    { name: '11. ESI 2 - 3-month infant HR 190', expectedEsi: 2,
+      patient: { last: 'RulesT_11', sex: 'male', dob_months_ago: 3 },
+      encounter: { complaint: 'Fussiness and not feeding' },
+      vitals: { heart_rate: 190, resp_rate: 42, spo2: 95,
+        temperature: 38.5, gcs: 15 } }
+  ];
+
+  var rules = new ERTriageRules();
+  var pass = 0;
+  var fail = 0;
+
+  for (var c = 0; c < cases.length; c++) {
+    var tc = cases[c];
+    var pid = mkPat(tc.patient);
+    var encGr = mkEnc(pid, tc.encounter);
+    var vitGr = mkVit(encGr.getUniqueValue(), tc.vitals);
+
+    var result = rules.evaluate(encGr, vitGr);
+
+    var ok = result.esi === tc.expectedEsi;
+    if (ok) pass++;
+    else fail++;
+
+    gs.info((ok ? 'PASS' : 'FAIL') + ' | ' + tc.name +
+      ' | Got ESI=' + result.esi + ' point=' + result.decision_point +
+      (ok ? '' : ' (EXPECTED ESI=' + tc.expectedEsi + ')') +
+      ' | Triggers: ' + (result.triggers || []).join('; ') +
+      (result.missing.length
+        ? ' | Missing: ' + result.missing.join(', ')
+        : ''));
+  }
+
+  gs.info('===== RESULTS: ' + pass + ' passed, ' + fail +
+    ' failed out of ' + cases.length + ' =====');
+})();]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>eric.k</sys_created_by>
+        <sys_created_on>2026-10-29 15:04:16</sys_created_on>
+        <sys_id>e8f39568c31c135043d2ffbc050131f6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ER Triage - Test Rules Engine</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_fix_e8f39568c31c135043d2ffbc050131f6</sys_update_name>
+        <sys_updated_by>eric.k</sys_updated_by>
+        <sys_updated_on>2026-10-29 15:04:16</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+</record_update>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="392c7baac3c4d31043d2ffbc05013111" label="Patient" max_length="40" name="x_2206627_er_tri_0_patient" type="collection">
+        <element label="First name" mandatory="true" max_length="50" name="patient_first_name" type="string"/>
+        <element label="Synthetic data" max_length="255" name="is_synthetic" read_only="true" read_only_option="display_read_only" type="boolean"/>
+        <element label="Medical history" max_length="4000" name="medical_history" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="MRN" max_length="40" name="number" type="string"/>
+        <element label="Medications" max_length="2000" name="medications" type="string"/>
+        <element display="true" label="Display name" max_length="110" name="patient_display_name" read_only="true" read_only_option="display_read_only" type="string"/>
+        <element default="true" label="No known drug allergies" max_length="1000" name="nkda" type="boolean"/>
+        <element label="Known cardiac history" max_length="40" name="cardiac_history" type="boolean"/>
+        <element label="Allergies" max_length="1000" name="allergies" type="string"/>
+        <element label="Immunosuppressed" max_length="40" name="immunosuppressed" type="boolean"/>
+        <element label="On anticoagulant" max_length="40" name="on_anticoagulant" type="boolean"/>
+        <element label="Diabetic" max_length="40" name="diabetic" type="boolean"/>
+        <element label="Last name" mandatory="true" max_length="50" name="patient_last_name" type="string"/>
+        <element choice="3" default="unknown" label="Sex" max_length="255" name="sex" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Female" sequence="0" value="female"/>
+                <element inactive_on_update="false" label="Other" sequence="2" value="other"/>
+                <element inactive_on_update="false" label="Unknown" sequence="3" value="unknown"/>
+                <element inactive_on_update="false" label="Male" sequence="1" value="male"/>
+            </choice>
+        </element>
+        <element label="Date of birth" mandatory="true" max_length="40" name="date_of_birth" type="glide_date"/>
+    </element>
+</database>

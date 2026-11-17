@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="DELETE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-23 20:18:23</sys_created_on>
+        <sys_id>3f92a76ac304d31043d2ffbc05013127</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_2206627_er_tri_0_encounter.x_2206627_er_tri_0.user</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_security_acl display_value="x_2206627_er_tri_0_encounter">ef92676ac304d31043d2ffbc050131f0</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_3f92a76ac304d31043d2ffbc05013127</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-23 20:18:23</sys_updated_on>
+        <sys_user_role display_value="x_2206627_er_tri_0.user" name="x_2206627_er_tri_0.user">86921e56c34c131043d2ffbc050131e5</sys_user_role>
+    </sys_security_acl_role>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</application>
+        <file_path/>
+        <instance_id>657464de93401fd8401cddd548373c41</instance_id>
+        <instance_name>dev458343</instance_name>
+        <merge_base/>
+        <name>sys_security_acl_role_3f92a76ac304d31043d2ffbc05013127</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role"><sys_security_acl_role action="INSERT_OR_UPDATE"><sys_class_name>sys_security_acl_role</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-10-23 20:18:23</sys_created_on><sys_id>3f92a76ac304d31043d2ffbc05013127</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_2206627_er_tri_0_encounter.x_2206627_er_tri_0.user</sys_name><sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package><sys_policy/><sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope><sys_security_acl display_value="x_2206627_er_tri_0_encounter">ef92676ac304d31043d2ffbc050131f0</sys_security_acl><sys_update_name>sys_security_acl_role_3f92a76ac304d31043d2ffbc05013127</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-10-23 20:18:23</sys_updated_on><sys_user_role display_value="x_2206627_er_tri_0.user" name="x_2206627_er_tri_0.user">86921e56c34c131043d2ffbc050131e5</sys_user_role></sys_security_acl_role></record_update>]]></payload>
+        <payload_hash>-39995353</payload_hash>
+        <record_name>x_2206627_er_tri_0_encounter.x_2206627_er_tri_0.user</record_name>
+        <reverted_from/>
+        <source>58e79edec34c131043d2ffbc0501311f</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-23 20:18:23</sys_created_on>
+        <sys_id>3792a76ac304d31043d2ffbc0501314b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a16a6a24710000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-23 20:18:23</sys_updated_on>
+        <type>Access Roles</type>
+        <update_guid>b392a76a8404d310352b8569ba06ab4a</update_guid>
+        <update_guid_history>b392a76a8404d310352b8569ba06ab4a:-39995353</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="x_2206627_er_tri_0_encounter.x_2206627_er_tri_0.user">9c28467dc3989b5043d2ffbc05013130</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-02 16:03:16</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
+        <sys_id>07106c15d85140888033699e47098aa4</sys_id>
+        <sys_metadata>3f92a76ac304d31043d2ffbc05013127</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_2206627_er_tri_0_encounter.x_2206627_er_tri_0.user</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_parent display_value="x_2206627_er_tri_0_encounter">ef92676ac304d31043d2ffbc050131f0</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_scope_delete display_value="">9ac35f9b9d704fc6ace7b0309b1d2b01</sys_scope_delete>
+        <sys_update_name>sys_security_acl_role_3f92a76ac304d31043d2ffbc05013127</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_role_3f92a76ac304d31043d2ffbc05013127">3792a76ac304d31043d2ffbc0501314b</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-02 16:03:16</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

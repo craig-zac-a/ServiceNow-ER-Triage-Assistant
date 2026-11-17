@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section action="DELETE" caption="x_2206627_er_tri_0_triage_assessment" section_id="48679d2ec3dcdf5043d2ffbc05013128" sys_domain="global" table="x_2206627_er_tri_0_triage_assessment" version="3" view="Governance">
+        <sys_ui_section action="DELETE">
+            <caption>x_2206627_er_tri_0_triage_assessment</caption>
+            <header>false</header>
+            <name>x_2206627_er_tri_0_triage_assessment</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-04 20:25:41</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>48679d2ec3dcdf5043d2ffbc05013128</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_2206627_er_tri_0_triage_assessment</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_ui_section_48679d2ec3dcdf5043d2ffbc05013128</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-04 20:25:41</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Governance" name="Governance">44679d2ec3dcdf5043d2ffbc05013121</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</application>
+        <file_path/>
+        <instance_id>657464de93401fd8401cddd548373c41</instance_id>
+        <instance_name>dev458343</instance_name>
+        <merge_base/>
+        <name>sys_ui_section_48679d2ec3dcdf5043d2ffbc05013128</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_ui_section caption="x_2206627_er_tri_0_triage_assessment" section_id="48679d2ec3dcdf5043d2ffbc05013128" sys_domain="global" table="x_2206627_er_tri_0_triage_assessment" version="3" view="Governance"><sys_ui_section action="INSERT_OR_UPDATE"><caption>x_2206627_er_tri_0_triage_assessment</caption><header>false</header><name>x_2206627_er_tri_0_triage_assessment</name><roles/><sys_class_name>sys_ui_section</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-11-04 20:25:41</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>48679d2ec3dcdf5043d2ffbc05013128</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_2206627_er_tri_0_triage_assessment</sys_name><sys_overrides/><sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package><sys_policy/><sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope><sys_update_name>sys_ui_section_48679d2ec3dcdf5043d2ffbc05013128</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-11-04 20:25:41</sys_updated_on><sys_user/><title>false</title><view display_value="Governance" name="Governance">44679d2ec3dcdf5043d2ffbc05013121</view><view_name/></sys_ui_section></sys_ui_section></record_update>]]></payload>
+        <payload_hash>2005581605</payload_hash>
+        <record_name>Triage Assessment</record_name>
+        <reverted_from/>
+        <source>caccc890c3589f1043d2ffbc050131dd</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-04 20:25:41</sys_created_on>
+        <sys_id>44679d2ec3dcdf5043d2ffbc0501312d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a1a83d25360000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-04 20:25:41</sys_updated_on>
+        <type>Form Layout</type>
+        <update_guid>08679d2efbdcdf50b6a0df75b68bea2c</update_guid>
+        <update_guid_history>08679d2efbdcdf50b6a0df75b68bea2c:2005581605</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-04 20:26:14</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_section">sys_ui_section</sys_db_object>
+        <sys_id>113edb21ba544ee88231221bc6767c40</sys_id>
+        <sys_metadata>48679d2ec3dcdf5043d2ffbc05013128</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_2206627_er_tri_0_triage_assessment</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_parent display_value="Triage Assessment">9551b366c384d31043d2ffbc0501315a</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_scope_delete display_value="">9ac35f9b9d704fc6ace7b0309b1d2b01</sys_scope_delete>
+        <sys_update_name>sys_ui_section_48679d2ec3dcdf5043d2ffbc05013128</sys_update_name>
+        <sys_update_version display_value="sys_ui_section_48679d2ec3dcdf5043d2ffbc05013128">44679d2ec3dcdf5043d2ffbc0501312d</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-04 20:26:14</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

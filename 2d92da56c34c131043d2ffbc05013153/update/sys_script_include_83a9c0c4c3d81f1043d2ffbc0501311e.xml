@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_2206627_er_tri_0.ERTriageLLMStub</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ERTriageLLMStub</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var ERTriageLLMStub = Class.create();
+ERTriageLLMStub.prototype = {
+  initialize: function() {},
+
+  /**
+   * CONTRACT: same signature and return shape as ERTriageLLM.analyze()
+   * @param {string} caseText
+   * @param {object} [opts] - accepted for signature parity; ignored
+   * @returns {object} { available, result, meta } or { available:false, reason, meta }
+   */
+  analyze: function(caseText, opts) {
+    return {
+      available: true,
+      result: {
+        extracted_symptoms: ['Epigastric discomfort ("bad indigestion") for 2 hours', 'Diaphoresis'],
+        risk_factors: ['Age 58', 'Male', 'Diabetes mellitus'],
+        missing_information: ['Glucose not recorded', 'Symptom radiation not documented'],
+        differential: [
+          {
+            condition: 'Acute coronary syndrome',
+            icd10: 'I24.9',
+            cant_miss: true,
+            likelihood: 'high',
+            supporting: ['Diaphoresis', 'Diabetic (atypical presentation risk)', 'Tachycardia'],
+            contradicting: ['No reported chest pain'],
+            suggested_questions: ['Does the discomfort radiate to the arm, jaw, or back?'],
+            suggested_workup: ['12-lead ECG within 10 minutes', 'Serial troponin']
+          },
+          {
+            condition: 'Aortic dissection',
+            icd10: 'I71.00',
+            cant_miss: true,
+            likelihood: 'low',
+            supporting: ['Hypertension'],
+            contradicting: ['No tearing pain reported'],
+            suggested_questions: ['Is there tearing pain radiating to the back?'],
+            suggested_workup: ['Bilateral arm blood pressures']
+          },
+          {
+            condition: 'Gastroesophageal reflux disease',
+            icd10: 'K21.9',
+            cant_miss: false,
+            likelihood: 'low',
+            supporting: ['Patient describes symptoms as indigestion'],
+            contradicting: ['Diaphoresis and tachycardia are atypical for reflux'],
+            suggested_questions: ['Is the pain related to meals?'],
+            suggested_workup: ['Diagnosis of exclusion after cardiac workup']
+          }
+        ],
+        rationale: 'STUB: Possible ACS in a diabetic with atypical symptoms. High-risk presentation; should not wait.',
+        suggested_esi: 2,
+        confidence: 'moderate'
+      },
+      meta: {
+        model: 'stub',
+        reasoning_effort: 'none',
+        prompt_version: 'stub',
+        prompt_source: 'stub',
+        prompt_hash: '',
+        response_format: 'stub',
+        cant_miss_source: 'stub',
+        cant_miss_count: 0,
+        format_repaired: false,
+        repairs: [],
+        compat_retry: false,
+        latency_ms: 0,
+        http_status: 200,
+        response_id: 'stub-' + new Date().getTime(),
+        finish_reason: 'stop',
+        stub: true
+      }
+    };
+  },
+
+  type: 'ERTriageLLMStub'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-27 20:21:59</sys_created_on>
+        <sys_id>83a9c0c4c3d81f1043d2ffbc0501311e</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>ERTriageLLMStub</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_include_83a9c0c4c3d81f1043d2ffbc0501311e</sys_update_name>
+        <sys_updated_by>mihir.k</sys_updated_by>
+        <sys_updated_on>2026-11-03 16:24:32</sys_updated_on>
+    </sys_script_include>
+</record_update>

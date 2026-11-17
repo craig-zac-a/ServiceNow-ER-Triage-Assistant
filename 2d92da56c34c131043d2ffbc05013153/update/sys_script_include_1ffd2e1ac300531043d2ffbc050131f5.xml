@@ -1,0 +1,924 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_2206627_er_tri_0.ERTriageLLM</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ERTriageLLM</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var ERTriageLLM = Class.create();
+ERTriageLLM.prototype = {
+    SCOPE: 'x_2206627_er_tri_0',
+    ALIAS_SYS_ID: 'fdfae2d2c300531043d2ffbc0501310f',
+    REST_MESSAGE: 'ER LLM API',
+    REST_METHOD: 'post',
+    T_CANT_MISS: 'x_2206627_er_tri_0_cant_miss',
+    TIMEOUT_MS: 120000,
+    MAX_COMPLETION_TOKENS: 16000,
+
+    DEFAULT_PROMPT_VERSION: 'v1.0',
+    // The prompt property must contain this line; if it doesn't, the property was
+    // probably cut off when saved, and the built-in prompt is used instead.
+    PROMPT_END_MARKER: 'END OF CLINICAL INSTRUCTIONS',
+
+    LIKELIHOOD: ['high', 'moderate', 'low'],
+    CONFIDENCE: ['low', 'moderate', 'high'],
+    TOP_ARRAYS: ['extracted_symptoms', 'risk_factors', 'missing_information'],
+    DX_ARRAYS: ['supporting', 'contradicting', 'suggested_questions', 'suggested_workup'],
+
+    // Clinical instructions, owned by clinical governance. Copy of system-prompt-v1.0.txt;
+    // the llm_system_prompt property overrides it.
+    DEFAULT_SYSTEM_PROMPT: [
+        'You are an emergency department (ED) triage decision-support assistant. A triage nurse reviews every suggestion and makes the final decision. Give the nurse a fast, honest second opinion they can check.',
+        'This is a high-stakes clinical task requiring maximum reasoning',
+		'',
+        'INPUT',
+        'You receive a de-identified case: age, sex, arrival mode, chief complaint, triage note, vital signs, risk flags, history, medications, and allergies. Use only these facts. Never invent vital signs, history, or results. Anything not stated is unknown, not normal.',
+        '',
+        'ESI LEVELS (Emergency Severity Index; apply in order and stop at the first match)',
+        '1 - Needs an immediate life-saving intervention: cardiac or respiratory arrest, unresponsive or GCS 8 or less, SpO2 below 90%, signs of shock, severe respiratory distress, anaphylaxis affecting airway or breathing.',
+        '2 - Should not wait: High-risk situations where delay would likely lead to a threat to life, limb, or organ function (for example possible ACS, stroke, PE, sepsis, ectopic pregnancy, overdose, suicidal or homicidal ideation), new confusion or lethargy, or severe pain/distress that suggests a critical or time-sensitive condition (e.g., chest pain, rigid abdomen, severe sudden headache, or pain accompanied by cold/pale/pulseless extremities).',
+        'Pain alone does not make ESI 2. Severe pain (8 or more) in a stable patient with a localized musculoskeletal or soft-tissue problem and intact circulation, sensation and movement distal to the injury is ESI 3 or lower. Pain raises ESI only when it suggests a time-sensitive condition: chest, back or tearing pain; sudden severe headache; rigid abdomen; testicular or ovarian torsion; threatened limb (cold, pale, pulseless, numb or cannot move distal to the injury); or compartment syndrome.',
+        '3 to 5 - Count the different resource types the ED will likely need: labs, ECG or X-ray, CT/MRI/ultrasound, IV fluids, IV/IM/nebulized medications, specialty consult, simple procedure (counts 1), complex procedure such as sedation (counts 2). Not resources: exam, point-of-care tests, oral medications, prescriptions, simple wound care, splints, crutches. Two or more = ESI 3, one = ESI 4, none = ESI 5.',
+        'Danger-zone vitals (ESI handbook decision point D): if you would choose ESI 3 and the vitals are in the danger zone for age, CONSIDER ESI 2. This is a prompt to reassess, not an automatic upgrade. Thresholds: over 8 years HR above 100 or RR above 20; 3 to 8 years HR above 140 or RR above 30; 3 months to 3 years HR above 160 or RR above 40; under 3 months HR above 180 or RR above 50. Any age: SpO2 below 92%. Fever of 38.0 C or higher in an infant under 28 days is at least ESI 2.',
+        'LIMB COMPLAINTS: a swollen, hot, painful joint or limb with intact distal pulse, capillary refill under 2 seconds, normal sensation and movement is a localized problem. It is not ESI 2 unless it is a suspected septic joint with fever or systemic illness, a limb-threatening injury, or the patient is unstable. Count resources normally.',
+        'Do NOT upgrade for danger-zone vitals when ALL of these are true: (a) the abnormal value is a single mild one (adult HR up to 120, RR up to 24); (b) SpO2 is 94% or higher and blood pressure is normal; (c) the patient is alert and speaking normally; (d) there is an obvious painful local injury or illness that explains it. Mention the vital in your rationale and keep the lower level.',
+        '- If you are torn between ESI 2 and ESI 3 for a patient with a possible high-risk condition (chest pain, stroke, sepsis, overdose, ectopic pregnancy), choose the more urgent level. For localized injuries and stable patients with explained findings, choose the level that matches the resource count. Over-triage is acceptable only when there is real clinical doubt.',
+        '- Never lower urgency because the patient\'s own words sound mild ("indigestion", "anxiety", "just tired"). Older adults, women, and people with diabetes often present atypically.',
+        '- Risk flags raise concern: anticoagulant use with any head injury or bleeding; immunosuppression with fever; diabetes or cardiac history with chest, epigastric, jaw, or arm symptoms; pregnancy possible or unknown in a female aged 12 to 50 with abdominal pain, vaginal bleeding, or fainting.',
+        '- A separate rules engine also scores this case and the more urgent result is used. Reason independently; do not try to match it.',
+        '- List every missing item that would change your assessment, for example "Blood pressure not recorded" or "Onset time not documented".',
+        '',
+        'DIFFERENTIAL',
+        '- 3 to 6 conditions, most likely first.',
+        '- Include every condition from the CAN\'T-MISS REFERENCE that fits the complaint or findings, even when unlikely. Set cant_miss to true and give an honest likelihood.',
+        '- Also set cant_miss to true for any other condition that threatens life or limb if missed.',
+        '- The condition field holds only the condition name. Put all reasoning in supporting and contradicting.',
+        '- supporting and contradicting cite findings from the case; contradicting may also name expected findings that are absent.',
+        '- suggested_questions: up to 3 bedside questions that best confirm or rule out the condition.',
+        '- suggested_workup: up to 3 initial tests or actions.',
+        '',
+        'STYLE',
+        'Short clinical phrases. No treatment orders beyond initial workup. This is decision support only.',
+        'END OF CLINICAL INSTRUCTIONS'
+    ].join('\n'),
+
+    // Used only if WS1's can't-miss table is missing or empty
+    DEFAULT_CANT_MISS: [{
+            complaint: 'Chest pain',
+            condition: 'Acute coronary syndrome',
+            icd10: 'I24.9'
+        },
+        {
+            complaint: 'Chest pain',
+            condition: 'Pulmonary embolism',
+            icd10: 'I26.99'
+        },
+        {
+            complaint: 'Chest pain',
+            condition: 'Aortic dissection',
+            icd10: 'I71.00'
+        },
+        {
+            complaint: 'Chest pain',
+            condition: 'Tension pneumothorax',
+            icd10: 'J93.0'
+        },
+        {
+            complaint: 'Headache',
+            condition: 'Subarachnoid hemorrhage',
+            icd10: 'I60.9'
+        },
+        {
+            complaint: 'Headache',
+            condition: 'Meningitis',
+            icd10: 'G03.9'
+        },
+        {
+            complaint: 'Headache',
+            condition: 'Stroke',
+            icd10: 'I63.9'
+        },
+        {
+            complaint: 'Abdominal pain',
+            condition: 'Appendicitis',
+            icd10: 'K35.80'
+        },
+        {
+            complaint: 'Abdominal pain',
+            condition: 'Ectopic pregnancy',
+            icd10: 'O00.90'
+        },
+        {
+            complaint: 'Abdominal pain',
+            condition: 'Abdominal aortic aneurysm',
+            icd10: 'I71.40'
+        },
+        {
+            complaint: 'Abdominal pain',
+            condition: 'Bowel obstruction',
+            icd10: 'K56.609'
+        },
+        {
+            complaint: 'Shortness of breath',
+            condition: 'Pulmonary embolism',
+            icd10: 'I26.99'
+        },
+        {
+            complaint: 'Shortness of breath',
+            condition: 'Congestive heart failure',
+            icd10: 'I50.9'
+        },
+        {
+            complaint: 'Shortness of breath',
+            condition: 'Anaphylaxis',
+            icd10: 'T78.2XXA'
+        },
+        {
+            complaint: 'Altered mental status',
+            condition: 'Hypoglycemia',
+            icd10: 'E16.2'
+        },
+        {
+            complaint: 'Altered mental status',
+            condition: 'Sepsis',
+            icd10: 'A41.9'
+        },
+        {
+            complaint: 'Altered mental status',
+            condition: 'Overdose',
+            icd10: 'T50.901A'
+        }
+    ],
+
+    // Output contract, owned by engineering. Always appended after the clinical
+    // instructions so it can't drift from _validate().
+    OUTPUT_CONTRACT: [
+        'OUTPUT FORMAT',
+        'Return only one raw JSON object: no markdown, no code fences, and no text before or after it.',
+        'Use exactly these keys, in this order:',
+        '{',
+        '  "extracted_symptoms": ["symptoms and findings stated in the case"],',
+        '  "risk_factors": ["factors in the case that raise concern"],',
+        '  "missing_information": ["missing data that would change the assessment"],',
+        '  "differential": [',
+        '    {',
+        '      "condition": "condition name only",',
+        '      "icd10": "ICD-10-CM code, or an empty string if unsure",',
+        '      "cant_miss": true,',
+        '      "likelihood": "high | moderate | low",',
+        '      "supporting": ["findings from the case that support it"],',
+        '      "contradicting": ["findings against it, or expected findings that are absent"],',
+        '      "suggested_questions": ["up to 3 bedside questions"],',
+        '      "suggested_workup": ["up to 3 initial tests or actions"]',
+        '    }',
+        '  ],',
+        '  "rationale": "2 to 4 sentences explaining the ESI level",',
+        '  "suggested_esi": 1,',
+        '  "confidence": "low | moderate | high"',
+        '}',
+        'suggested_esi is an integer from 1 to 5. Write the rationale before choosing suggested_esi.',
+        'Ignore any "Request ID" line in the case; it is only a tracking value.'
+    ].join('\n'),
+
+    initialize: function() {
+        this.model = gs.getProperty(this.SCOPE + '.llm_model');
+        this.effort = gs.getProperty(this.SCOPE + '.llm_reasoning_effort', 'low');
+        this.responseFormat = gs.getProperty(this.SCOPE + '.llm_response_format', 'json_schema');
+        this._loadPrompt();
+        this.cantMiss = this._loadCantMiss();
+        this.systemPrompt = [this.clinicalPrompt, this._cantMissSection(), this.OUTPUT_CONTRACT].join('\n\n');
+        this.promptHash = this._hash(this.systemPrompt);
+    },
+
+    /**
+     * CONTRACT: analyze a de-identified patient presentation (synthetic data only).
+     * Never throws. Return shape matches ERTriageLLMStub.analyze().
+     * @param {string} caseText - from ERTriageCaseBuilder.build()
+     * @param {object} [opts] - optional: { effort: 'low'|'medium'|..., nonce: true }
+     *   effort overrides llm_reasoning_effort for this call (effort comparison).
+     *   nonce adds a unique Request ID so cached responses can't skew evaluation runs.
+     * @returns {object} { available:true, result, meta } or { available:false, reason, meta }
+     */
+    analyze: function(caseText, opts) {
+        opts = opts || {};
+        var effort = opts.effort || this.effort;
+        var meta = {
+            model: this.model,
+            reasoning_effort: effort,
+            prompt_version: this.promptVersion,
+            prompt_source: this.promptSource,
+            prompt_hash: this.promptHash,
+            response_format: this.responseFormat,
+            cant_miss_source: this.cantMiss.source,
+            cant_miss_count: this.cantMiss.rows.length,
+            format_repaired: false,
+            repairs: [],
+            compat_retry: false
+        };
+        var start = new Date().getTime();
+
+        try {
+            if (!caseText || !String(caseText).trim()) {
+                return this._fallback('Empty case text', meta);
+            }
+            if (!this.model) {
+                return this._fallback('System property ' + this.SCOPE + '.llm_model is not set', meta);
+            }
+
+            var userText = String(caseText);
+            if (opts.nonce) userText += '\n\nRequest ID: ' + gs.generateGUID();
+
+            var apiKey = this._getApiKey();
+            var resp = this._post(apiKey, this._buildPayload(userText, effort, false));
+
+            // Some OpenAI-compatible gateways reject json_schema or max_completion_tokens.
+            // Retry once with the minimal payload that is known to work.
+            if (resp.getStatusCode() == 400) {
+                gs.warn('ERTriageLLM HTTP 400, retrying in compatibility mode: ' + resp.getBody());
+                meta.compat_retry = true;
+                meta.response_format = 'json_object';
+                resp = this._post(apiKey, this._buildPayload(userText, effort, true));
+            }
+
+            var status = resp.getStatusCode();
+            meta.latency_ms = new Date().getTime() - start;
+            meta.http_status = status;
+
+            if (status != 200) {
+                gs.error('ERTriageLLM HTTP ' + status + ': ' + resp.getErrorMessage() + ' | ' + resp.getBody());
+                return this._fallback('HTTP ' + status, meta);
+            }
+
+            var parsed = JSON.parse(resp.getBody());
+            meta.response_id = parsed.id;
+            meta.usage = parsed.usage;
+
+            if (!parsed.choices || !parsed.choices.length || !parsed.choices[0].message) {
+                return this._fallback('Response contained no choices', meta);
+            }
+
+            var unwrapped = this._unwrapStream(parsed.choices[0].message.content);
+            var content = unwrapped.text;
+            meta.finish_reason = unwrapped.finish_reason || parsed.choices[0].finish_reason;
+            if (unwrapped.model) meta.routed_model = unwrapped.model; // which model the router picked
+            if (!meta.usage && unwrapped.usage) meta.usage = unwrapped.usage;
+
+            if (!content.trim()) {
+                // Reasoning tokens can use up the whole budget and leave no visible output
+                return this._fallback('Empty model content (finish_reason: ' + meta.finish_reason + ')', meta);
+            }
+
+            var extracted = this._extractJson(content);
+            meta.format_repaired = extracted.repaired;
+
+            var checked = this._postProcess(extracted.data, meta.repairs);
+            if (checked.errors.length) {
+                gs.warn('ERTriageLLM schema validation failed: ' + checked.errors.join('; ') + ' | ' + content);
+                return this._fallback('Schema validation failed: ' + checked.errors.join('; '), meta);
+            }
+
+            return {
+                available: true,
+                result: checked.result,
+                meta: meta
+            };
+
+        } catch (e) {
+            meta.latency_ms = new Date().getTime() - start;
+            gs.error('ERTriageLLM exception: ' + e.message);
+            return this._fallback(e.message, meta);
+        }
+    },
+
+    /**
+     * Current configuration, for test scripts and the presentation.
+     */
+    describeConfig: function() {
+        return {
+            model: this.model,
+            reasoning_effort: this.effort,
+            response_format: this.responseFormat,
+            prompt_version: this.promptVersion,
+            prompt_source: this.promptSource,
+            prompt_hash: this.promptHash,
+            system_prompt_chars: this.systemPrompt.length,
+            cant_miss_source: this.cantMiss.source,
+            cant_miss_count: this.cantMiss.rows.length,
+            cant_miss_columns: this.cantMiss.fields || 'n/a (built-in list)',
+            cant_miss_mode: this.cantMiss.structured ? 'structured' : 'generic'
+        };
+    },
+
+    /**
+     * Safe repairs first, then strict validation. Used by analyze() and the test Fix Scripts.
+     * @returns {object} { result, errors }
+     */
+    _postProcess: function(data, repairs) {
+        var result = this._normalize(data, repairs);
+        this._enforceCantMiss(result, repairs);
+        return {
+            result: result,
+            errors: this._validate(result)
+        };
+    },
+
+    _post: function(apiKey, payload) {
+        var rm = new sn_ws.RESTMessageV2(this.REST_MESSAGE, this.REST_METHOD);
+        rm.setStringParameterNoEscape('api_key', apiKey);
+        rm.setRequestBody(JSON.stringify(payload));
+        rm.setHttpTimeout(this.TIMEOUT_MS);
+        return rm.execute();
+    },
+
+    _getApiKey: function() {
+        var provider = new sn_cc.StandardCredentialsProvider();
+        var cred = provider.getCredentialByAliasID(this.ALIAS_SYS_ID);
+        if (!cred) throw new Error('No credential linked to ER_LLM alias');
+        var key = cred.getAttribute('api_key');
+        if (!key) throw new Error('Credential has no api_key attribute');
+        return String(key);
+    },
+
+    _buildPayload: function(userText, effort, compat) {
+        var payload = {
+            model: this.model,
+            reasoning_effort: effort,
+            messages: [{
+                    role: 'system',
+                    content: this.systemPrompt
+                },
+                {
+                    role: 'user',
+                    content: userText
+                }
+            ]
+        };
+        if (compat || this.responseFormat == 'json_object') {
+            payload.response_format = {
+                type: 'json_object'
+            };
+        } else if (this.responseFormat == 'json_schema') {
+            payload.response_format = {
+                type: 'json_schema',
+                json_schema: {
+                    name: 'er_triage_assessment',
+                    strict: true,
+                    schema: this._schema()
+                }
+            };
+        }
+        if (!compat) payload.max_completion_tokens = this.MAX_COMPLETION_TOKENS;
+        return payload;
+    },
+
+    // Strict JSON schema; field order puts the evidence and rationale before the ESI number
+    _schema: function() {
+        var strings = {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        };
+        return {
+            type: 'object',
+            additionalProperties: false,
+            required: ['extracted_symptoms', 'risk_factors', 'missing_information', 'differential',
+                'rationale', 'suggested_esi', 'confidence'
+            ],
+            properties: {
+                extracted_symptoms: strings,
+                risk_factors: strings,
+                missing_information: strings,
+                differential: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        additionalProperties: false,
+                        required: ['condition', 'icd10', 'cant_miss', 'likelihood', 'supporting',
+                            'contradicting', 'suggested_questions', 'suggested_workup'
+                        ],
+                        properties: {
+                            condition: {
+                                type: 'string'
+                            },
+                            icd10: {
+                                type: 'string'
+                            },
+                            cant_miss: {
+                                type: 'boolean'
+                            },
+                            likelihood: {
+                                type: 'string',
+                                'enum': this.LIKELIHOOD
+                            },
+                            supporting: strings,
+                            contradicting: strings,
+                            suggested_questions: strings,
+                            suggested_workup: strings
+                        }
+                    }
+                },
+                rationale: {
+                    type: 'string'
+                },
+                // 'enum' is quoted: it is a reserved word in ServiceNow's ES5 (Rhino) mode
+                suggested_esi: {
+                    type: 'integer',
+                    'enum': [1, 2, 3, 4, 5]
+                },
+                confidence: {
+                    type: 'string',
+                    'enum': this.CONFIDENCE
+                }
+            }
+        };
+    },
+
+    _loadPrompt: function() {
+        var text = String(gs.getProperty(this.SCOPE + '.llm_system_prompt', '') || '').trim();
+        var version = String(gs.getProperty(this.SCOPE + '.llm_prompt_version', '') || '').trim();
+
+        if (text && text.indexOf(this.PROMPT_END_MARKER) > -1) {
+            this.clinicalPrompt = text;
+            this.promptVersion = version || 'unversioned';
+            this.promptSource = 'property';
+            return;
+        }
+        if (text) {
+            gs.warn('ERTriageLLM: llm_system_prompt does not contain "' + this.PROMPT_END_MARKER +
+                '" (cut off when saved?); using the built-in prompt');
+        }
+        this.clinicalPrompt = this.DEFAULT_SYSTEM_PROMPT;
+        this.promptVersion = this.DEFAULT_PROMPT_VERSION;
+        this.promptSource = 'default';
+    },
+
+    /**
+     * Reads WS1's can't-miss table. Column names are detected, so this works with
+     * the table as built; unknown layouts fall back to listing every non-system field.
+     */
+    _loadCantMiss: function() {
+        var gr = new GlideRecord(this.T_CANT_MISS);
+        if (gr.isValid()) {
+            var f = {
+                complaint: this._firstField(gr, ['complaint', 'complaint_keyword', 'complaint_keywords',
+                    'chief_complaint', 'keywords', 'keyword', 'complaint_category', 'category', 'presentation'
+                ]),
+                condition: this._firstField(gr, ['condition', 'condition_name', 'cant_miss_condition',
+                    'diagnosis', 'name'
+                ]),
+                icd10: this._firstField(gr, ['icd10', 'icd_10', 'icd10_code', 'icd_code'])
+            };
+            if (gr.isValidField('active')) gr.addActiveQuery();
+            if (gr.isValidField('order')) gr.orderBy('order');
+            if (f.complaint) gr.orderBy(f.complaint);
+            gr.query();
+
+            var rows = [];
+            while (gr.next()) {
+                if (f.condition) {
+                    var c = this._fieldText(gr, f.condition);
+                    if (c) {
+                        rows.push({
+                            complaint: this._fieldText(gr, f.complaint),
+                            condition: c,
+                            icd10: this._fieldText(gr, f.icd10)
+                        });
+                    }
+                } else {
+                    var t = this._recordText(gr);
+                    if (t) rows.push({
+                        text: t
+                    });
+                }
+            }
+            if (rows.length) {
+                return {
+                    source: 'table',
+                    structured: !!f.condition,
+                    fields: f,
+                    rows: rows
+                };
+            }
+            gs.warn('ERTriageLLM: ' + this.T_CANT_MISS + ' has no active rows; using the built-in list');
+        }
+        return {
+            source: 'default',
+            structured: true,
+            fields: null,
+            rows: this.DEFAULT_CANT_MISS
+        };
+    },
+
+    _cantMissSection: function() {
+        var cm = this.cantMiss;
+        var lines = ['CAN\'T-MISS REFERENCE (' +
+            (cm.source == 'table' ? 'from the clinical governance table' : 'built-in list') + ')'
+        ];
+
+        if (!cm.structured) {
+            for (var i = 0; i < cm.rows.length; i++) lines.push('- ' + cm.rows[i].text);
+            return lines.join('\n');
+        }
+
+        // Group conditions by complaint, keeping the table's order
+        var order = [];
+        var groups = {};
+        for (var j = 0; j < cm.rows.length; j++) {
+            var r = cm.rows[j];
+            var key = r.complaint || 'Any presentation';
+            if (!groups[key]) {
+                groups[key] = [];
+                order.push(key);
+            }
+            groups[key].push(r.condition + (r.icd10 ? ' (' + r.icd10 + ')' : ''));
+        }
+        for (var k = 0; k < order.length; k++) {
+            lines.push('- ' + order[k] + ': ' + groups[order[k]].join('; '));
+        }
+        return lines.join('\n');
+    },
+
+    _firstField: function(gr, names) {
+        for (var i = 0; i < names.length; i++) {
+            if (gr.isValidField(names[i])) return names[i];
+        }
+        return null;
+    },
+
+    _fieldText: function(gr, f) {
+        return f ? String(gr.getElement(f).getDisplayValue() || '').trim() : '';
+    },
+
+    _recordText: function(gr) {
+        var parts = [];
+        var els = gr.getElements();
+        for (var i = 0; i < els.length; i++) {
+            var name = String(els[i].getName());
+            if (name.indexOf('sys_') === 0 || name == 'active' || name == 'order' || name == 'number') continue;
+            var v = String(els[i].getDisplayValue() || '').trim();
+            if (v) parts.push(els[i].getLabel() + ': ' + v);
+        }
+        return parts.join('; ');
+    },
+
+    _hash: function(s) {
+        try {
+            return String(new GlideDigest().getMD5Hex(s)).substring(0, 8);
+        } catch (e) {
+            return '';
+        }
+    },
+
+    /**
+     * Parse JSON, stripping code fences or surrounding text if present.
+     * @returns {object} { data, repaired }
+     */
+    _extractJson: function(text) {
+        var s = String(text).trim();
+
+        try {
+            return {
+                data: JSON.parse(s),
+                repaired: false
+            };
+        } catch (ignore) {}
+
+        var fence = s.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i);
+        if (fence) {
+            try {
+                return {
+                    data: JSON.parse(fence[1].trim()),
+                    repaired: true
+                };
+            } catch (ignore2) {}
+        }
+
+        var start = s.indexOf('{');
+        var end = s.lastIndexOf('}');
+        if (start !== -1 && end > start) {
+            return {
+                data: JSON.parse(s.substring(start, end + 1)),
+                repaired: true
+            };
+        }
+
+        throw new Error('No valid JSON object found in model output');
+    },
+
+    /**
+     * Advantage Assist returns a raw SSE dump as message.content, with chunks glued
+     * together ("}data: {") even when stream is false. Rebuild the text from the deltas.
+     * Plain text passes through unchanged, so this is safe for any gateway or model.
+     * @returns {object} { text, model, id, usage, finish_reason }
+     */
+    _unwrapStream: function(raw) {
+        var out = {
+            text: '',
+            model: '',
+            id: '',
+            usage: null,
+            finish_reason: ''
+        };
+        var s = String(raw || '');
+
+        if (!/^\s*data:/.test(s)) {
+            out.text = s; // not a stream dump
+            return out;
+        }
+
+        var parts = [];
+        var pos = 0;
+
+        while (true) {
+            var open = s.indexOf('{', pos);
+            if (open < 0) break;
+
+            // Find the matching close brace, skipping braces inside JSON strings
+            var depth = 0,
+                inStr = false,
+                esc = false,
+                end = -1;
+            for (var i = open; i < s.length; i++) {
+                var c = s.charAt(i);
+                if (inStr) {
+                    if (esc) esc = false;
+                    else if (c == '\\') esc = true;
+                    else if (c == '"') inStr = false;
+                } else if (c == '"') {
+                    inStr = true;
+                } else if (c == '{') {
+                    depth++;
+                } else if (c == '}') {
+                    depth--;
+                    if (depth == 0) {
+                        end = i;
+                        break;
+                    }
+                }
+            }
+            if (end < 0) break; // truncated stream: use what we have
+            pos = end + 1;
+
+            var chunk;
+            try {
+                chunk = JSON.parse(s.substring(open, end + 1));
+            } catch (e) {
+                continue;
+            }
+
+            if (chunk.id && !out.id) out.id = String(chunk.id);
+            if (chunk.model) out.model = String(chunk.model);
+            if (chunk.usage) out.usage = chunk.usage;
+
+            var ch = chunk.choices && chunk.choices[0];
+            if (!ch) continue;
+            if (ch.finish_reason) out.finish_reason = ch.finish_reason;
+            if (ch.delta && typeof ch.delta.content === 'string') parts.push(ch.delta.content);
+        }
+        out.text = parts.join('');
+        return out;
+    },
+
+    /**
+     * Safe, recorded repairs only: types the model got slightly wrong and missing
+     * optional values. Anything that changes clinical meaning is left for _validate to reject.
+     */
+    _normalize: function(obj, repairs) {
+        if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return obj;
+        var self = this;
+
+        if (typeof obj.suggested_esi === 'string' && /^\s*[1-5]\s*$/.test(obj.suggested_esi)) {
+            obj.suggested_esi = parseInt(obj.suggested_esi, 10);
+            repairs.push('suggested_esi was a string');
+        }
+        if (typeof obj.rationale === 'string') obj.rationale = obj.rationale.trim();
+        obj.confidence = this._enumValue(obj.confidence, 'confidence', 'low', repairs);
+
+        this.TOP_ARRAYS.forEach(function(k) {
+            obj[k] = self._stringArray(obj[k], k, repairs);
+        });
+
+        if (Array.isArray(obj.differential)) {
+            for (var i = 0; i < obj.differential.length; i++) {
+                obj.differential[i] = this._normalizeDx(obj.differential[i], i, repairs);
+            }
+        }
+        return obj;
+    },
+
+    _normalizeDx: function(d, i, repairs) {
+        var self = this;
+        var label = 'differential[' + i + ']';
+
+        if (typeof d === 'string') {
+            d = {
+                condition: d
+            };
+            repairs.push(label + ' was a plain string');
+        }
+        if (!d || typeof d !== 'object' || Array.isArray(d)) return d;
+
+        this.DX_ARRAYS.forEach(function(k) {
+            d[k] = self._stringArray(d[k], label + '.' + k, repairs);
+        });
+
+        if (typeof d.condition === 'string') {
+            d.condition = d.condition.trim();
+            // "Aortic dissection: consider given hypertension" -> name + note
+            var m = d.condition.match(/^([^:]{2,80}):\s+(.+)$/);
+            if (m && Array.isArray(d.supporting)) {
+                d.condition = m[1].trim();
+                d.supporting.push('Note: ' + m[2].trim());
+                repairs.push(label + '.condition contained reasoning; moved to supporting');
+            }
+        }
+
+        if (d.icd10 == null) {
+            d.icd10 = '';
+            repairs.push(label + '.icd10 missing');
+        } else {
+            d.icd10 = String(d.icd10).trim();
+        }
+
+        if (d.cant_miss === 'true' || d.cant_miss === 'false') {
+            d.cant_miss = d.cant_miss === 'true';
+            repairs.push(label + '.cant_miss was a string');
+        } else if (d.cant_miss == null) {
+            d.cant_miss = false;
+            repairs.push(label + '.cant_miss missing; set to false');
+        }
+
+        d.likelihood = this._enumValue(d.likelihood, label + '.likelihood', 'moderate', repairs);
+        return d;
+    },
+
+    _stringArray: function(v, label, repairs) {
+        if (v == null) {
+            repairs.push(label + ' missing; set to []');
+            return [];
+        }
+        if (typeof v === 'string') {
+            repairs.push(label + ' was a string');
+            return v.trim() ? [v.trim()] : [];
+        }
+        if (!Array.isArray(v)) return v; // _validate rejects it
+
+        var out = [];
+        for (var i = 0; i < v.length; i++) {
+            var x = v[i];
+            if (typeof x === 'string') {
+                if (x.trim()) out.push(x.trim());
+            } else if (typeof x === 'number' || typeof x === 'boolean') {
+                out.push(String(x));
+            } else if (x != null) {
+                repairs.push(label + '[' + i + '] was not text; dropped');
+            }
+        }
+        return out;
+    },
+
+    _enumValue: function(v, label, dflt, repairs) {
+        if (v == null || v === '') {
+            repairs.push(label + ' missing; set to ' + dflt);
+            return dflt;
+        }
+        var s = String(v).trim().toLowerCase();
+        if (s == 'medium') {
+            repairs.push(label + ' "medium" read as "moderate"');
+            return 'moderate';
+        }
+        return s;
+    },
+
+    /**
+     * The can't-miss flag must not depend on the model remembering it: any differential
+     * entry that matches a condition in the reference list is flagged.
+     */
+    _enforceCantMiss: function(result, repairs) {
+        if (!this.cantMiss.structured || !result || !Array.isArray(result.differential)) return;
+
+        var refs = [];
+        for (var i = 0; i < this.cantMiss.rows.length; i++) {
+            var ref = this._conditionKey(this.cantMiss.rows[i].condition);
+            if (ref.length >= 4 && refs.indexOf(ref) < 0) refs.push(ref);
+        }
+
+        for (var j = 0; j < result.differential.length; j++) {
+            var d = result.differential[j];
+            if (!d || typeof d.condition !== 'string' || d.cant_miss === true) continue;
+            var name = this._conditionKey(d.condition);
+            if (name.length < 4) continue;
+            for (var k = 0; k < refs.length; k++) {
+                if (name.indexOf(refs[k]) > -1 || refs[k].indexOf(name) > -1) {
+                    d.cant_miss = true;
+                    repairs.push('differential[' + j + '].cant_miss set to true (matches can\'t-miss list: ' + refs[k] + ')');
+                    break;
+                }
+            }
+        }
+    },
+
+    // "Acute coronary syndrome (ACS)" -> "acute coronary syndrome"
+    _conditionKey: function(s) {
+        return String(s || '').toLowerCase().replace(/\([^)]*\)/g, '').replace(/\s+/g, ' ').trim();
+    },
+
+    /**
+     * Strict check after _normalize.
+     * @returns {string[]} list of validation errors (empty if valid)
+     */
+    _validate: function(obj) {
+        var self = this;
+        var errors = [];
+
+        if (!obj || typeof obj !== 'object' || Array.isArray(obj)) {
+            return ['Output is not a JSON object'];
+        }
+
+        var esi = obj.suggested_esi;
+        if (typeof esi !== 'number' || esi % 1 !== 0 || esi < 1 || esi > 5) {
+            errors.push('suggested_esi must be an integer 1-5 (got: ' + esi + ')');
+        }
+        if (typeof obj.rationale !== 'string' || !obj.rationale) {
+            errors.push('rationale must be a non-empty string');
+        }
+        if (this.CONFIDENCE.indexOf(obj.confidence) < 0) {
+            errors.push('confidence must be low, moderate, or high (got: ' + obj.confidence + ')');
+        }
+        this.TOP_ARRAYS.forEach(function(k) {
+            self._checkStrings(obj[k], k, errors);
+        });
+
+        if (!Array.isArray(obj.differential)) {
+            errors.push('differential must be an array');
+        } else if (!obj.differential.length) {
+            errors.push('differential must not be empty');
+        } else {
+            for (var i = 0; i < obj.differential.length; i++) {
+                var d = obj.differential[i];
+                var label = 'differential[' + i + ']';
+                if (!d || typeof d !== 'object' || Array.isArray(d)) {
+                    errors.push(label + ' must be an object');
+                    continue;
+                }
+                if (typeof d.condition !== 'string' || !d.condition) {
+                    errors.push(label + '.condition is missing');
+                } else if (d.condition.length > 120) {
+                    errors.push(label + '.condition is longer than a condition name');
+                }
+                if (typeof d.icd10 !== 'string') errors.push(label + '.icd10 must be a string');
+                if (typeof d.cant_miss !== 'boolean') errors.push(label + '.cant_miss must be true or false');
+                if (this.LIKELIHOOD.indexOf(d.likelihood) < 0) {
+                    errors.push(label + '.likelihood must be high, moderate, or low (got: ' + d.likelihood + ')');
+                }
+                for (var j = 0; j < this.DX_ARRAYS.length; j++) {
+                    this._checkStrings(d[this.DX_ARRAYS[j]], label + '.' + this.DX_ARRAYS[j], errors);
+                }
+            }
+        }
+        return errors;
+    },
+
+    _checkStrings: function(v, label, errors) {
+        if (!Array.isArray(v)) {
+            errors.push(label + ' must be an array');
+            return;
+        }
+        for (var i = 0; i < v.length; i++) {
+            if (typeof v[i] !== 'string') {
+                errors.push(label + ' must contain only text');
+                return;
+            }
+        }
+    },
+
+    _fallback: function(reason, meta) {
+        // The rules engine still produces an ESI; the UI shows "AI analysis unavailable"
+        return {
+            available: false,
+            reason: reason,
+            meta: meta || {}
+        };
+    },
+
+    type: 'ERTriageLLM'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-22 22:25:33</sys_created_on>
+        <sys_id>1ffd2e1ac300531043d2ffbc050131f5</sys_id>
+        <sys_mod_count>19</sys_mod_count>
+        <sys_name>ERTriageLLM</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_include_1ffd2e1ac300531043d2ffbc050131f5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-12 17:48:21</sys_updated_on>
+    </sys_script_include>
+</record_update>

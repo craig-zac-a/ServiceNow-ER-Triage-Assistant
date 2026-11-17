@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field>final_esi</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>ER Policy - Override reason required</name>
+        <order/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading) {
+        return;
+    }
+    //Type appropriate comment here, and begin script below
+    updateOverrideReason();
+}
+
+function updateOverrideReason() {
+    var finalEsi = g_form.getValue('final_esi');
+    var suggested = g_form.getValue('suggested_esi');
+    var differs = finalEsi !== '' && finalEsi !== suggested;
+
+    g_form.setMandatory('override_reason', differs);
+    g_form.setDisplay('override_reason', differs);
+    if (!differs) g_form.clearValue('override_reason');
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-05 16:04:55</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>5e842132c3dc539043d2ffbc050131c1</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>ER Policy - Override reason required</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_client_5e842132c3dc539043d2ffbc050131c1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-09 18:29:18</sys_updated_on>
+        <table>x_2206627_er_tri_0_triage_assessment</table>
+        <type>onChange</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

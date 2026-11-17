@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_report_users_groups">
+    <sys_report_users_groups action="INSERT_OR_UPDATE">
+        <group_id display_value="ER Charge Nurses" name="ER Charge Nurses">f10f9f62c304d31043d2ffbc05013151</group_id>
+        <report_id display_value="Triaged patients">b59544e8c36c931043d2ffbc0501310d</report_id>
+        <sys_class_name>sys_report_users_groups</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-10 20:15:05</sys_created_on>
+        <sys_id>d37e846cc3ac931043d2ffbc050131f1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>b59544e8c36c931043d2ffbc0501310d</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_report_users_groups_d37e846cc3ac931043d2ffbc050131f1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-10 20:15:05</sys_updated_on>
+        <user_id/>
+    </sys_report_users_groups>
+</record_update>

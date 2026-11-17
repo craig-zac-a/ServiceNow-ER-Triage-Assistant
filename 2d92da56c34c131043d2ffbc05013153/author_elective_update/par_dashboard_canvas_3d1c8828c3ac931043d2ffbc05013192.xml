@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="par_dashboard_canvas">
+    <par_dashboard_canvas action="DELETE">
+        <dashboard display_value="ER Triage - Nurse Queue">59fb8028c3ac931043d2ffbc05013166</dashboard>
+        <dashboard_tab display_value="New Tab 2">751c8828c3ac931043d2ffbc0501318d</dashboard_tab>
+        <layout>[]</layout>
+        <sys_class_name>par_dashboard_canvas</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-10 20:04:37</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>3d1c8828c3ac931043d2ffbc05013192</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_overrides/>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>par_dashboard_canvas_3d1c8828c3ac931043d2ffbc05013192</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-10 20:04:37</sys_updated_on>
+    </par_dashboard_canvas>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</application>
+        <file_path/>
+        <instance_id>657464de93401fd8401cddd548373c41</instance_id>
+        <instance_name>dev458343</instance_name>
+        <merge_base/>
+        <name>par_dashboard_canvas_3d1c8828c3ac931043d2ffbc05013192</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="par_dashboard_canvas"><par_dashboard_canvas action="INSERT_OR_UPDATE"><dashboard display_value="ER Triage - Nurse Queue">59fb8028c3ac931043d2ffbc05013166</dashboard><dashboard_tab display_value="New Tab 2">751c8828c3ac931043d2ffbc0501318d</dashboard_tab><layout>[]</layout><sys_class_name>par_dashboard_canvas</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-11-10 20:04:37</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>3d1c8828c3ac931043d2ffbc05013192</sys_id><sys_mod_count>0</sys_mod_count><sys_name/><sys_overrides/><sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package><sys_policy/><sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope><sys_update_name>par_dashboard_canvas_3d1c8828c3ac931043d2ffbc05013192</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-11-10 20:04:37</sys_updated_on></par_dashboard_canvas></record_update>]]></payload>
+        <payload_hash>-1343725992</payload_hash>
+        <record_name/>
+        <reverted_from/>
+        <source>caccc890c3589f1043d2ffbc050131dd</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-10 20:04:37</sys_created_on>
+        <sys_id>b11c8828c3ac931043d2ffbc05013197</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a1c71001a00000002</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-10 20:04:37</sys_updated_on>
+        <type>PAR Dashboard Page Canvas</type>
+        <update_guid>311c882822ac9310d55c06b1c972dd96</update_guid>
+        <update_guid_history>311c882822ac9310d55c06b1c972dd96:-1343725992</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="">fff1bcb8c320571043d2ffbc050131fa</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-11 17:28:43</sys_created_on>
+        <sys_db_object display_value="" name="par_dashboard_canvas">par_dashboard_canvas</sys_db_object>
+        <sys_id>2b0b0f7531c3463dac4ba459fa5d8859</sys_id>
+        <sys_metadata>3d1c8828c3ac931043d2ffbc05013192</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_scope_delete display_value="">9ac35f9b9d704fc6ace7b0309b1d2b01</sys_scope_delete>
+        <sys_update_name>par_dashboard_canvas_3d1c8828c3ac931043d2ffbc05013192</sys_update_name>
+        <sys_update_version display_value="par_dashboard_canvas_3d1c8828c3ac931043d2ffbc05013192">b11c8828c3ac931043d2ffbc05013197</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-11 17:28:43</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

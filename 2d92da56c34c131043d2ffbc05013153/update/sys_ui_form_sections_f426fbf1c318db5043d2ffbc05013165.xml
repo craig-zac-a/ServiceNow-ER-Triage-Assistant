@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="f426fbf1c318db5043d2ffbc05013165" sys_domain="global" table="x_2206627_er_tri_0_triage_assessment" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>rahul.s</sys_created_by>
+            <sys_created_on>2026-11-03 00:03:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>bc26fbf1c318db5043d2ffbc0501316a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_2206627_er_tri_0_triage_assessment" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="Default view">f426fbf1c318db5043d2ffbc05013165</sys_ui_form>
+            <sys_ui_section caption="Triage Assessment" display_value="Triage Assessment" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="Default view">b426fbf1c318db5043d2ffbc05013150</sys_ui_section>
+            <sys_updated_by>rahul.s</sys_updated_by>
+            <sys_updated_on>2026-11-03 00:03:54</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>rahul.s</sys_created_by>
+            <sys_created_on>2026-11-03 00:03:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>b426fbf1c318db5043d2ffbc0501316c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_2206627_er_tri_0_triage_assessment" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="Default view">f426fbf1c318db5043d2ffbc05013165</sys_ui_form>
+            <sys_ui_section caption="Suggestion" display_value="Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="Default view">f826fbf1c318db5043d2ffbc05013152</sys_ui_section>
+            <sys_updated_by>rahul.s</sys_updated_by>
+            <sys_updated_on>2026-11-03 00:03:54</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>2</position>
+            <sys_created_by>rahul.s</sys_created_by>
+            <sys_created_on>2026-11-03 00:03:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>7826fbf1c318db5043d2ffbc0501318c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_2206627_er_tri_0_triage_assessment" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="Default view">f426fbf1c318db5043d2ffbc05013165</sys_ui_form>
+            <sys_ui_section caption="Reasoning" display_value="Reasoning" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="Default view">7426fbf1c318db5043d2ffbc05013154</sys_ui_section>
+            <sys_updated_by>rahul.s</sys_updated_by>
+            <sys_updated_on>2026-11-03 00:03:54</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>3</position>
+            <sys_created_by>rahul.s</sys_created_by>
+            <sys_created_on>2026-11-03 00:03:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>b826fbf1c318db5043d2ffbc05013193</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_2206627_er_tri_0_triage_assessment" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="Default view">f426fbf1c318db5043d2ffbc05013165</sys_ui_form>
+            <sys_ui_section caption="Nurse Decision" display_value="Nurse Decision" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="Default view">fc26fbf1c318db5043d2ffbc05013155</sys_ui_section>
+            <sys_updated_by>rahul.s</sys_updated_by>
+            <sys_updated_on>2026-11-03 00:03:54</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>x_2206627_er_tri_0_triage_assessment</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>rahul.s</sys_created_by>
+            <sys_created_on>2026-11-03 00:03:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f426fbf1c318db5043d2ffbc05013165</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_2206627_er_tri_0_triage_assessment</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_ui_form_sections_f426fbf1c318db5043d2ffbc05013165</sys_update_name>
+            <sys_updated_by>rahul.s</sys_updated_by>
+            <sys_updated_on>2026-11-03 00:03:54</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description/>
+        <name>ER Triage - Test Decisions and Fallback</name>
+        <record_for_rollback>true</record_for_rollback>
+        <script><![CDATA[var SCOPE = 'x_2206627_er_tri_0';
+var P = SCOPE + '_patient', E = SCOPE + '_encounter',
+    V = SCOPE + '_vitals', A = SCOPE + '_triage_assessment';
+var results = [];
+
+function check(name, ok, detail) {
+  results.push((ok ? 'PASS' : 'FAIL') + ' - ' + name + (detail ? ' (' + detail + ')' : ''));
+}
+function rec(table, id) {
+  var gr = new GlideRecord(table);
+  return gr.get(id) ? gr : null;
+}
+function newEncounter(p) {
+  var e = new GlideRecord(E);
+  e.initialize();
+  e.setValue('patient', p.getUniqueValue());
+  e.setValue('status', 'waiting_triage');
+  var encId = e.insert();
+  var v = new GlideRecord(V);
+  v.initialize();
+  v.setValue('encounter', encId);
+  v.setValue('taken_at', new GlideDateTime());
+  v.setWorkflow(false); // skip the re-triage rule; the script calls runTriage directly
+  v.insert();
+  return encId;
+}
+// Service instance with alerts turned off, so tests don't page the charge nurses
+function testService() {
+  var s = new ERTriageService();
+  s._checkAlert = function() {};
+  return s;
+}
+
+var p = new GlideRecord(P);
+if (!p.get('patient_last_name', 'StubTest')) {
+  gs.error('Test patient not found. Run ER Triage - Test High Acuity Alert first.');
+} else {
+  var svc = testService();
+
+  // TEST 1: Accept
+  var enc1 = newEncounter(p);
+  var a1 = svc.runTriage(enc1);
+  var ok1 = svc.recordDecision(a1, 'accepted');
+  var asmt1 = rec(A, a1), e1 = rec(E, enc1);
+  var sug = asmt1.getValue('suggested_esi');
+  check('Accept returns true', ok1 === true);
+  check('Accept sets nurse_decision', asmt1.getValue('nurse_decision') == 'accepted');
+  check('Accept sets final_esi = suggested_esi', asmt1.getValue('final_esi') == sug);
+  check('Accept copies ESI to encounter', e1.getValue('current_esi') == sug);
+  check('Accept sets assigned_area', e1.getValue('assigned_area') == svc._areaForEsi(parseInt(sug, 10)),
+    e1.getValue('assigned_area'));
+  check('Accept moves status to triaged', e1.getValue('status') == 'triaged');
+
+  // TEST 2: Override without a reason is rejected
+  var enc2 = newEncounter(p);
+  var a2 = svc.runTriage(enc2);
+  check('Override without reason returns false', svc.recordDecision(a2, 'overridden', 3, '') === false);
+  check('Assessment still pending', rec(A, a2).getValue('nurse_decision') == 'pending');
+
+  // TEST 3: Invalid decision value is rejected
+  check('Invalid decision returns false', svc.recordDecision(a2, 'maybe') === false);
+
+  // TEST 4: Override with a reason
+  var ok4 = svc.recordDecision(a2, 'overridden', 3, 'Test override: patient stable on reassessment');
+  var asmt2 = rec(A, a2), e2 = rec(E, enc2);
+  check('Override returns true', ok4 === true);
+  check('Override sets final_esi 3', asmt2.getValue('final_esi') == '3');
+  check('Override saves reason', !!asmt2.getValue('override_reason'));
+  check('Override copies ESI 3 to encounter', e2.getValue('current_esi') == '3');
+  check('Override sets area main_ed', e2.getValue('assigned_area') == 'main_ed');
+
+  // TEST 5: AI unavailable falls back to the rules ESI
+  var svc5 = testService();
+  svc5._runLLM = function(enc, vitals, caseText) {
+    return { available: false, reason: 'Forced test: AI unavailable', meta: {}, case_text: caseText };
+  };
+  var enc5 = newEncounter(p);
+  var a5 = svc5.runTriage(enc5);
+  var asmt5 = rec(A, a5);
+  check('Fallback writes an assessment', !!asmt5);
+  if (asmt5) {
+    check('ai_available is false', asmt5.getValue('ai_available') == '0');
+    check('Fallback reason saved', !!asmt5.getValue('ai_fallback_reason'));
+    check('suggested_esi = rule_esi', asmt5.getValue('suggested_esi') == asmt5.getValue('rule_esi'));
+    check('llm_esi is empty', !asmt5.getValue('llm_esi'));
+  }
+
+  gs.info('WS3 DECISION/FALLBACK TESTS:\n' + results.join('\n'));
+}]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-30 20:49:17</sys_created_on>
+        <sys_id>50cce3b0c39cd35043d2ffbc0501319b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ER Triage - Test Decisions and Fallback</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_fix_50cce3b0c39cd35043d2ffbc0501319b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-30 20:49:17</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+</record_update>

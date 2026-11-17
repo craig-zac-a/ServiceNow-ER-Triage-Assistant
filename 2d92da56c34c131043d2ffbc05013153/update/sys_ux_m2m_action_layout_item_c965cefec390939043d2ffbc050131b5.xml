@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_m2m_action_layout_item">
+    <sys_ux_m2m_action_layout_item action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <animate_icon>false</animate_icon>
+        <display_type>1</display_type>
+        <icon/>
+        <order>100</order>
+        <sys_class_name>sys_ux_m2m_action_layout_item</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-05 18:25:13</sys_created_on>
+        <sys_id>c965cefec390939043d2ffbc050131b5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_ux_m2m_action_layout_item_c965cefec390939043d2ffbc050131b5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-05 18:25:13</sys_updated_on>
+        <table/>
+        <ux_form_action_layout display_value="x_2206627_er_tri_0_encounter layout">0d65cefec390939043d2ffbc050131ac</ux_form_action_layout>
+        <ux_form_action_layout_item display_value="Compose Email">04dd22af93b9121004e40b27648918dd</ux_form_action_layout_item>
+        <variant>secondary</variant>
+    </sys_ux_m2m_action_layout_item>
+</record_update>

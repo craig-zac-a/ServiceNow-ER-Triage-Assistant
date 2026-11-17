@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="vital_name" table="x_2206627_er_tri_0_vital_thr" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>vital_name</element>
+            <name>x_2206627_er_tri_0_vital_thr</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:00:20</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>vital_name</sys_name>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_choice_x_2206627_er_tri_0_vital_thr_vital_name</sys_update_name>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:00:20</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>vital_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Heart Rate</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_vital_thr</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:46</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:46</sys_updated_on>
+            <value>heart_rate</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>vital_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Systolic BP</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_vital_thr</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:46</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:46</sys_updated_on>
+            <value>systolic_bp</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>vital_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Diastolic BP</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_vital_thr</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:46</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:46</sys_updated_on>
+            <value>diastolic_bp</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>vital_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Respiratory Rate</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_vital_thr</name>
+            <sequence>4</sequence>
+            <synonyms/>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:46</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:46</sys_updated_on>
+            <value>resp_rate</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>vital_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>SpO2</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_vital_thr</name>
+            <sequence>5</sequence>
+            <synonyms/>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:46</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:46</sys_updated_on>
+            <value>spo2</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>vital_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Temperature</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_vital_thr</name>
+            <sequence>6</sequence>
+            <synonyms/>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:48:46</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:48:46</sys_updated_on>
+            <value>temperature</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

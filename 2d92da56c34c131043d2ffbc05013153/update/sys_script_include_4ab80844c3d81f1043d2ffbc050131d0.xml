@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_2206627_er_tri_0.ERTriageRules</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ERTriageRules</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var ERTriageRules = Class.create();
+ERTriageRules.prototype = {
+    initialize: function() {},
+
+    /**
+     * CONTRACT (do not change without telling the team)
+     * @param {GlideRecord} encounterGr - Encounter record
+     * @param {GlideRecord|null} vitalsGr - latest Vitals record, or null
+     * @returns {object} {
+     *   esi: integer 1-5,
+     *   decision_point: 'A' | 'B' | 'C' | 'D',
+     *   triggers: string[],
+     *   resources_estimated: integer,
+     *   danger_zone: boolean,
+     *   missing: string[],
+     *   stub: boolean
+     * }
+     */
+    evaluate: function(encounterGr, vitalsGr) {
+        var result = {
+            esi: 5,
+            decision_point: 'C',
+            triggers: [],
+            resources_estimated: 0,
+            danger_zone: false,
+            missing: [],
+            stub: false
+        };
+
+        // ── Extract encounter data ──────────────────────────
+        var complaint = '' + (encounterGr.getValue('chief_complaint') || '');
+        var triageNote = '' + (encounterGr.getValue('triage_note') || '');
+        var pregnancyStatus = '' + (encounterGr.getValue('pregnancy_status') || '');
+        var ageMonths = parseInt(encounterGr.getValue('age_months'), 10);
+        if (isNaN(ageMonths)) {
+            ageMonths = -1;
+        }
+        var combinedText = (complaint + ' ' + triageNote).toLowerCase();
+
+        // ── Extract patient flags ───────────────────────────
+        var patientFlags = this._getPatientFlags(encounterGr);
+
+        // ── Extract vitals ──────────────────────────────────
+        var vitals = this._extractVitals(vitalsGr, result);
+
+        // ── Decision Point A (ESI 1 – immediate life-saving) ─
+        var pointA = this._evaluatePointA(vitals, combinedText, result);
+        if (pointA) {
+            return result;
+        }
+
+        // ── Decision Point B (ESI 2 – high-risk) ────────────
+        var pointB = this._evaluatePointB(vitals, combinedText, complaint, patientFlags, pregnancyStatus, result);
+        if (pointB) {
+            return result;
+        }
+
+        // ── Decision Point C (ESI 3/4/5 – resource estimation) ──
+        this._evaluatePointC(complaint, combinedText, vitals, result);
+
+        // ── Decision Point D (upgrade ESI 3/4/5 → ESI 2 on danger-zone vitals) ──
+        if (result.esi >= 3) {
+            this._evaluatePointD(vitals, ageMonths, result);
+        }
+
+        return result;
+    },
+
+    // ====================================================================
+    // PRIVATE: Extract patient flags from the referenced patient record
+    // ====================================================================
+    _getPatientFlags: function(encounterGr) {
+        var flags = {
+            diabetic: false,
+            on_anticoagulant: false,
+            immunosuppressed: false,
+            cardiac_history: false
+        };
+
+        var patientRef = encounterGr.getValue('patient');
+        if (!patientRef) {
+            return flags;
+        }
+
+        var patGr = new GlideRecord('x_2206627_er_tri_0_patient');
+        if (patGr.get(patientRef)) {
+            flags.diabetic = patGr.getValue('diabetic') == '1' || patGr.getValue('diabetic') == 'true';
+            flags.on_anticoagulant = patGr.getValue('on_anticoagulant') == '1' || patGr.getValue('on_anticoagulant') == 'true';
+            flags.immunosuppressed = patGr.getValue('immunosuppressed') == '1' || patGr.getValue('immunosuppressed') == 'true';
+            flags.cardiac_history = patGr.getValue('cardiac_history') == '1' || patGr.getValue('cardiac_history') == 'true';
+        }
+
+        return flags;
+    },
+
+    // ====================================================================
+    // PRIVATE: Extract vitals from vitals GlideRecord
+    // ====================================================================
+    _extractVitals: function(vitalsGr, result) {
+        var vitals = {
+            gcs: null,
+            spo2: null,
+            systolic_bp: null,
+            diastolic_bp: null,
+            resp_rate: null,
+            heart_rate: null,
+            temperature: null,
+            pain_score: null
+        };
+
+        if (!vitalsGr) {
+            result.missing.push('No vitals recorded');
+            return vitals;
+        }
+
+        var fieldMap = {
+            gcs: 'GCS',
+            spo2: 'SpO2',
+            systolic_bp: 'Systolic BP',
+            diastolic_bp: 'Diastolic BP',
+            resp_rate: 'Respiratory Rate',
+            heart_rate: 'Heart Rate',
+            temperature: 'Temperature',
+            pain_score: 'Pain Score'
+        };
+
+        var key;
+        for (key in fieldMap) {
+            if (fieldMap.hasOwnProperty(key)) {
+                var raw = vitalsGr.getValue(key);
+                if (raw !== null && raw !== '' && raw !== undefined) {
+                    var parsed = parseFloat(raw);
+                    if (!isNaN(parsed)) {
+                        vitals[key] = parsed;
+                    } else {
+                        result.missing.push(fieldMap[key] + ' not recorded');
+                    }
+                } else {
+                    result.missing.push(fieldMap[key] + ' not recorded');
+                }
+            }
+        }
+
+        return vitals;
+    },
+
+    // ====================================================================
+    // Decision Point A — ESI 1 (immediate life-saving intervention)
+    // ====================================================================
+    _evaluatePointA: function(vitals, combinedText, result) {
+        // GCS <= 8
+        if (vitals.gcs !== null && vitals.gcs <= 8) {
+            result.esi = 1;
+            result.decision_point = 'A';
+            result.triggers.push('GCS ' + vitals.gcs + ' (<=8, comatose)');
+            return true;
+        }
+
+        // SpO2 < 85 (critically low)
+        if (vitals.spo2 !== null && vitals.spo2 < 85) {
+            result.esi = 1;
+            result.decision_point = 'A';
+            result.triggers.push('SpO2 ' + vitals.spo2 + '% (<85%, critical hypoxia)');
+            return true;
+        }
+
+        // SBP < 70 (profound hypotension)
+        if (vitals.systolic_bp !== null && vitals.systolic_bp < 70) {
+            result.esi = 1;
+            result.decision_point = 'A';
+            result.triggers.push('SBP ' + vitals.systolic_bp + ' (<70, profound hypotension)');
+            return true;
+        }
+
+        // Respiratory rate <= 4 or == 0 (apnea/near-apnea)
+        if (vitals.resp_rate !== null && vitals.resp_rate <= 4) {
+            result.esi = 1;
+            result.decision_point = 'A';
+            result.triggers.push('Resp rate ' + vitals.resp_rate + ' (<=4, apnea/near-apnea)');
+            return true;
+        }
+
+        // Keywords for ESI 1
+        var esi1Keywords = ['cardiac arrest', 'unresponsive', 'not breathing'];
+        var i;
+        for (i = 0; i < esi1Keywords.length; i++) {
+            if (combinedText.indexOf(esi1Keywords[i]) >= 0) {
+                result.esi = 1;
+                result.decision_point = 'A';
+                result.triggers.push('Keyword: "' + esi1Keywords[i] + '" (immediate life threat)');
+                return true;
+            }
+        }
+
+        return false;
+    },
+
+    // ====================================================================
+    // Decision Point B — ESI 2 (high-risk situation)
+    // ====================================================================
+    _evaluatePointB: function(vitals, combinedText, complaint, patientFlags, pregnancyStatus, result) {
+        var triggered = false;
+        var triggers = [];
+
+        // ── High-risk keywords from config table ────────────
+        var kwGr = new GlideRecord('x_2206627_er_tri_0_risk_kw');
+        kwGr.addQuery('active', true);
+        kwGr.query();
+
+        while (kwGr.next()) {
+            var kw = ('' + kwGr.getValue('keyword')).toLowerCase();
+            var esiLevel = parseInt(kwGr.getValue('esi_level'), 10);
+
+            // Skip ESI 1 keywords (handled in Point A)
+            if (esiLevel === 1) {
+                continue;
+            }
+
+            if (combinedText.indexOf(kw) >= 0) {
+                var reqFlag = '' + (kwGr.getValue('requires_flag') || '');
+
+                if (reqFlag && reqFlag !== '' && reqFlag !== 'null') {
+                    // Only trigger if patient has the required flag
+                    if (patientFlags[reqFlag]) {
+                        triggers.push('High-risk keyword: "' + kw + '" (with flag: ' + reqFlag + ')');
+                        triggered = true;
+                    }
+                } else {
+                    triggers.push('High-risk keyword: "' + kw + '"');
+                    triggered = true;
+                }
+            }
+        }
+
+        // ── Severe pain (pain_score >= 8) ───────────────────
+        if (vitals.pain_score !== null && vitals.pain_score >= 8) {
+            triggers.push('Severe pain (score: ' + vitals.pain_score + ')');
+            triggered = true;
+        }
+
+        // ── GCS 9-13 (altered but not comatose) ────────────
+        if (vitals.gcs !== null && vitals.gcs >= 9 && vitals.gcs <= 13) {
+            triggers.push('GCS ' + vitals.gcs + ' (altered mental status)');
+            triggered = true;
+        }
+
+        // ── Pregnancy + abdominal pain ──────────────────────
+        var isPregnant = pregnancyStatus === 'pregnant' || pregnancyStatus === 'possible';
+        var hasAbdPain = combinedText.indexOf('abdominal pain') >= 0;
+        if (isPregnant && hasAbdPain) {
+            triggers.push('Pregnant patient with abdominal pain');
+            triggered = true;
+        }
+
+        // ── Known cardiac history + relevant complaint ──────
+        if (patientFlags.cardiac_history) {
+            if (combinedText.indexOf('chest pain') >= 0 || combinedText.indexOf('shortness of breath') >= 0) {
+                triggers.push('Cardiac history with ' + (combinedText.indexOf('chest pain') >= 0 ? 'chest pain' : 'shortness of breath'));
+                triggered = true;
+            }
+        }
+
+        if (triggered) {
+            result.esi = 2;
+            result.decision_point = 'B';
+            result.triggers = result.triggers.concat(triggers);
+            return true;
+        }
+
+        return false;
+    },
+
+    // ====================================================================
+    // Decision Point C — ESI 3/4/5 (resource-based)
+    // ====================================================================
+    _evaluatePointC: function(complaint, combinedText, vitals, result) {
+        var resources = this._estimateResources(combinedText, vitals);
+        result.resources_estimated = resources;
+
+        if (resources >= 2) {
+            result.esi = 3;
+        } else if (resources === 1) {
+            result.esi = 4;
+        } else {
+            result.esi = 5;
+        }
+
+        result.decision_point = 'C';
+        result.triggers.push('Estimated resources: ' + resources);
+    },
+
+    // ====================================================================
+    // Resource estimation helper
+    // ====================================================================
+    _estimateResources: function(combinedText, vitals) {
+        // Order matters — check more specific patterns first
+
+        if (combinedText.indexOf('chest pain') >= 0) {
+            return 2; // ECG + troponin + imaging
+        }
+
+        if (combinedText.indexOf('abdominal pain') >= 0) {
+            return 2; // labs + imaging
+        }
+
+        if (combinedText.indexOf('shortness of breath') >= 0 || combinedText.indexOf('difficulty breathing') >= 0) {
+            return 2; // CXR + labs
+        }
+
+        if (combinedText.indexOf('headache') >= 0) {
+            // Severe headache -> more resources
+            if (vitals.pain_score !== null && vitals.pain_score >= 7) {
+                return 2;
+            }
+            return 1;
+        }
+
+        if (combinedText.indexOf('altered mental status') >= 0) {
+            return 2; // labs + CT
+        }
+
+        if (combinedText.indexOf('fever') >= 0) {
+            return 2; // labs + cultures
+        }
+
+        if (combinedText.indexOf('laceration') >= 0 || combinedText.indexOf('cut') >= 0) {
+            return 1; // sutures
+        }
+
+        if (combinedText.indexOf('sprain') >= 0 || combinedText.indexOf('strain') >= 0) {
+            return 1; // xray
+        }
+
+        if (combinedText.indexOf('rash') >= 0) {
+            return 0;
+        }
+
+        if (combinedText.indexOf('medication refill') >= 0 || combinedText.indexOf('prescription') >= 0) {
+            return 0;
+        }
+
+        if (combinedText.indexOf('sore throat') >= 0 || combinedText.indexOf('cold') >= 0 || combinedText.indexOf('cough') >= 0) {
+            // Simple URI — possibly 1 resource (rapid strep)
+            return 1;
+        }
+
+        // Default: 1 resource -> ESI 4
+        return 1;
+    },
+
+    // ====================================================================
+    // Decision Point D — Danger zone vital check (upgrade ESI 3/4/5 → 2)
+    // ====================================================================
+    _evaluatePointD: function(vitals, ageMonths, result) {
+        if (ageMonths < 0) {
+            result.missing.push('Age not available for danger zone check');
+            return;
+        }
+
+        // If no vitals at all, can't do the check — don't lower acuity
+        var hasAnyVital = (vitals.heart_rate !== null || vitals.resp_rate !== null ||
+            vitals.spo2 !== null || vitals.temperature !== null ||
+            vitals.systolic_bp !== null);
+
+        if (!hasAnyVital) {
+            result.missing.push('Cannot perform danger zone check without vitals');
+            return;
+        }
+
+        // Load thresholds from the vital_threshold config table
+        var thresholds = this._loadThresholds(ageMonths);
+
+        if (thresholds.length === 0) {
+            result.missing.push('No vital thresholds configured for age ' + ageMonths + ' months');
+            return;
+        }
+
+        var dangerTriggers = [];
+        var severe = false;
+        var i, t;
+
+        for (i = 0; i < thresholds.length; i++) {
+            t = thresholds[i];
+            var vitalValue = vitals[t.vital_name];
+            if (vitalValue === null) continue;
+
+            if (t.low_danger !== null && vitalValue < t.low_danger) {
+                dangerTriggers.push(t.vital_name + ' ' + vitalValue + ' < ' + t.low_danger + ' (low danger)');
+                severe = true; // low values are never treated as mild
+            }
+            if (t.high_danger !== null && vitalValue > t.high_danger) {
+                dangerTriggers.push(t.vital_name + ' ' + vitalValue + ' > ' + t.high_danger + ' (high danger)');
+                // "mild" = within MILD_MARGIN of the threshold
+                if (vitalValue > t.high_danger * (1 + this.MILD_MARGIN)) severe = true;
+            }
+        }
+
+        // A single mild elevation, with normal SpO2 and nothing else abnormal, does not upgrade
+        var isAdult = ageMonths > 96;
+        var isolatedMild = isAdult && dangerTriggers.length === 1 && !severe &&
+            (vitals.spo2 === null || vitals.spo2 >= 94);
+
+        if (dangerTriggers.length > 0 && !isolatedMild) {
+            result.esi = 2;
+            result.decision_point = 'D';
+            result.danger_zone = true;
+            result.triggers = result.triggers.concat(dangerTriggers);
+        } else if (isolatedMild) {
+            // Record it for the nurse, but keep the resource-based level
+            result.triggers.push('Mild isolated vital not upgraded: ' + dangerTriggers[0]);
+        }
+    },
+
+    // ====================================================================
+    // Load vital thresholds for an age band
+    // ====================================================================
+    _loadThresholds: function(ageMonths) {
+        var thresholds = [];
+
+        var gr = new GlideRecord('x_2206627_er_tri_0_vital_thr');
+        gr.addQuery('active', true);
+        gr.addQuery('min_age_months', '<=', ageMonths);
+        gr.addQuery('max_age_months', '>=', ageMonths);
+        gr.query();
+
+        while (gr.next()) {
+            var lowVal = gr.getValue('low_danger');
+            var highVal = gr.getValue('high_danger');
+
+            thresholds.push({
+                vital_name: '' + gr.getValue('vital_name'),
+                low_danger: (lowVal !== null && lowVal !== '') ? parseFloat(lowVal) : null,
+                high_danger: (highVal !== null && highVal !== '') ? parseFloat(highVal) : null
+            });
+        }
+
+        return thresholds;
+    },
+	
+	MILD_MARGIN: 0.20,
+
+    type: 'ERTriageRules'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-27 20:20:34</sys_created_on>
+        <sys_id>4ab80844c3d81f1043d2ffbc050131d0</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>ERTriageRules</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_include_4ab80844c3d81f1043d2ffbc050131d0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-09 18:27:07</sys_updated_on>
+    </sys_script_include>
+</record_update>

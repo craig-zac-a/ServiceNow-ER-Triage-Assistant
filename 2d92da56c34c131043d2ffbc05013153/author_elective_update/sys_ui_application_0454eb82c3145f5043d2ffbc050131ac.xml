@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_application">
+    <sys_ui_application action="DELETE">
+        <active>true</active>
+        <hint/>
+        <name>ER Triage</name>
+        <order>100</order>
+        <roles/>
+        <sys_class_name>sys_ui_application</sys_class_name>
+        <sys_created_by>rahul.s</sys_created_by>
+        <sys_created_on>2026-11-03 17:30:19</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>0454eb82c3145f5043d2ffbc050131ac</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ER Triage</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_ui_application_0454eb82c3145f5043d2ffbc050131ac</sys_update_name>
+        <sys_updated_by>rahul.s</sys_updated_by>
+        <sys_updated_on>2026-11-03 17:30:19</sys_updated_on>
+    </sys_ui_application>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</application>
+        <file_path/>
+        <instance_id>657464de93401fd8401cddd548373c41</instance_id>
+        <instance_name>dev458343</instance_name>
+        <merge_base/>
+        <name>sys_ui_application_0454eb82c3145f5043d2ffbc050131ac</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_application"><sys_ui_application action="INSERT_OR_UPDATE"><active>true</active><hint/><name>ER Triage</name><order>100</order><roles/><sys_class_name>sys_ui_application</sys_class_name><sys_created_by>rahul.s</sys_created_by><sys_created_on>2026-11-03 17:30:19</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>0454eb82c3145f5043d2ffbc050131ac</sys_id><sys_mod_count>0</sys_mod_count><sys_name>ER Triage</sys_name><sys_overrides/><sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package><sys_policy/><sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope><sys_update_name>sys_ui_application_0454eb82c3145f5043d2ffbc050131ac</sys_update_name><sys_updated_by>rahul.s</sys_updated_by><sys_updated_on>2026-11-03 17:30:19</sys_updated_on></sys_ui_application></record_update>]]></payload>
+        <payload_hash>1302008695</payload_hash>
+        <record_name>ER Triage</record_name>
+        <reverted_from/>
+        <source>9e9a56f9c35c9b5043d2ffbc05013112</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>rahul.s</sys_created_by>
+        <sys_created_on>2026-11-03 17:30:19</sys_created_on>
+        <sys_id>11a5af46c3145f5043d2ffbc050131c5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a1a2763ab50000001</sys_recorded_at>
+        <sys_updated_by>rahul.s</sys_updated_by>
+        <sys_updated_on>2026-11-03 17:30:19</sys_updated_on>
+        <type>Application Menu</type>
+        <update_guid>dda5af464a145f5004be4cf988642dc3</update_guid>
+        <update_guid_history>dda5af464a145f5004be4cf988642dc3:1302008695</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>rahul.s</sys_created_by>
+        <sys_created_on>2026-11-03 18:44:56</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_application">sys_ui_application</sys_db_object>
+        <sys_id>0d80b13ac844453b80db44cbc313e071</sys_id>
+        <sys_metadata>0454eb82c3145f5043d2ffbc050131ac</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ER Triage</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_scope_delete display_value="">9ac35f9b9d704fc6ace7b0309b1d2b01</sys_scope_delete>
+        <sys_update_name>sys_ui_application_0454eb82c3145f5043d2ffbc050131ac</sys_update_name>
+        <sys_update_version display_value="sys_ui_application_0454eb82c3145f5043d2ffbc050131ac">11a5af46c3145f5043d2ffbc050131c5</sys_update_version>
+        <sys_updated_by>rahul.s</sys_updated_by>
+        <sys_updated_on>2026-11-03 18:44:56</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

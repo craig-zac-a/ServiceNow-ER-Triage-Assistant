@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description/>
+        <name>ER Triage - Populate Config Tables</name>
+        <record_for_rollback>true</record_for_rollback>
+        <script><![CDATA[(function() {
+  // ─── Vital Thresholds ─────────────────────────────────
+  var VT = 'x_2206627_er_tri_0_vital_thr';
+  var bands = [
+    { label: 'Neonate (0-3 months)', min: 0, max: 3, vitals: [
+      { name: 'heart_rate', low: 100, high: 180 },
+      { name: 'resp_rate', low: null, high: 50 },
+      { name: 'spo2', low: 92, high: null },
+      { name: 'temperature', low: 36.0, high: 38.2 }
+    ]},
+    { label: 'Infant/Toddler (3-36 months)', min: 3, max: 36, vitals: [
+      { name: 'heart_rate', low: 80, high: 160 },
+      { name: 'resp_rate', low: null, high: 40 },
+      { name: 'spo2', low: 92, high: null },
+      { name: 'temperature', low: 36.0, high: 38.5 }
+    ]},
+    { label: 'Child (3-8 years)', min: 36, max: 96, vitals: [
+      { name: 'heart_rate', low: 60, high: 140 },
+      { name: 'resp_rate', low: null, high: 30 },
+      { name: 'spo2', low: 92, high: null },
+      { name: 'temperature', low: 36.0, high: 38.5 }
+    ]},
+    { label: 'Adolescent (8-16 years)', min: 96, max: 192, vitals: [
+      { name: 'heart_rate', low: 50, high: 120 },
+      { name: 'resp_rate', low: null, high: 24 },
+      { name: 'spo2', low: 92, high: null },
+      { name: 'temperature', low: 36.0, high: 38.5 }
+    ]},
+    { label: 'Adult (16+ years)', min: 192, max: 9999, vitals: [
+      { name: 'heart_rate', low: 50, high: 100 },
+      { name: 'resp_rate', low: null, high: 20 },
+      { name: 'spo2', low: 92, high: null },
+      { name: 'temperature', low: 36.0, high: 38.5 },
+      { name: 'systolic_bp', low: 100, high: 180 }
+    ]}
+  ];
+  var vtCount = 0;
+  for (var b = 0; b < bands.length; b++) {
+    var band = bands[b];
+    for (var v = 0; v < band.vitals.length; v++) {
+      var vt = band.vitals[v];
+      var gr = new GlideRecord(VT);
+      gr.addQuery('age_band_label', band.label);
+      gr.addQuery('vital_name', vt.name);
+      gr.query();
+      if (gr.next()) continue;
+      gr.initialize();
+      gr.setValue('age_band_label', band.label);
+      gr.setValue('min_age_months', band.min);
+      gr.setValue('max_age_months', band.max);
+      gr.setValue('vital_name', vt.name);
+      if (vt.low !== null) gr.setValue('low_danger', vt.low);
+      if (vt.high !== null) gr.setValue('high_danger', vt.high);
+      gr.setValue('active', true);
+      gr.insert();
+      vtCount++;
+    }
+  }
+
+  // ─── High-Risk Keywords ───────────────────────────────
+  var KW = 'x_2206627_er_tri_0_risk_kw';
+  var keywords = [
+    { kw: 'cardiac arrest', esi: 1, flag: '' },
+    { kw: 'unresponsive', esi: 1, flag: '' },
+    { kw: 'not breathing', esi: 1, flag: '' },
+    { kw: 'chest pain', esi: 2, flag: '' },
+    { kw: 'stroke', esi: 2, flag: '' },
+    { kw: 'suicidal', esi: 2, flag: '' },
+    { kw: 'anaphylaxis', esi: 2, flag: '' },
+    { kw: 'seizure', esi: 2, flag: '' },
+    { kw: 'shortness of breath', esi: 2, flag: '' },
+    { kw: 'difficulty breathing', esi: 2, flag: '' },
+    { kw: 'altered mental status', esi: 2, flag: '' },
+    { kw: 'abdominal pain', esi: 2, flag: '' },
+    { kw: 'indigestion', esi: 2, flag: 'diabetic' },
+    { kw: 'heartburn', esi: 2, flag: 'diabetic' },
+    { kw: 'head injury', esi: 2, flag: 'on_anticoagulant' },
+    { kw: 'head trauma', esi: 2, flag: 'on_anticoagulant' },
+    { kw: 'fall', esi: 2, flag: 'on_anticoagulant' },
+    { kw: 'fever', esi: 2, flag: 'immunosuppressed' }
+  ];
+  var kwCount = 0;
+  for (var k = 0; k < keywords.length; k++) {
+    var kd = keywords[k];
+    var kg = new GlideRecord(KW);
+    kg.addQuery('keyword', kd.kw);
+    kg.query();
+    if (kg.next()) continue;
+    kg.initialize();
+    kg.setValue('keyword', kd.kw);
+    kg.setValue('esi_level', kd.esi);
+    if (kd.flag) kg.setValue('requires_flag', kd.flag);
+    kg.setValue('active', true);
+    kg.insert();
+    kwCount++;
+  }
+
+  // ─── Can't-Miss Conditions ────────────────────────────
+  var CM = 'x_2206627_er_tri_0_cant_miss';
+  var conditions = [
+    { cat: 'chest pain', name: 'Acute coronary syndrome', icd: 'I24.9' },
+    { cat: 'chest pain', name: 'Pulmonary embolism', icd: 'I26.99' },
+    { cat: 'chest pain', name: 'Aortic dissection', icd: 'I71.00' },
+    { cat: 'chest pain', name: 'Tension pneumothorax', icd: 'J93.0' },
+    { cat: 'headache', name: 'Subarachnoid hemorrhage', icd: 'I60.9' },
+    { cat: 'headache', name: 'Meningitis', icd: 'G03.9' },
+    { cat: 'headache', name: 'Stroke', icd: 'I63.9' },
+    { cat: 'abdominal pain', name: 'Appendicitis', icd: 'K35.80' },
+    { cat: 'abdominal pain', name: 'Ectopic pregnancy', icd: 'O00.90' },
+    { cat: 'abdominal pain', name: 'Abdominal aortic aneurysm', icd: 'I71.4' },
+    { cat: 'abdominal pain', name: 'Bowel obstruction', icd: 'K56.69' },
+    { cat: 'shortness of breath', name: 'Pulmonary embolism', icd: 'I26.99' },
+    { cat: 'shortness of breath', name: 'Heart failure', icd: 'I50.9' },
+    { cat: 'shortness of breath', name: 'Asthma exacerbation', icd: 'J45.901' },
+    { cat: 'shortness of breath', name: 'Anaphylaxis', icd: 'T78.2' },
+    { cat: 'altered mental status', name: 'Hypoglycemia', icd: 'E16.2' },
+    { cat: 'altered mental status', name: 'Sepsis', icd: 'A41.9' },
+    { cat: 'altered mental status', name: 'Stroke', icd: 'I63.9' },
+    { cat: 'altered mental status', name: 'Overdose', icd: 'T50.901A' },
+    { cat: 'fever', name: 'Sepsis', icd: 'A41.9' },
+    { cat: 'fever', name: 'Meningitis', icd: 'G03.9' }
+  ];
+  var cmCount = 0;
+  for (var c = 0; c < conditions.length; c++) {
+    var cd = conditions[c];
+    var cg = new GlideRecord(CM);
+    cg.addQuery('complaint_category', cd.cat);
+    cg.addQuery('condition_name', cd.name);
+    cg.query();
+    if (cg.next()) continue;
+    cg.initialize();
+    cg.setValue('complaint_category', cd.cat);
+    cg.setValue('condition_name', cd.name);
+    cg.setValue('icd10', cd.icd);
+    cg.setValue('active', true);
+    cg.insert();
+    cmCount++;
+  }
+
+  gs.info('Populated: ' + vtCount + ' vital thresholds, ' +
+    kwCount + ' high-risk keywords, ' + cmCount + ' cant-miss conditions');
+})();]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>eric.k</sys_created_by>
+        <sys_created_on>2026-10-29 15:01:51</sys_created_on>
+        <sys_id>9c83d524c3dc135043d2ffbc05013146</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ER Triage - Populate Config Tables</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_fix_9c83d524c3dc135043d2ffbc05013146</sys_update_name>
+        <sys_updated_by>eric.k</sys_updated_by>
+        <sys_updated_on>2026-10-29 15:01:51</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+</record_update>

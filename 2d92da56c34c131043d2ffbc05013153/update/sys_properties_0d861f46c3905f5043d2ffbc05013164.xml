@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>Version of the clinical system prompt. Bump whenever llm_system_prompt changes; written to every Triage Assessment.</description>
+        <ignore_cache>false</ignore_cache>
+        <is_private>false</is_private>
+        <name>x_2206627_er_tri_0.llm_prompt_version</name>
+        <read_roles/>
+        <suffix>llm_prompt_version</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>mihir.k</sys_created_by>
+        <sys_created_on>2026-11-03 16:24:13</sys_created_on>
+        <sys_id>0d861f46c3905f5043d2ffbc05013164</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_2206627_er_tri_0.llm_prompt_version</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_properties_0d861f46c3905f5043d2ffbc05013164</sys_update_name>
+        <sys_updated_by>mihir.k</sys_updated_by>
+        <sys_updated_on>2026-11-03 16:24:13</sys_updated_on>
+        <type>string</type>
+        <value>v1.0</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=0d861f46c3905f5043d2ffbc05013164"/>
+</record_update>

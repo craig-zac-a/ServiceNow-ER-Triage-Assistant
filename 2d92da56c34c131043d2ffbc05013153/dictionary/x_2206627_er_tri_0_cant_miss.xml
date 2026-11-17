@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="76d84f0ec9ee4b73a5e0530ea9ccc0fb" label="Cant Miss Condition" name="x_2206627_er_tri_0_cant_miss" type="collection">
+        <element default="true" label="Active" name="active" type="boolean"/>
+        <element label="Complaint Category" mandatory="true" max_length="100" name="complaint_category" type="string"/>
+        <element display="true" label="Condition" mandatory="true" max_length="200" name="condition_name" type="string"/>
+        <element label="ICD-10 Code" max_length="20" name="icd10" type="string"/>
+        <element default="javascript:getNextObjNumberPadded();" label="Number" name="number" type="string"/>
+    </element>
+</database>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="par_dashboard_widget">
+    <par_dashboard_widget action="INSERT_OR_UPDATE">
+        <canvas display_value="">790f88acc3ac931043d2ffbc050131ce</canvas>
+        <component display_value="List">7ff373544303121093711347efb8f23c</component>
+        <component_props>{"metrics":[{"aggregateFunction":"COUNT","axisId":"primary","dataSource":"dGFibGVpbmNpZGVudDE3MzYzNjA0MzU5NjM=","id":"ZEdGaWJHVnBibU5wWkdWdWRERTNNell6TmpBME16VTVOak09MTczNjM2MDQzNjgwMQ==","numberFormat":{"customFormat":false}}],"showHeader":true,"wrapTitle":false,"showHeaderSeparator":false,"contextMenuActions":[],"headingLevel":2,"limit":10,"columnLimit":0,"maxCharLimit":40,"columnPreferenceKey":"","showPersonalization":false,"hideDotwalk":false,"showColumnReorder":true,"showColumnGrouping":true,"showColumnResizing":true,"showColumnFiltering":false,"showColumnSorting":true,"parFilter":"","allowAdditionalGroupByPerMetric":false,"groupBy":[],"sortBy":null,"sortByOrder":"ORDERBY","followFilters":true,"showFilterIcon":true,"enableRealTimeUpdate":false,"enableDrilldown":true,"enableCustomEmptyState":false,"componentId":"5c30jcib","emptyStateIllustration":"no-data","emptyStateHeading":"No data available.","emptyStateHeadingLevel":3,"emptyStateContent":"There are no scores available for the selected criteria. Contact your admin for more info.","emptyStateAlignment":"vertical-centered","filterConfigurations":[],"columns":"number,patient,chief_complaint,status,current_esi,arrival_time,reassessment_overdue,assigned_area","table":"x_2206627_er_tri_0_encounter","groupByField":"","showLinks":true,"wrapCellContent":"wrapOff","showViewAll":false,"showRecordCount":false,"showInlineEditing":false,"allowListPagination":false,"fetchHighlightedValues":true,"highlightedValueConfigId":"","lineClamp":1,"headerTitleAlignment":"center","headerTitle":"Untriaged and Overdue","showBorder":false,"showExportOption":true,"dataSources":[{"isDatabaseView":false,"allowRealTime":true,"label":"Encounter","sourceType":"table","tableOrViewName":"x_2206627_er_tri_0_encounter","filterQuery":"status=waiting_triage^NQreassessment_overdue=true^ORDERBYreassessment_overdue^ORDERBYDESCcurrent_esi^ORDERBYarrival_time","preferredVisualizations":["d24d53f60350de7a652caf3188a46ed2"],"id":"dGFibGV4XzIyMDY2MjdfZXJfdHJpXzBfZW5jb3VudGVyMTc5NDQxNDk1MjkwOA==","dataCategories":["trend","group","simple"]}],"bareBorder":true,"headerColor":null,"titleColor":null,"additionalGroupByConfig":[],"showAdditionalGroupBySelector":false,"parFilterConfig":[]}</component_props>
+        <h>15</h>
+        <name/>
+        <required_translations>[{"comment":"","message":"No data available.","code":"PAR_DASHBOARD.790f88acc3ac931043d2ffbc050131ce.412ca0fcc3ec171043d2ffbc05013176"},{"comment":"","message":"There are no scores available for the selected criteria. Contact your admin for more info.","code":"PAR_DASHBOARD.790f88acc3ac931043d2ffbc050131ce.412ca0fcc3ec171043d2ffbc05013176"},{"comment":"","message":"Untriaged and Overdue","code":"PAR_DASHBOARD.790f88acc3ac931043d2ffbc050131ce.412ca0fcc3ec171043d2ffbc05013176"},{"comment":"","message":"Encounter","code":"PAR_DASHBOARD.790f88acc3ac931043d2ffbc050131ce.412ca0fcc3ec171043d2ffbc05013176"}]</required_translations>
+        <stored_component/>
+        <sys_class_name>par_dashboard_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-11 17:03:08</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>412ca0fcc3ec171043d2ffbc05013176</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name/>
+        <sys_overrides/>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>par_dashboard_widget_412ca0fcc3ec171043d2ffbc05013176</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-11 18:40:41</sys_updated_on>
+        <visualization/>
+        <w>27</w>
+        <widget_props>{"showHeader":true,"headerColor":null,"titleColor":null,"headerTitle":"Untriaged and Overdue","headerTitleAlignment":"center","showBorder":false,"bareBorder":true,"showHeaderSeparator":false,"followFilters":true,"showFilterIcon":true}</widget_props>
+        <x>0</x>
+        <y>0</y>
+    </par_dashboard_widget>
+</record_update>

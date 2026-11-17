@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="87c9fbb9c318db5043d2ffbc0501317e" sys_domain="global" table="x_2206627_er_tri_0_vitals" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>rahul.s</sys_created_by>
+            <sys_created_on>2026-11-03 00:19:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>8fc9fbb9c318db5043d2ffbc05013182</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_2206627_er_tri_0_vitals" name="x_2206627_er_tri_0_vitals" sys_domain="global" view="Default view">87c9fbb9c318db5043d2ffbc0501317e</sys_ui_form>
+            <sys_ui_section caption="Vitals" display_value="Vitals" name="x_2206627_er_tri_0_vitals" sys_domain="global" view="Default view">c3c9bbb9c318db5043d2ffbc050131eb</sys_ui_section>
+            <sys_updated_by>rahul.s</sys_updated_by>
+            <sys_updated_on>2026-11-03 00:19:54</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>rahul.s</sys_created_by>
+            <sys_created_on>2026-11-03 00:19:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>87c9fbb9c318db5043d2ffbc05013184</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_2206627_er_tri_0_vitals" name="x_2206627_er_tri_0_vitals" sys_domain="global" view="Default view">87c9fbb9c318db5043d2ffbc0501317e</sys_ui_form>
+            <sys_ui_section caption="Recording Details" display_value="Recording Details" name="x_2206627_er_tri_0_vitals" sys_domain="global" view="Default view">25dc27eac344d31043d2ffbc0501318e</sys_ui_section>
+            <sys_updated_by>rahul.s</sys_updated_by>
+            <sys_updated_on>2026-11-03 00:19:54</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>2</position>
+            <sys_created_by>rahul.s</sys_created_by>
+            <sys_created_on>2026-11-03 00:19:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>cfc9fbb9c318db5043d2ffbc050131a3</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_2206627_er_tri_0_vitals" name="x_2206627_er_tri_0_vitals" sys_domain="global" view="Default view">87c9fbb9c318db5043d2ffbc0501317e</sys_ui_form>
+            <sys_ui_section caption="Vital Signs" display_value="Vital Signs" name="x_2206627_er_tri_0_vitals" sys_domain="global" view="Default view">47c9fbb9c318db5043d2ffbc0501317b</sys_ui_section>
+            <sys_updated_by>rahul.s</sys_updated_by>
+            <sys_updated_on>2026-11-03 00:19:54</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>3</position>
+            <sys_created_by>rahul.s</sys_created_by>
+            <sys_created_on>2026-11-03 00:19:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>13c9fbb9c318db5043d2ffbc050131ab</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_2206627_er_tri_0_vitals" name="x_2206627_er_tri_0_vitals" sys_domain="global" view="Default view">87c9fbb9c318db5043d2ffbc0501317e</sys_ui_form>
+            <sys_ui_section caption="Neuro and Other" display_value="Neuro and Other" name="x_2206627_er_tri_0_vitals" sys_domain="global" view="Default view">cfc9fbb9c318db5043d2ffbc0501317c</sys_ui_section>
+            <sys_updated_by>rahul.s</sys_updated_by>
+            <sys_updated_on>2026-11-03 00:19:54</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>x_2206627_er_tri_0_vitals</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>rahul.s</sys_created_by>
+            <sys_created_on>2026-11-03 00:19:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>87c9fbb9c318db5043d2ffbc0501317e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_2206627_er_tri_0_vitals</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_ui_form_sections_87c9fbb9c318db5043d2ffbc0501317e</sys_update_name>
+            <sys_updated_by>rahul.s</sys_updated_by>
+            <sys_updated_on>2026-11-03 00:19:54</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

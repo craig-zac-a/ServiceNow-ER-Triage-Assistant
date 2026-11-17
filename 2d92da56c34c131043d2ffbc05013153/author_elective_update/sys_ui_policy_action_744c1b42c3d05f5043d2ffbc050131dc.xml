@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="DELETE">
+        <cleared>false</cleared>
+        <disabled>ignore</disabled>
+        <field>override_reason</field>
+        <field_message/>
+        <field_message_type>none</field_message_type>
+        <mandatory>true</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>rahul.s</sys_created_by>
+        <sys_created_on>2026-11-03 16:49:20</sys_created_on>
+        <sys_id>744c1b42c3d05f5043d2ffbc050131dc</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>override_reason</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_ui_policy_action_744c1b42c3d05f5043d2ffbc050131dc</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-04 19:25:05</sys_updated_on>
+        <table>x_2206627_er_tri_0_triage_assessment</table>
+        <ui_policy display_value="ER Triage - Override reason required">7c4c1b42c3d05f5043d2ffbc0501317d</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
+        <visible>true</visible>
+    </sys_ui_policy_action>
+    <sys_translated_text action="DELETE" query="documentkey=744c1b42c3d05f5043d2ffbc050131dc"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</application>
+        <file_path/>
+        <instance_id>657464de93401fd8401cddd548373c41</instance_id>
+        <instance_name>dev458343</instance_name>
+        <merge_base/>
+        <name>sys_ui_policy_action_744c1b42c3d05f5043d2ffbc050131dc</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action"><sys_ui_policy_action action="INSERT_OR_UPDATE"><cleared>false</cleared><disabled>ignore</disabled><field>override_reason</field><field_message/><field_message_type>none</field_message_type><mandatory>true</mandatory><sys_class_name>sys_ui_policy_action</sys_class_name><sys_created_by>rahul.s</sys_created_by><sys_created_on>2026-11-03 16:49:20</sys_created_on><sys_id>744c1b42c3d05f5043d2ffbc050131dc</sys_id><sys_mod_count>1</sys_mod_count><sys_name>override_reason</sys_name><sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package><sys_policy/><sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope><sys_update_name>sys_ui_policy_action_744c1b42c3d05f5043d2ffbc050131dc</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-11-04 19:25:05</sys_updated_on><table>x_2206627_er_tri_0_triage_assessment</table><ui_policy display_value="ER Triage - Override reason required">7c4c1b42c3d05f5043d2ffbc0501317d</ui_policy><value/><value_action>ignore</value_action><visible>true</visible></sys_ui_policy_action><sys_translated_text action="delete_multiple" query="documentkey=744c1b42c3d05f5043d2ffbc050131dc"/></record_update>]]></payload>
+        <payload_hash>1906591614</payload_hash>
+        <record_name>override_reason</record_name>
+        <reverted_from/>
+        <source>caccc890c3589f1043d2ffbc050131dd</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-04 19:25:05</sys_created_on>
+        <sys_id>4089c522c39cdf5043d2ffbc050131e5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a1a805a8510000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-04 19:25:05</sys_updated_on>
+        <type>UI Policy Action</type>
+        <update_guid>8089c522ed9cdf50d98a3222067505e4</update_guid>
+        <update_guid_history>8089c522ed9cdf50d98a3222067505e4:1906591614,cd4c1b423fd05f503430ebe05f0725e0:-871793734</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-05 15:36:13</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_policy_action">sys_ui_policy_action</sys_db_object>
+        <sys_id>2060946b1d7f4bbf9c96502c82084c01</sys_id>
+        <sys_metadata>744c1b42c3d05f5043d2ffbc050131dc</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>override_reason</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_scope_delete display_value="">9ac35f9b9d704fc6ace7b0309b1d2b01</sys_scope_delete>
+        <sys_update_name>sys_ui_policy_action_744c1b42c3d05f5043d2ffbc050131dc</sys_update_name>
+        <sys_update_version display_value="sys_ui_policy_action_744c1b42c3d05f5043d2ffbc050131dc">4089c522c39cdf5043d2ffbc050131e5</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-05 15:36:13</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

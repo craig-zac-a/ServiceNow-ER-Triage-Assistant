@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description/>
+        <name>ER Triage - Test Stubs End to End</name>
+        <record_for_rollback>true</record_for_rollback>
+        <script><![CDATA[(function() {
+  var P = 'x_2206627_er_tri_0_patient';
+  var E = 'x_2206627_er_tri_0_encounter';
+  var V = 'x_2206627_er_tri_0_vitals';
+  var A = 'x_2206627_er_tri_0_triage_assessment';
+
+  // 1. Test patient (reused on later runs)
+  var p = new GlideRecord(P);
+  if (!p.get('patient_last_name', 'StubTest')) {
+    p.initialize();
+    p.setValue('patient_first_name', 'E2E');
+    p.setValue('patient_last_name', 'StubTest');
+    var dob = new GlideDate();
+    dob.addYearsLocalTime(-58);
+    p.setValue('date_of_birth', dob);
+    p.setValue('sex', 'male');
+    p.setValue('diabetic', true);
+    p.insert();
+  }
+
+  // 2. New encounter and vitals
+  var e = new GlideRecord(E);
+  e.initialize();
+  e.setValue('patient', p.getUniqueValue());
+  e.setValue('chief_complaint', 'Bad indigestion');
+  e.setValue('triage_note', '[E2E] Stub end-to-end test');
+  var eid = e.insert();
+  gs.info('Encounter: ' + e.getValue('number') + ' (age ' + e.getValue('age_at_arrival') + ')');
+
+  var v = new GlideRecord(V);
+  v.initialize();
+  v.setValue('encounter', eid);
+  v.setValue('heart_rate', 108);
+  v.setValue('systolic_bp', 150);
+  v.setValue('diastolic_bp', 92);
+  v.setValue('spo2', 96);
+  v.insert();
+
+  // 3. Run triage
+  var svc = new ERTriageService();
+  var aid = svc.runTriage(eid);
+  if (!aid) { gs.error('runTriage returned null'); return; }
+
+  var a = new GlideRecord(A);
+  a.get(aid);
+  gs.info('Assessment: ' + a.getValue('number'));
+  gs.info('Rule / LLM / Suggested ESI: ' + a.getValue('rule_esi') + ' / ' +
+    a.getValue('llm_esi') + ' / ' + a.getValue('suggested_esi'));
+  gs.info('Disagreement: ' + a.getValue('disagreement') +
+    ' | AI available: ' + a.getValue('ai_available') + ' | Model: ' + a.getValue('model'));
+
+  // 4. Accept and check the encounter
+  gs.info('Accept recorded: ' + svc.recordDecision(aid, 'accepted'));
+  e.get(eid);
+  gs.info('Encounter ESI: ' + e.getValue('current_esi') + ' | Status: ' +
+    e.getValue('status') + ' | Area: ' + e.getValue('assigned_area'));
+})();]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-30 16:37:20</sys_created_on>
+        <sys_id>c303baf4c3d4d35043d2ffbc05013165</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ER Triage - Test Stubs End to End</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_fix_c303baf4c3d4d35043d2ffbc05013165</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-30 16:37:20</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+</record_update>

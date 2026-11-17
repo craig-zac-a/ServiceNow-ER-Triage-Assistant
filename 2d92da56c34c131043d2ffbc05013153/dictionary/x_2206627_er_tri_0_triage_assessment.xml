@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="9551b366c384d31043d2ffbc0501315a" label="Triage Assessment" max_length="40" name="x_2206627_er_tri_0_triage_assessment" type="collection">
+        <element label="Differential" max_length="65536" name="differential_html" read_only="true" read_only_option="display_read_only" type="html"/>
+        <element label="Prompt version" max_length="40" name="prompt_version" read_only="true" read_only_option="display_read_only" type="string"/>
+        <element choice="1" choice_field="current_esi" choice_table="x_2206627_er_tri_0_encounter" label="Rule ESI" max_length="40" name="rule_esi" read_only="true" read_only_option="display_read_only" type="integer">
+            <choice/>
+        </element>
+        <element label="Encounter" max_length="32" name="encounter" reference="x_2206627_er_tri_0_encounter" type="reference"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" display="true" label="Number" max_length="40" name="number" read_only="true" read_only_option="display_read_only" type="string"/>
+        <element label="AI fallback reason" max_length="1000" name="ai_fallback_reason" read_only="true" read_only_option="display_read_only" type="string"/>
+        <element label="Override reason" max_length="1000" name="override_reason" type="string"/>
+        <element label="Latency (ms)" max_length="40" name="latency_ms" read_only="true" read_only_option="display_read_only" type="integer"/>
+        <element label="Response ID" max_length="100" name="response_id" read_only="true" read_only_option="display_read_only" type="string"/>
+        <element label="Model" max_length="100" name="model" read_only="true" read_only_option="display_read_only" type="string"/>
+        <element label="Differential (JSON)" max_length="20000" name="differential_json" read_only="true" read_only_option="display_read_only" type="string"/>
+        <element label="Disagreement" max_length="40" name="disagreement" read_only="true" read_only_option="display_read_only" type="boolean"/>
+        <element label="Case hash" max_length="64" name="case_hash" read_only="true" read_only_option="display_read_only" type="string"/>
+        <element label="Suggested" max_length="40" name="suggested" read_only="true" read_only_option="client_script_modifiable" type="string"/>
+        <element choice="3" choice_field="current_esi" choice_table="x_2206627_er_tri_0_encounter" label="Suggested ESI" max_length="40" name="suggested_esi" read_only="true" read_only_option="display_read_only" type="integer">
+            <choice/>
+        </element>
+        <element choice="3" choice_field="current_esi" choice_table="x_2206627_er_tri_0_encounter" label="Final ESI" max_length="40" name="final_esi" type="integer">
+            <choice/>
+        </element>
+        <element label="AI rationale" max_length="4000" name="ai_rationale" read_only="true" read_only_option="display_read_only" type="string"/>
+        <element default="javascript:gs.nowDateTime()" dynamic_default_value="79cb83a85f220100a9ad2572f2b4773c" label="Decided at" max_length="40" name="decided_at" read_only="true" read_only_option="display_read_only" type="glide_date_time" use_dynamic_default="true"/>
+        <element choice="3" default="pending" label="Nurse Decision" max_length="40" name="nurse_decision" read_only="true" read_only_option="display_read_only" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Pending" sequence="0" value="pending"/>
+                <element inactive_on_update="false" label="Overridden" sequence="2" value="overriden"/>
+                <element inactive_on_update="false" label="Accepted" sequence="1" value="accepted"/>
+            </choice>
+        </element>
+        <element label="Routed model" max_length="100" name="routed_model" read_only="true" read_only_option="display_read_only" type="string"/>
+        <element default="javascript:gs.getUserID();" dynamic_default_value="bdcb83a85f220100a9ad2572f2b4773d" label="Decided by" max_length="32" name="decided_by" read_only="true" read_only_option="display_read_only" reference="sys_user" type="reference" use_dynamic_default="true"/>
+        <element label="Rule triggers" max_length="4000" name="rule_triggers" read_only="true" read_only_option="display_read_only" type="string"/>
+        <element label="AI available" max_length="40" name="ai_available" read_only="true" read_only_option="display_read_only" type="boolean"/>
+        <element label="Format repaired" max_length="40" name="format_repaired" read_only="true" read_only_option="display_read_only" type="boolean"/>
+        <element choice="1" choice_field="current_esi" choice_table="x_2206627_er_tri_0_encounter" label="AI ESI" max_length="40" name="llm_esi" read_only="true" read_only_option="display_read_only" type="integer">
+            <choice/>
+        </element>
+        <element label="Vitals" max_length="32" name="vitals" reference="x_2206627_er_tri_0_vitals" type="reference"/>
+        <index name="index">
+            <element name="decided_by"/>
+        </index>
+        <index name="index2">
+            <element name="encounter"/>
+        </index>
+        <index name="index3">
+            <element name="vitals"/>
+        </index>
+    </element>
+</database>

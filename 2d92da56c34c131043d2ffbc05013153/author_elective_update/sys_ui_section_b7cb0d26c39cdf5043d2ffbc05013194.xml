@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section action="DELETE" caption="Suggestion" section_id="b7cb0d26c39cdf5043d2ffbc05013194" sys_domain="global" table="x_2206627_er_tri_0_triage_assessment" version="3" view="Triage_Nurse">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>suggested_esi</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-04 19:35:55</sys_created_on>
+            <sys_id>3efbc166c39cdf5043d2ffbc05013118</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Suggestion" display_value="Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="77cb0d26c39cdf5043d2ffbc0501314c">b7cb0d26c39cdf5043d2ffbc05013194</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-04 19:35:55</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>disagreement</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-04 19:35:55</sys_created_on>
+            <sys_id>bafbc166c39cdf5043d2ffbc05013119</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Suggestion" display_value="Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="77cb0d26c39cdf5043d2ffbc0501314c">b7cb0d26c39cdf5043d2ffbc05013194</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-04 19:35:55</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-04 19:35:55</sys_created_on>
+            <sys_id>3afbc166c39cdf5043d2ffbc0501311a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Suggestion" display_value="Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="77cb0d26c39cdf5043d2ffbc0501314c">b7cb0d26c39cdf5043d2ffbc05013194</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-04 19:35:55</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>ai_available</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-04 19:35:55</sys_created_on>
+            <sys_id>b6fbc166c39cdf5043d2ffbc0501311b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Suggestion" display_value="Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="77cb0d26c39cdf5043d2ffbc0501314c">b7cb0d26c39cdf5043d2ffbc05013194</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-04 19:35:55</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="DELETE">
+            <caption>Suggestion</caption>
+            <header>false</header>
+            <name>x_2206627_er_tri_0_triage_assessment</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-04 19:35:10</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>b7cb0d26c39cdf5043d2ffbc05013194</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_2206627_er_tri_0_triage_assessment</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_ui_section_b7cb0d26c39cdf5043d2ffbc05013194</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-04 19:35:10</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Triage Nurse" name="Triage_Nurse">77cb0d26c39cdf5043d2ffbc0501314c</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</application>
+        <file_path/>
+        <instance_id>657464de93401fd8401cddd548373c41</instance_id>
+        <instance_name>dev458343</instance_name>
+        <merge_base/>
+        <name>sys_ui_section_b7cb0d26c39cdf5043d2ffbc05013194</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_ui_section caption="Suggestion" section_id="b7cb0d26c39cdf5043d2ffbc05013194" sys_domain="global" table="x_2206627_er_tri_0_triage_assessment" version="3" view="Triage_Nurse"><sys_ui_element action="INSERT_OR_UPDATE"><element>suggested_esi</element><position>0</position><sys_created_by>admin</sys_created_by><sys_created_on>2026-11-04 19:35:55</sys_created_on><sys_id>3efbc166c39cdf5043d2ffbc05013118</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="Suggestion" display_value="Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="77cb0d26c39cdf5043d2ffbc0501314c">b7cb0d26c39cdf5043d2ffbc05013194</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-11-04 19:35:55</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>disagreement</element><position>1</position><sys_created_by>admin</sys_created_by><sys_created_on>2026-11-04 19:35:55</sys_created_on><sys_id>bafbc166c39cdf5043d2ffbc05013119</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="Suggestion" display_value="Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="77cb0d26c39cdf5043d2ffbc0501314c">b7cb0d26c39cdf5043d2ffbc05013194</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-11-04 19:35:55</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.split</element><position>2</position><sys_created_by>admin</sys_created_by><sys_created_on>2026-11-04 19:35:55</sys_created_on><sys_id>3afbc166c39cdf5043d2ffbc0501311a</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="Suggestion" display_value="Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="77cb0d26c39cdf5043d2ffbc0501314c">b7cb0d26c39cdf5043d2ffbc05013194</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-11-04 19:35:55</sys_updated_on><sys_user/><type>.split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>ai_available</element><position>3</position><sys_created_by>admin</sys_created_by><sys_created_on>2026-11-04 19:35:55</sys_created_on><sys_id>b6fbc166c39cdf5043d2ffbc0501311b</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="Suggestion" display_value="Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="77cb0d26c39cdf5043d2ffbc0501314c">b7cb0d26c39cdf5043d2ffbc05013194</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-11-04 19:35:55</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_section action="INSERT_OR_UPDATE"><caption>Suggestion</caption><header>false</header><name>x_2206627_er_tri_0_triage_assessment</name><roles/><sys_class_name>sys_ui_section</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-11-04 19:35:10</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>b7cb0d26c39cdf5043d2ffbc05013194</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_2206627_er_tri_0_triage_assessment</sys_name><sys_overrides/><sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package><sys_policy/><sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope><sys_update_name>sys_ui_section_b7cb0d26c39cdf5043d2ffbc05013194</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-11-04 19:35:10</sys_updated_on><sys_user/><title>false</title><view display_value="Triage Nurse" name="Triage_Nurse">77cb0d26c39cdf5043d2ffbc0501314c</view><view_name/></sys_ui_section></sys_ui_section></record_update>]]></payload>
+        <payload_hash>1908081777</payload_hash>
+        <record_name>Triage Assessment</record_name>
+        <reverted_from/>
+        <source>caccc890c3589f1043d2ffbc050131dd</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-04 19:35:55</sys_created_on>
+        <sys_id>07fbc166c39cdf5043d2ffbc0501311f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a1a80f94b00000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-04 19:35:55</sys_updated_on>
+        <type>Form Layout</type>
+        <update_guid>87fbc166b69cdf50a9e1f2151213361e</update_guid>
+        <update_guid_history>87fbc166b69cdf50a9e1f2151213361e:1908081777,f7cb0d26369cdf50a72067e63b6a79eb:-1358184938</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-04 21:36:52</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_section">sys_ui_section</sys_db_object>
+        <sys_id>01f6e14754064474b046207deae44310</sys_id>
+        <sys_metadata>b7cb0d26c39cdf5043d2ffbc05013194</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Suggestion</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_parent display_value="Triage Assessment">9551b366c384d31043d2ffbc0501315a</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_scope_delete display_value="">9ac35f9b9d704fc6ace7b0309b1d2b01</sys_scope_delete>
+        <sys_update_name>sys_ui_section_b7cb0d26c39cdf5043d2ffbc05013194</sys_update_name>
+        <sys_update_version display_value="sys_ui_section_b7cb0d26c39cdf5043d2ffbc05013194">07fbc166c39cdf5043d2ffbc0501311f</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-04 21:36:52</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

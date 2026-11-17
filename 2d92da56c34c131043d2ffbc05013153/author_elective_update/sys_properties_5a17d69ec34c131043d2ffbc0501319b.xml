@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="DELETE">
+        <choices/>
+        <description/>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>x_2206627_er_tri_0.llm_api_key</name>
+        <read_roles/>
+        <suffix>llm_api_key</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-22 20:13:20</sys_created_on>
+        <sys_id>5a17d69ec34c131043d2ffbc0501319b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_2206627_er_tri_0.llm_api_key</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_properties_5a17d69ec34c131043d2ffbc0501319b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-22 20:13:20</sys_updated_on>
+        <type>string</type>
+        <value>sk-4669e4588a4e4a54962d698c79a6e339</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="DELETE" query="documentkey=5a17d69ec34c131043d2ffbc0501319b"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</application>
+        <file_path/>
+        <instance_id>657464de93401fd8401cddd548373c41</instance_id>
+        <instance_name>dev458343</instance_name>
+        <merge_base/>
+        <name>sys_properties_5a17d69ec34c131043d2ffbc0501319b</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties"><sys_properties action="INSERT_OR_UPDATE"><choices/><description/><ignore_cache>true</ignore_cache><is_private>false</is_private><name>x_2206627_er_tri_0.llm_api_key</name><read_roles/><suffix>llm_api_key</suffix><sys_class_name>sys_properties</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-10-22 20:13:20</sys_created_on><sys_id>5a17d69ec34c131043d2ffbc0501319b</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_2206627_er_tri_0.llm_api_key</sys_name><sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package><sys_policy/><sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope><sys_update_name>sys_properties_5a17d69ec34c131043d2ffbc0501319b</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-10-22 20:13:20</sys_updated_on><type>string</type><value>sk-4669e4588a4e4a54962d698c79a6e339</value><write_roles/></sys_properties><sys_translated_text action="delete_multiple" query="documentkey=5a17d69ec34c131043d2ffbc0501319b"/></record_update>]]></payload>
+        <payload_hash>1288235274</payload_hash>
+        <record_name>x_2206627_er_tri_0.llm_api_key</record_name>
+        <reverted_from/>
+        <source>58e79edec34c131043d2ffbc0501311f</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-22 20:13:21</sys_created_on>
+        <sys_id>d4e79edec34c131043d2ffbc05013124</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a1653f2c540000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-22 20:13:21</sys_updated_on>
+        <type>System Property</type>
+        <update_guid>94e79ede944c13108e37944bc5fe1223</update_guid>
+        <update_guid_history>94e79ede944c13108e37944bc5fe1223:1288235274</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-22 21:43:15</sys_created_on>
+        <sys_db_object display_value="" name="sys_properties">sys_properties</sys_db_object>
+        <sys_id>025e3be8ae084bc0a5a25431c17e12f9</sys_id>
+        <sys_metadata>5a17d69ec34c131043d2ffbc0501319b</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_2206627_er_tri_0.llm_api_key</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_scope_delete display_value="">9ac35f9b9d704fc6ace7b0309b1d2b01</sys_scope_delete>
+        <sys_update_name>sys_properties_5a17d69ec34c131043d2ffbc0501319b</sys_update_name>
+        <sys_update_version display_value="sys_properties_5a17d69ec34c131043d2ffbc0501319b">d4e79edec34c131043d2ffbc05013124</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-22 21:43:15</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

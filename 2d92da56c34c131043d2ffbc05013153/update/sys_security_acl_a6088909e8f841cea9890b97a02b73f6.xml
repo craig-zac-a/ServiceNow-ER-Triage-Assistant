@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl">
+    <sys_security_acl action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <admin_overrides>true</admin_overrides>
+        <advanced>false</advanced>
+        <applies_to/>
+        <condition/>
+        <controlled_by_refs/>
+        <decision_type>allow</decision_type>
+        <description>Allow write access to Vitals records for triage_nurse role only.</description>
+        <local_or_existing>Existing</local_or_existing>
+        <name>x_2206627_er_tri_0_vitals</name>
+        <operation display_value="write">write</operation>
+        <script/>
+        <security_attribute/>
+        <sys_class_name>sys_security_acl</sys_class_name>
+        <sys_created_by>sammy.s</sys_created_by>
+        <sys_created_on>2026-11-02 15:59:39</sys_created_on>
+        <sys_id>a6088909e8f841cea9890b97a02b73f6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_2206627_er_tri_0_vitals</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_security_acl_a6088909e8f841cea9890b97a02b73f6</sys_update_name>
+        <sys_updated_by>sammy.s</sys_updated_by>
+        <sys_updated_on>2026-11-02 15:59:39</sys_updated_on>
+        <type display_value="record">record</type>
+    </sys_security_acl>
+</record_update>

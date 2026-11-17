@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="ESI Suggestion" section_id="7c5269e2c350139043d2ffbc050131ad" sys_domain="global" table="x_2206627_er_tri_0_triage_assessment" version="3" view="nurse_review">
+        <sys_ui_annotation action="INSERT_OR_UPDATE">
+            <is_plain_text>true</is_plain_text>
+            <name/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 19:04:26</sys_created_on>
+            <sys_id>c05e7f5cc32c931043d2ffbc05013131</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 19:04:26</sys_updated_on>
+            <text/>
+            <type display_value="Plain Text">8e7fdb04531300109686ddeeff7b127d</type>
+        </sys_ui_annotation>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>suggested_esi</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 19:04:26</sys_created_on>
+            <sys_id>405e7f5cc32c931043d2ffbc0501317c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="ESI Suggestion" display_value="ESI Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="31bc5d2ac310139043d2ffbc050131c7">7c5269e2c350139043d2ffbc050131ad</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 19:04:26</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>rule_esi</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 19:04:26</sys_created_on>
+            <sys_id>cc5e7f5cc32c931043d2ffbc0501317c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="ESI Suggestion" display_value="ESI Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="31bc5d2ac310139043d2ffbc050131c7">7c5269e2c350139043d2ffbc050131ad</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 19:04:26</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>llm_esi</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 19:04:26</sys_created_on>
+            <sys_id>4c5e7f5cc32c931043d2ffbc0501317d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="ESI Suggestion" display_value="ESI Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="31bc5d2ac310139043d2ffbc050131c7">7c5269e2c350139043d2ffbc050131ad</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 19:04:26</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 19:04:26</sys_created_on>
+            <sys_id>c85e7f5cc32c931043d2ffbc0501317e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="ESI Suggestion" display_value="ESI Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="31bc5d2ac310139043d2ffbc050131c7">7c5269e2c350139043d2ffbc050131ad</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 19:04:26</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>c05e7f5cc32c931043d2ffbc05013131</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 19:04:26</sys_created_on>
+            <sys_id>485e7f5cc32c931043d2ffbc0501317f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="ESI Suggestion" display_value="ESI Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="31bc5d2ac310139043d2ffbc050131c7">7c5269e2c350139043d2ffbc050131ad</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 19:04:26</sys_updated_on>
+            <sys_user/>
+            <type>annotation</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>disagreement</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 19:04:26</sys_created_on>
+            <sys_id>c45e7f5cc32c931043d2ffbc05013180</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="ESI Suggestion" display_value="ESI Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="31bc5d2ac310139043d2ffbc050131c7">7c5269e2c350139043d2ffbc050131ad</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 19:04:26</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>ai_available</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-10 19:04:26</sys_created_on>
+            <sys_id>545e7f5cc32c931043d2ffbc05013181</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="ESI Suggestion" display_value="ESI Suggestion" name="x_2206627_er_tri_0_triage_assessment" sys_domain="global" view="31bc5d2ac310139043d2ffbc050131c7">7c5269e2c350139043d2ffbc050131ad</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-10 19:04:26</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>ESI Suggestion</caption>
+            <header>false</header>
+            <name>x_2206627_er_tri_0_triage_assessment</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-11-04 21:13:32</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>7c5269e2c350139043d2ffbc050131ad</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_2206627_er_tri_0_triage_assessment</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_ui_section_7c5269e2c350139043d2ffbc050131ad</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-11-04 21:13:32</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Nurse Review" name="nurse_review">31bc5d2ac310139043d2ffbc050131c7</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

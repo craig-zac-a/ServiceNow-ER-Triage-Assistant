@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_report_users_groups">
+    <sys_report_users_groups action="INSERT_OR_UPDATE">
+        <group_id/>
+        <report_id display_value="Triaged patients">b59544e8c36c931043d2ffbc0501310d</report_id>
+        <sys_class_name>sys_report_users_groups</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-10 19:39:10</sys_created_on>
+        <sys_id>8546446cc36c931043d2ffbc05013182</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>b59544e8c36c931043d2ffbc0501310d</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_report_users_groups_8546446cc36c931043d2ffbc05013182</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-10 19:39:10</sys_updated_on>
+        <user_id display_value="Zachary Craig">6816f79cc0a8016401c5a33be04be441</user_id>
+    </sys_report_users_groups>
+</record_update>

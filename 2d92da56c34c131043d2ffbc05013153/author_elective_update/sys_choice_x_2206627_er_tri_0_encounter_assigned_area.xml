@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="assigned_area" table="x_2206627_er_tri_0_encounter" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>assigned_area</element>
+            <name>x_2206627_er_tri_0_encounter</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-10-23 21:00:35</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>assigned_area</sys_name>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_choice_x_2206627_er_tri_0_encounter_assigned_area</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-10-23 21:00:35</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assigned_area</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Resuscitation</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_encounter</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-10-23 21:00:35</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-10-23 21:00:35</sys_updated_on>
+            <value>resuscitation</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assigned_area</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Main ED</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_encounter</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-10-23 21:00:35</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-10-23 21:00:35</sys_updated_on>
+            <value>main_ed</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assigned_area</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Fast Track</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_encounter</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-10-23 21:00:35</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-10-23 21:00:35</sys_updated_on>
+            <value>fast_track</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assigned_area</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Waiting Room</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_encounter</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-10-23 21:00:35</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-10-23 21:00:35</sys_updated_on>
+            <value>waiting_room</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

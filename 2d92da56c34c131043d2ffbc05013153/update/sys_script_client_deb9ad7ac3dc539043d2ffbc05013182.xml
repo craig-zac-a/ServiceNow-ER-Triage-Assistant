@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>onLoad Triage Assistant</name>
+        <order/>
+        <script><![CDATA[function onLoad() {
+    //Type appropriate comment here, and begin script below
+    updateOverrideReason();
+	setSuggestionClone();
+    readOnlyFields();
+	visibleFieldsLogic();
+    // removeDefaultTextSelection();
+}
+
+// function removeDefaultTextSelection() {
+//     setTimeout(function() {
+//         var field = g_form.getControl('triage_note');
+//         if (field && field.setSelectionRange) {
+// 			g_form.addInfoMessage("*Hacker Voice* we're in.");
+//             var len = field.value.length;
+// 			g_form.addInfoMessage("Text area length: " + len + ".");
+//             field.focus();
+//             field.setSelectionRange(len, len);
+//         }
+// 		g_form.addInfoMessage("This has now finished running");
+//     }, 2000);
+// }
+
+function updateOverrideReason() {
+	// g_form.addInfoMessage("updateOverrideReason()");
+    var finalEsi = g_form.getValue('final_esi');
+    var suggested = g_form.getValue('suggested_esi');
+    var differs = finalEsi !== '' && finalEsi !== suggested;
+
+    g_form.setDisplay('override_reason', differs);
+    g_form.setMandatory('override_reason', differs);
+    if (!differs) g_form.clearValue('override_reason');
+}
+
+function setSuggestionClone() {
+	setTimeout(function() {
+		var choiceValue = g_form.getValue('suggested_esi');
+		var optionObj = g_form.getOption('suggested_esi', choiceValue);
+		if(optionObj && optionObj.text)
+		{
+			var displayValue = optionObj.text;
+			g_form.setValue('suggested', displayValue);
+		}
+		else
+		{
+			g_form.setValue('suggested', choiceValue);
+		}
+	}, 100);
+}
+
+function readOnlyFields() {
+	// g_form.addInfoMessage("readOnlyFields()");
+    g_form.setReadOnly('patient', true);
+    g_form.setReadOnly('encounter', true);
+}
+
+// function visibleFieldsLogic() {
+// 	g_form
+// }]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-05 16:25:06</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>deb9ad7ac3dc539043d2ffbc05013182</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>onLoad Triage Assistant</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_client_deb9ad7ac3dc539043d2ffbc05013182</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-10 18:51:47</sys_updated_on>
+        <table>x_2206627_er_tri_0_triage_assessment</table>
+        <type>onLoad</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

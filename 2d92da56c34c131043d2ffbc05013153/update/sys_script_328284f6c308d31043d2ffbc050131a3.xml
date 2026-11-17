@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_2206627_er_tri_0_encounter</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition table="x_2206627_er_tri_0_encounter">arrival_timeVALCHANGES^arrival_timeISNOTEMPTY^EQ<item endquery="false" field="arrival_time" goto="false" newquery="false" operator="VALCHANGES" or="false" value=""/>
+            <item endquery="false" field="arrival_time" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filter_condition>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Calculate Age on Arrival</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/)
+{
+	if(current.patient.nil()) return;
+
+	var dobStr = current.patient.getRefRecord().getValue('date_of_birth');
+	if(!dobStr) return;
+
+	var arrival = current.arrival_time.nil() ? new GlideDateTime() : new GlideDateTime(current.getValue('arrival_time'));
+
+	var arrStr = arrival.getLocalDate().getValue();
+	var d = dobStr.split('-'), a = arrStr.split('-');
+	var months = 	(parseInt(a[0], 10) - parseInt(d[0], 10)) * 12 +
+					(parseInt(a[1], 10) - parseInt(d[1], 10));
+	
+	if(parseInt(a[2], 10) < parseInt(d[2], 10)) months--;
+
+	if(months < 0)
+	{
+		gs.addErrorMessage('Date of birth is after the arrival time.');
+		current.setAbortAction(true);
+		return;
+	}
+
+	current.setValue('age_months', months);
+	current.setValue('age_at_arrival', Math.floor(months/12));
+})(current, previous);
+]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-23 22:52:22</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>328284f6c308d31043d2ffbc050131a3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Calculate Age on Arrival</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_328284f6c308d31043d2ffbc050131a3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-23 22:52:22</sys_updated_on>
+        <template/>
+        <when>before</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=328284f6c308d31043d2ffbc050131a3"/>
+</record_update>

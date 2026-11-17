@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description/>
+        <name>ER Triage - Test High Acuity Alert</name>
+        <record_for_rollback>true</record_for_rollback>
+        <script><![CDATA[var SCOPE = 'x_2206627_er_tri_0';
+var P = SCOPE + '_patient', E = SCOPE + '_encounter', V = SCOPE + '_vitals';
+
+// Sets a field only if it exists, and warns otherwise, so wrong names are easy to spot
+function setIf(gr, field, val)
+{
+	if (gr.isValidField(field)) gr.setValue(field, val);
+	else gs.warn('Field not found on ' + gr.getTableName() + ': ' + field);
+}
+
+// 1. Test patient (reused on later runs)
+var p = new GlideRecord(P);
+if (!p.get('patient_last_name', 'StubTest'))
+{
+	p.initialize();
+	p.setValue('patient_first_name', 'E2E');
+	p.setValue('patient_last_name', 'StubTest');
+	var dob = new GlideDate();
+	dob.addYearsLocalTime(-58);
+	p.setValue('date_of_birth', dob);
+	p.setValue('sex', 'male');
+	p.setValue('diabetic', true);
+	p.insert();
+}
+
+// 2. New encounter
+var e = new GlideRecord(E);
+e.initialize();
+e.setValue('patient', p.getUniqueValue());
+e.setValue('status', 'waiting_triage');
+setIf(e, 'arrival_mode', 'ambulance');
+setIf(e, 'chief_complaint', 'Crushing chest pain for 30 minutes, sweaty');
+var encId = e.insert();
+
+// 3. Danger-zone vitals
+var v = new GlideRecord(V);
+v.initialize();
+v.setValue('encounter', encId);
+setIf(v, 'taken_at', new GlideDateTime());
+setIf(v, 'heart_rate', 128);
+setIf(v, 'systolic_bp', 88);
+setIf(v, 'diastolic_bp', 54);
+setIf(v, 'resp_rate', 26);
+setIf(v, 'spo2', 89);
+// v.setWorkflow(false);
+v.insert();
+
+// 4. Run triage
+var asmtId = new ERTriageService().runTriage(encId);
+if (!asmtId)
+{
+  gs.error('Triage failed. Check the system log.');
+}
+else
+{
+	var a = new GlideRecord(SCOPE + '_triage_assessment');
+	a.get(asmtId);
+	gs.info('Assessment ' + a.getValue('number') +
+		' | Rule ' + a.getValue('rule_esi') +
+		' / LLM ' + a.getValue('llm_esi') +
+		' / Suggested ' + a.getValue('suggested_esi') +
+		' | Disagreement ' + a.getValue('disagreement') +
+		' | AI available ' + a.getValue('ai_available'));
+}]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-30 17:21:57</sys_created_on>
+        <sys_id>de7cf6b8c318d35043d2ffbc050131e7</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>ER Triage - Test High Acuity Alert</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_fix_de7cf6b8c318d35043d2ffbc050131e7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-30 19:59:16</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+</record_update>

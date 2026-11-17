@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description>WS2: 32 checks of the AI layer with no API cost (parser, repairs, validation, can't-miss safety net, de-identification).</description>
+        <name>ER Triage - Test AI Layer (Offline)</name>
+        <record_for_rollback>true</record_for_rollback>
+        <script><![CDATA[// ER Triage - Test AI Layer (Offline)
+// No API calls and no cost. Checks the JSON parser, the schema repairs and validation,
+// the can't-miss safety net, and case builder de-identification.
+// Creates three temporary records (patient, encounter, vitals) and deletes them at the end.
+// Expected: every line says PASS, and the last line says "RESULT: n/n passed".
+(function() {
+  var P = 'x_2206627_er_tri_0_patient';
+  var E = 'x_2206627_er_tri_0_encounter';
+  var V = 'x_2206627_er_tri_0_vitals';
+
+  var passed = 0;
+  var failed = 0;
+  function check(name, ok, detail) {
+    if (ok) {
+      passed++;
+      gs.info('PASS ' + name);
+    } else {
+      failed++;
+      gs.error('FAIL ' + name + (detail ? ' | ' + detail : ''));
+    }
+  }
+  function clone(o) {
+    return JSON.parse(JSON.stringify(o));
+  }
+
+  var llm = new ERTriageLLM();
+  gs.info('Config: ' + JSON.stringify(llm.describeConfig()));
+
+  // 1. JSON parser
+  var sample = new ERTriageLLMStub().analyze('x').result;
+  var json = JSON.stringify(sample);
+  check('parse clean JSON', llm._extractJson(json).repaired === false);
+  check('parse JSON in code fences', llm._extractJson('```json\n' + json + '\n```').repaired === true);
+  check('parse JSON wrapped in prose', llm._extractJson('Here is the assessment: ' + json + ' Done.').repaired === true);
+  var threw = false;
+  try {
+    llm._extractJson('no json here');
+  } catch (e) {
+    threw = true;
+  }
+  check('reject output with no JSON', threw);
+
+  // 2. Repairs and validation (the same steps analyze() runs)
+  function run(obj) {
+    var repairs = [];
+    var out = llm._postProcess(clone(obj), repairs);
+    out.repairs = repairs;
+    return out;
+  }
+
+  var r = run(sample);
+  check('valid output passes with no repairs', r.errors.length === 0 && r.repairs.length === 0,
+    r.errors.concat(r.repairs).join('; '));
+
+  var t = clone(sample);
+  t.suggested_esi = '2';
+  r = run(t);
+  check('ESI "2" (text) repaired to 2', r.errors.length === 0 && r.result.suggested_esi === 2);
+
+  t = clone(sample);
+  t.suggested_esi = 7;
+  check('ESI 7 rejected', run(t).errors.length > 0);
+
+  t = clone(sample);
+  t.suggested_esi = 2.5;
+  check('ESI 2.5 rejected', run(t).errors.length > 0);
+
+  t = clone(sample);
+  delete t.suggested_esi;
+  check('missing ESI rejected', run(t).errors.length > 0);
+
+  t = clone(sample);
+  t.differential = [];
+  check('empty differential rejected', run(t).errors.length > 0);
+
+  t = clone(sample);
+  t.rationale = '';
+  check('empty rationale rejected', run(t).errors.length > 0);
+
+  t = clone(sample);
+  t.differential[0].likelihood = 'certain';
+  check('invalid likelihood rejected', run(t).errors.length > 0);
+
+  t = clone(sample);
+  t.confidence = 'Medium';
+  r = run(t);
+  check('confidence "Medium" read as "moderate"', r.errors.length === 0 && r.result.confidence == 'moderate');
+
+  t = clone(sample);
+  delete t.missing_information;
+  delete t.differential[0].suggested_workup;
+  r = run(t);
+  check('missing optional arrays filled with []', r.errors.length === 0 &&
+    r.result.missing_information.length === 0 && r.result.differential[0].suggested_workup.length === 0);
+
+  t = clone(sample);
+  t.differential[1].condition = 'Aortic dissection: consider given hypertension; check bilateral BPs';
+  r = run(t);
+  check('reasoning moved out of the condition name', r.errors.length === 0 &&
+    r.result.differential[1].condition == 'Aortic dissection');
+
+  t = clone(sample);
+  t.differential = ['Pneumonia', 'Pulmonary embolism'];
+  r = run(t);
+  check('plain-text differential entries converted', r.errors.length === 0 &&
+    r.result.differential[0].condition == 'Pneumonia');
+
+  // 3. Can't-miss safety net
+  var cm = llm.cantMiss;
+  var ref = null;
+  for (var i = 0; cm.structured && i < cm.rows.length && !ref; i++) {
+    if (llm._conditionKey(cm.rows[i].condition).length >= 4) ref = cm.rows[i].condition;
+  }
+  if (ref) {
+    t = clone(sample);
+    t.differential[2].condition = ref;
+    t.differential[2].cant_miss = false;
+    r = run(t);
+    check('cant_miss forced true for "' + ref + '" from the ' + cm.source + ' list',
+      r.result.differential[2].cant_miss === true);
+  } else {
+    gs.warn('SKIP can\'t-miss safety net: column names in ' + llm.T_CANT_MISS +
+      ' were not recognized. Share the column names with WS2.');
+  }
+
+  t = clone(sample);
+  t.differential[2].condition = 'Gastroesophageal reflux disease';
+  t.differential[2].cant_miss = false;
+  r = run(t);
+  check('non-dangerous condition keeps cant_miss false', r.result.differential[2].cant_miss === false);
+
+  // 4. Case builder de-identification
+  var ids = {};
+  try {
+    var p = new GlideRecord(P);
+    p.initialize();
+    p.setValue('patient_first_name', 'Zelda');
+    p.setValue('patient_last_name', 'Quixotic');
+    var dob = new GlideDate();
+    dob.addYearsLocalTime(-34);
+    p.setValue('date_of_birth', dob);
+    p.setValue('sex', 'female');
+    p.setValue('diabetic', true);
+    p.setValue('nkda', true);
+    p.setValue('medical_history', 'Asthma. Zelda Quixotic was seen here last year.');
+    ids.p = p.insert();
+    p.get(ids.p);
+    var mrn = p.getValue('number');
+    var dobStr = p.getValue('date_of_birth');
+
+    var e = new GlideRecord(E);
+    e.initialize();
+    e.setValue('patient', ids.p);
+    e.setValue('chief_complaint', 'Lower abdominal pain');
+    e.setValue('triage_note', '[V99] Quixotic, Zelda (MRN ' + mrn + ', DOB ' + dobStr +
+      ') reports pain since this morning. Call 504-555-0142.');
+    e.setValue('pregnancy_status', 'unknown');
+    e.setValue('status', 'discharged');   // keeps re-triage rules away from this test record
+    ids.e = e.insert();
+    e.get(ids.e);
+
+    var v = new GlideRecord(V);
+    v.initialize();
+    v.setWorkflow(false);                  // no re-triage Business Rule for test vitals
+    v.setValue('encounter', ids.e);
+    v.setValue('heart_rate', 96);
+    v.setValue('spo2', 99);
+    v.setValue('pain_score', 0);
+    ids.v = v.insert();
+    v.get(ids.v);
+
+    var builder = new ERTriageCaseBuilder();
+    var text = builder.build(e, v);
+    gs.info('De-identified case text:\n' + text);
+
+    check('no first name in case text', text.indexOf('Zelda') < 0);
+    check('no last name in case text', text.indexOf('Quixotic') < 0);
+    check('no MRN in case text', !mrn || text.indexOf(mrn) < 0);
+    check('no date of birth in case text', !dobStr || text.indexOf(dobStr) < 0);
+    check('no encounter number in case text', text.indexOf(e.getValue('number')) < 0);
+    check('no phone number in case text', text.indexOf('555-0142') < 0);
+    check('vignette tag stripped', text.indexOf('[V99]') < 0);
+    check('age included', /Age: 3[34] years/.test(text), 'age_at_arrival: ' + e.getValue('age_at_arrival'));
+    check('missing BP stated explicitly', text.indexOf('Blood pressure: not recorded') > -1);
+    check('pain score 0 kept, not treated as missing', text.indexOf('Pain score: 0/10') > -1);
+    check('pregnancy status shown for a female patient', text.indexOf('Pregnancy status:') > -1);
+    check('risk flag included', text.indexOf('Risk flags: diabetic') > -1);
+    check('NKDA shown', text.indexOf('no known drug allergies') > -1);
+
+    var noVitals = builder.build(e, null);
+    check('no vitals stated explicitly', noVitals.indexOf('Vital signs: none recorded yet') > -1);
+  } catch (ex) {
+    check('case builder test ran without errors', false, ex.message);
+  } finally {
+    [[V, ids.v], [E, ids.e], [P, ids.p]].forEach(function(pair) {
+      if (!pair[1]) return;
+      var g = new GlideRecord(pair[0]);
+      if (g.get(pair[1])) g.deleteRecord();
+    });
+  }
+
+  var summary = 'RESULT: ' + passed + '/' + (passed + failed) + ' passed';
+  if (failed) gs.error(summary);
+  else gs.info(summary);
+})();
+]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>mihir.k</sys_created_by>
+        <sys_created_on>2026-11-03 16:24:42</sys_created_on>
+        <sys_id>98a69386c3905f5043d2ffbc0501310d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ER Triage - Test AI Layer (Offline)</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_fix_98a69386c3905f5043d2ffbc0501310d</sys_update_name>
+        <sys_updated_by>mihir.k</sys_updated_by>
+        <sys_updated_on>2026-11-03 16:24:42</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+</record_update>

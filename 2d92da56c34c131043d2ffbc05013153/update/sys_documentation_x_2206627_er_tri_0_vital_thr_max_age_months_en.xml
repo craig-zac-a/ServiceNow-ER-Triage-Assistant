@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="max_age_months" label="Max Age (months)" language="en" table="x_2206627_er_tri_0_vital_thr">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>max_age_months</element>
+            <help/>
+            <hint/>
+            <label>Max Age (months)</label>
+            <language>en</language>
+            <name>x_2206627_er_tri_0_vital_thr</name>
+            <plural>Max Age (months)</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>eric.k</sys_created_by>
+            <sys_created_on>2026-10-28 16:00:15</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Max Age (months)</sys_name>
+            <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+            <sys_update_name>sys_documentation_x_2206627_er_tri_0_vital_thr_max_age_months_en</sys_update_name>
+            <sys_updated_by>eric.k</sys_updated_by>
+            <sys_updated_on>2026-10-28 16:00:15</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

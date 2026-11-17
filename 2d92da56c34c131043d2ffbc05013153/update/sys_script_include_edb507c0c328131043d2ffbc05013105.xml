@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_2206627_er_tri_0.ERTriageRunAjax</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ERTriageRunAjax</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var ERTriageRunAjax = Class.create();
+ERTriageRunAjax.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+  T_ENCOUNTER: 'x_2206627_er_tri_0_encounter',
+  T_ASSESSMENT: 'x_2206627_er_tri_0_triage_assessment',
+
+  start: function() {
+    if (!gs.hasRole('x_2206627_er_tri_0.triage_nurse'))
+      return JSON.stringify({ ok: false, error: 'Not authorized' });
+
+    var id = this.getParameter('sysparm_encounter');
+    var e = new GlideRecord(this.T_ENCOUNTER);
+    if (!e.get(id)) return JSON.stringify({ ok: false, error: 'Encounter not found' });
+    if (e.getValue('triage_job_status') == 'running')
+      return JSON.stringify({ ok: true, already: true });   // don't start twice
+
+    e.setValue('triage_job_status', 'running');
+    e.setValue('triage_job_message', 'Queued...');
+    e.setWorkflow(false);
+    e.update();
+
+    gs.eventQueue('x_2206627_er_tri_0.retriage_requested', e, id, gs.getUserID());
+    return JSON.stringify({ ok: true });
+  },
+
+  status: function() {
+    var id = this.getParameter('sysparm_encounter');
+    var e = new GlideRecord(this.T_ENCOUNTER);
+    if (!e.get(id)) return JSON.stringify({ status: 'failed', message: 'Encounter not found' });
+
+    var out = {
+      status: e.getValue('triage_job_status') || 'idle',
+      message: e.getValue('triage_job_message') || ''
+    };
+    if (out.status == 'done' && !e.current_assessment.nil()) {
+      var a = new GlideRecord(this.T_ASSESSMENT);
+      if (a.get(e.getValue('current_assessment'))) {
+        out.assessment = a.getUniqueValue();
+        out.suggested_esi = a.getValue('suggested_esi');
+        out.rule_esi = a.getValue('rule_esi');
+        out.llm_esi = a.getValue('llm_esi');
+        out.rationale = a.getValue('ai_rationale');
+        out.ai_available = a.getValue('ai_available');
+      }
+    }
+    return JSON.stringify(out);
+  },
+
+  type: 'ERTriageRunAjax'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-09 20:19:56</sys_created_on>
+        <sys_id>edb507c0c328131043d2ffbc05013105</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ERTriageRunAjax</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_include_edb507c0c328131043d2ffbc05013105</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-09 20:19:56</sys_updated_on>
+    </sys_script_include>
+</record_update>

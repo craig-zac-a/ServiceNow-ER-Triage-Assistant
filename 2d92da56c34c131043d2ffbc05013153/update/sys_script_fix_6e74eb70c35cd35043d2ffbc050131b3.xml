@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description/>
+        <name>ER Triage - Test Cache and Timer</name>
+        <record_for_rollback>true</record_for_rollback>
+        <script><![CDATA[var SCOPE = 'x_2206627_er_tri_0';
+var E = SCOPE + '_encounter', V = SCOPE + '_vitals', A = SCOPE + '_triage_assessment';
+
+function val(table, id, field) {
+  var gr = new GlideRecord(table);
+  return gr.get(id) ? gr.getValue(field) : null;
+}
+
+// Find the latest test encounter
+var enc = new GlideRecord(E);
+enc.addQuery('patient.patient_last_name', 'StubTest');
+enc.orderByDesc('sys_created_on');
+enc.setLimit(1);
+enc.query();
+
+if (!enc.next()) {
+  gs.error('No test encounter found. Run ER Triage - Test High Acuity Alert first.');
+} else {
+  var encId = enc.getUniqueValue();
+  var svc = new ERTriageService();
+  svc.useCache = true; // turns the cache on for this test only; the property is unchanged
+
+  // ---------- TEST 2: CACHE ----------
+  var firstId = enc.getValue('current_assessment');
+  if (val(A, firstId, 'nurse_decision') == 'pending') {
+    svc.recordDecision(firstId, 'accepted'); // so _findReusable skips it
+  }
+  var secondId = svc.runTriage(encId);
+  gs.info('CACHE TEST: first ' + val(A, firstId, 'number') +
+    ' | second ' + val(A, secondId, 'number') +
+    ' | new record: ' + (secondId != firstId) +
+    ' | same hash: ' + (val(A, firstId, 'case_hash') == val(A, secondId, 'case_hash')));
+
+  // ---------- TEST 3: TIMER ----------
+  // Backdate all vitals for this encounter by 20 minutes (ESI 2 limit is 15)
+  var old = new GlideDateTime();
+  old.addSeconds(-20 * 60);
+  var v = new GlideRecord(V);
+  v.addQuery('encounter', encId);
+  v.query();
+  while (v.next()) {
+    v.setValue('taken_at', old);
+    v.setWorkflow(false);
+    v.update();
+  }
+
+  svc.flagOverdueReassessments();
+  gs.info('TIMER TEST: after backdating, overdue = ' +
+    val(E, encId, 'reassessment_overdue') + ' (expected 1)');
+
+  // New vitals, then triage, should clear the flag
+  var nv = new GlideRecord(V);
+  nv.initialize();
+  nv.setValue('encounter', encId);
+  nv.setValue('taken_at', new GlideDateTime());
+  nv.setValue('heart_rate', 118);
+  nv.setWorkflow(false); // skip the re-triage rule; we call runTriage directly
+  nv.insert();
+
+  svc.runTriage(encId);
+  gs.info('TIMER TEST: after new vitals, overdue = ' +
+    val(E, encId, 'reassessment_overdue') + ' (expected 0)');
+}]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-30 20:13:51</sys_created_on>
+        <sys_id>6e74eb70c35cd35043d2ffbc050131b3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ER Triage - Test Cache and Timer</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_update_name>sys_script_fix_6e74eb70c35cd35043d2ffbc050131b3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-30 20:13:51</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+</record_update>

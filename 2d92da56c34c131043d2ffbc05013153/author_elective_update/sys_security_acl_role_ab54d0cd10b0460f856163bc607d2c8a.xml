@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+  <sys_security_acl_role action="DELETE" apply_defaults="true">
+    <sys_id>ab54d0cd10b0460f856163bc607d2c8a</sys_id>
+    <sys_scope display_value="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_scope>
+    <sys_update_name>sys_security_acl_role_ab54d0cd10b0460f856163bc607d2c8a</sys_update_name>
+    <sys_name>x_2206627_er_tri_0_patient.x_2206627_er_tri_0.charge_nurse</sys_name>
+    <sys_security_acl>762cbbaac3c4d31043d2ffbc0501313b</sys_security_acl>
+    <sys_user_role name="x_2206627_er_tri_0.charge_nurse">6ebcdfe89e0d40d9b0cf15f88fa9ae8c</sys_user_role>
+  </sys_security_acl_role>
+<sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</application>
+        <file_path/>
+        <instance_id>657464de93401fd8401cddd548373c41</instance_id>
+        <instance_name>dev458343</instance_name>
+        <merge_base/>
+        <name>sys_security_acl_role_ab54d0cd10b0460f856163bc607d2c8a</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+  <sys_security_acl_role action="INSERT_OR_UPDATE" apply_defaults="true">
+    <sys_id>ab54d0cd10b0460f856163bc607d2c8a</sys_id>
+    <sys_scope display_value="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_scope>
+    <sys_update_name>sys_security_acl_role_ab54d0cd10b0460f856163bc607d2c8a</sys_update_name>
+    <sys_name>x_2206627_er_tri_0_patient.x_2206627_er_tri_0.charge_nurse</sys_name>
+    <sys_security_acl>762cbbaac3c4d31043d2ffbc0501313b</sys_security_acl>
+    <sys_user_role name="x_2206627_er_tri_0.charge_nurse">6ebcdfe89e0d40d9b0cf15f88fa9ae8c</sys_user_role>
+  </sys_security_acl_role>
+</record_update>]]></payload>
+        <payload_hash>1545235188</payload_hash>
+        <record_name>x_2206627_er_tri_0_patient.x_2206627_er_tri_0.charge_nurse</record_name>
+        <reverted_from/>
+        <source>4b47ceb5c3d89b5043d2ffbc0501316d</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>sammy.s</sys_created_by>
+        <sys_created_on>2026-11-02 15:59:39</sys_created_on>
+        <sys_id>274702f5c3d89b5043d2ffbc0501314c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a19cfcdd420000001</sys_recorded_at>
+        <sys_updated_by>sammy.s</sys_updated_by>
+        <sys_updated_on>2026-11-02 15:59:39</sys_updated_on>
+        <type>Access Roles</type>
+        <update_guid>e34702f5e1d89b507b8644ce86b03b4b</update_guid>
+        <update_guid_history>e34702f5e1d89b507b8644ce86b03b4b:-1998521281</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="x_2206627_er_tri_0_patient.x_2206627_er_tri_0.charge_nurse">060d2b1cc3a8931043d2ffbc05013113</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>sammy.s</sys_created_by>
+        <sys_created_on>2026-11-10 17:48:55</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
+        <sys_id>63ed5a350c964365893323d2af9007f1</sys_id>
+        <sys_metadata>ab54d0cd10b0460f856163bc607d2c8a</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_2206627_er_tri_0_patient.x_2206627_er_tri_0.charge_nurse</sys_name>
+        <sys_package display_value="ER Triage Assistant" source="x_2206627_er_tri_0">2d92da56c34c131043d2ffbc05013153</sys_package>
+        <sys_parent display_value="x_2206627_er_tri_0_patient">762cbbaac3c4d31043d2ffbc0501313b</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="ER Triage Assistant">2d92da56c34c131043d2ffbc05013153</sys_scope>
+        <sys_scope_delete display_value="">9ac35f9b9d704fc6ace7b0309b1d2b01</sys_scope_delete>
+        <sys_update_name>sys_security_acl_role_ab54d0cd10b0460f856163bc607d2c8a</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_role_ab54d0cd10b0460f856163bc607d2c8a">274702f5c3d89b5043d2ffbc0501314c</sys_update_version>
+        <sys_updated_by>sammy.s</sys_updated_by>
+        <sys_updated_on>2026-11-10 17:48:55</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
